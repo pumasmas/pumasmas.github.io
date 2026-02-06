@@ -91,8 +91,8 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
 
       <div class="mb-8 pb-6 border-b border-gray-800">
         <div class="flex items-center gap-4 mb-4">
-          <TagBadge text={topic} type="topic" />
-          <TagBadge text={difficulty} type="difficulty" difficultyLevel={difficulty} />
+          <TagBadge text={topic} type="topic" href="/wiki" />
+          <TagBadge text={difficulty} type="difficulty" difficultyLevel={difficulty} href="/wiki" />
         </div>
         <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{title}</h1>
         <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
