@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
 import { getCollection } from 'astro:content';
+import { DIFFICULTY_COLORS } from '../../consts';
 
 const entries = await getCollection('wiki');
 
@@ -51,7 +52,9 @@ const topics = [...new Set(entries.map((e) => e.data.topic))];
                   >
                     <div class="flex justify-between items-start mb-2">
                       <h3 class="font-bold text-white text-lg">{entry.data.title}</h3>
-                      <span class="text-xs font-bold bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                      <span
+                        class={`text-[10px] font-bold text-white px-2 py-1 rounded ${DIFFICULTY_COLORS[entry.data.difficulty] || 'bg-gray-600'}`}
+                      >
                         {entry.data.difficulty}
                       </span>
                     </div>
