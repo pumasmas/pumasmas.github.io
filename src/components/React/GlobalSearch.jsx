@@ -132,7 +132,9 @@ const GlobalSearch = ({ entries }) => {
                   onClick={() => setIsOpen(false)}
                   className="text-gray-500 hover:text-white px-2"
                 >
-                  <kbd className="text-xs border border-gray-600 rounded px-1">ESC</kbd>
+                  <kbd className="hidden sm:inline-block text-xs border border-gray-600 rounded px-1">
+                    ESC
+                  </kbd>
                 </button>
               </div>
 
@@ -186,7 +188,7 @@ const GlobalSearch = ({ entries }) => {
               </div>
 
               {/* Footer */}
-              <div className="border-t border-gray-800 px-4 py-2 text-xs text-gray-500 flex justify-between">
+              <div className="hidden sm:flex border-t border-gray-800 px-4 py-2 text-xs text-gray-500 justify-between">
                 <span>
                   <i className="fas fa-level-down-alt rotate-90 mr-1"></i> Seleccionar
                 </span>
