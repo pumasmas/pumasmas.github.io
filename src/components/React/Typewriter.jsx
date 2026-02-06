@@ -6,11 +6,6 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
   const [reverse, setReverse] = useState(false);
 
   useEffect(() => {
-    if (index >= words.length) {
-      setIndex(0); // Loop back
-      return;
-    }
-
     if (subIndex === words[index].length + 1 && !reverse) {
       setTimeout(() => setReverse(true), pause);
       return;
@@ -18,7 +13,7 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
 
     if (subIndex === 0 && reverse) {
       setReverse(false);
-      setIndex((prev) => prev + 1);
+      setIndex((prev) => (prev + 1) % words.length);
       return;
     }
 
@@ -31,7 +26,7 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
 
   return (
     <span className="text-unam-gold typewriter-cursor">
-      {words[index].substring(0, subIndex)}
+      {words[index] ? words[index].substring(0, subIndex) : ''}
     </span>
   );
 };
