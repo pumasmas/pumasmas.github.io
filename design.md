@@ -1,85 +1,68 @@
-# Design Document: Pu++ Web Portal (v2)
+# Design Document: Pu++ Web Portal (v2.1)
 
 ## 1. Project Overview
-The **Pu++ Web Portal** serves as the central hub for the Competitive Programming Club at the Faculty of Sciences, UNAM. It transforms the previous static brochure into a content-rich platform featuring club news, contest updates, and a comprehensive algorithmic knowledge base.
+The **Pu++ Web Portal** serves as the central hub for the Competitive Programming Club at the Faculty of Sciences, UNAM. This document outlines the design for version 2.1, focusing on mobile responsiveness, enhanced navigation, and better content discoverability.
 
 ## 2. Technology Stack
 
 ### Core Framework
-*   **Astro:** Chosen for its "Island Architecture," delivering zero JavaScript to the client by default while allowing rich interactivity where needed. It excels at content-heavy static sites.
+*   **Astro:** Chosen for its "Island Architecture," delivering zero JavaScript to the client by default while allowing rich interactivity where needed.
+*   **Integrations:** `@astrojs/sitemap` (New) for SEO.
 
 ### Styling
-*   **Tailwind CSS:** Utility-first framework for rapid UI development.
+*   **Tailwind CSS:** Utility-first framework.
 *   **Theme:** Dark Mode default (GitHub Dark Dimmed aesthetic) with UNAM Gold and Blue accents.
+*   **Animations:** CSS-based animations for UI elements (cursor, transitions) instead of JS-heavy implementations where possible.
 
 ### Content & Rendering
-*   **MDX (Markdown + JSX):** Allows writing content in Markdown while embedding interactive components (graphs, visualizations) directly into articles.
-*   **KaTeX:** Fast, client-side LaTeX rendering for mathematical formulas in problem editorials and algorithm explanations.
-*   **Content Collections:** Astro's type-safe API to manage the `blog` and `wiki` schemas.
+*   **MDX:** For rich content in Blog and Wiki.
+*   **KaTeX:** Client-side LaTeX rendering.
+*   **Content Collections:** Type-safe schemas for `blog` and `wiki`.
 
 ### Interactivity
-*   **React:** Used for dynamic components ("Islands") such as:
-    *   Search functionality (filtering algorithms/posts).
-    *   Interactive countdowns for contests.
-    *   Complex data visualizations (e.g., graph algorithm demos).
+*   **React:** Used for complex stateful components (Search, Interactive Visualizations).
+*   **Vanilla JS:** For lightweight UI interactions (Mobile Menu toggling) to avoid heavy framework overhead for simple tasks.
 
-## 3. Content Architecture
+## 3. UI/UX Improvements
 
-The site will utilize Astro's **Content Collections** to enforce strict schemas for data integrity.
+### Navigation
+*   **Mobile First:** A responsive navbar with a functional hamburger menu for mobile devices.
+*   **Sidebar Navigation (Wiki):** A dynamic, auto-generated sidebar for the Wiki section that groups entries by topic, allowing seamless browsing without returning to the index.
+*   **Breadcrumbs:** Clear path indication (e.g., `Wiki > Dynamic Programming > Intro`) on deep pages.
 
-### A. Blog / News (`src/content/blog`)
-Designed for time-sensitive updates.
-*   **Fields:** `title`, `date`, `author`, `tags` (e.g., "Contest", "Announcement"), `description`, `coverImage`.
-*   **Route:** `/blog/[slug]`
+### Visual Polish
+*   **Typewriter Effect:** Refactored to use CSS animations for the cursor to prevent layout shifts and improve accessibility.
+*   **Consistent Theming:** Centralized configuration for difficulty colors (Codeforces style) and navigation links.
 
-### B. Wiki / Knowledge Base (`src/content/wiki`)
-A structured hierarchy of educational resources.
-*   **Fields:** `title`, `difficulty` (Newbie -> Grandmaster), `topic` (e.g., "DP", "Graphs"), `prerequisites` (list of other wiki slugs), `lastUpdated`.
-*   **Route:** `/wiki/[topic]/[slug]` or `/wiki/[slug]`
+## 4. Content Architecture
 
-## 4. UI/UX Design System
+### A. Blog (`src/content/blog`)
+*   **Fields:** `title`, `date`, `author`, `tags`, `description`, `coverImage`.
 
-### Color Palette
-*   **Background:** `#0d1117` (Dark Dimmed) / `#161b22` (Cards)
-*   **Primary Text:** `#c9d1d9`
-*   **UNAM Blue:** `#3b82f6` (Highlighting links, primary buttons)
-*   **UNAM Gold:** `#D59F0F` (Accents, warnings, "Solution" headers)
-*   **Code Blocks:** Syntax highlighting matching the dark theme.
+### B. Wiki (`src/content/wiki`)
+*   **Fields:** `title`, `difficulty` (Newbie -> Grandmaster), `topic`, `prerequisites`.
+*   **Organization:** Entries are grouped by `topic` in the sidebar.
 
-### Typography
-*   **Body:** Inter or system-sans.
-*   **Headings/Code:** Fira Code or JetBrains Mono (essential for algorithm snippets).
+## 5. SEO & Meta Data
+*   **Open Graph:** Comprehensive OG tags (Title, Description, Image, Type) for social sharing.
+*   **Sitemap:** Automatic generation of `sitemap-index.xml` and `sitemap-0.xml`.
+*   **Canonical URLs:** Ensure preventing duplicate content issues.
 
-## 5. Proposed Directory Structure
+## 6. Directory Structure Updates
 
 ```text
 /
-├── public/              # Static assets (images, logos)
+├── public/
 ├── src/
-│   ├── components/      # UI Components
-│   │   ├── BaseHead.astro
-│   │   ├── Header.astro
-│   │   ├── Footer.astro
-│   │   └── React/       # Interactive React Islands
-│   ├── content/         # MDX Files
-│   │   ├── blog/
-│   │   ├── wiki/
-│   │   └── config.ts    # Schema definitions
-│   ├── layouts/         # Page wrappers (BlogPost, WikiEntry)
-│   ├── pages/           # Route definitions
-│   │   ├── index.astro
-│   │   ├── blog/[...slug].astro
-│   │   └── wiki/[...slug].astro
-│   └── styles/          # Tailwind directives
-├── astro.config.mjs     # Configuration (React, Tailwind, MDX integrations)
-├── tailwind.config.mjs  # Theme customization
-└── package.json
+│   ├── components/
+│   │   ├── BaseHead.astro       # New: Centralized <head> meta tags
+│   │   ├── Breadcrumbs.astro    # New: Breadcrumb navigation
+│   │   ├── Navbar.astro         # Updated: Mobile menu logic
+│   │   ├── WikiSidebar.astro    # New: Dynamic sidebar
+│   │   └── React/
+│   │       └── Typewriter.jsx   # Updated: CSS-based cursor
+│   ├── consts.ts                # New: Centralized constants (Nav links, difficulty colors)
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
 ```
-
-## 6. Implementation Phases
-
-1.  **Scaffolding:** Initialize Astro, install Tailwind, React, and MDX integrations.
-2.  **Layout & Design:** Port the existing "Hero" design to Tailwind components; build the Header/Footer.
-3.  **Content Engine:** Configure Content Collections for Blog and Wiki; set up KaTeX.
-4.  **Migration:** Move existing text to the new structure.
-5.  **Interactivity:** Implement the React-based components.

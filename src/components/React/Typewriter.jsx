@@ -4,15 +4,6 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
   const [index, setIndex] = useState(0);
   const [subIndex, setSubIndex] = useState(0);
   const [reverse, setReverse] = useState(false);
-  const [blink, setBlink] = useState(true);
-
-  // Blinking cursor
-  useEffect(() => {
-    const timeout2 = setTimeout(() => {
-      setBlink((prev) => !prev);
-    }, 500);
-    return () => clearTimeout(timeout2);
-  }, [blink]);
 
   useEffect(() => {
     if (index >= words.length) {
@@ -39,8 +30,8 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
   }, [subIndex, index, reverse, words, speed, pause]);
 
   return (
-    <span className="text-unam-gold border-r-2 border-unam-gold pr-1 animate-pulse">
-      {`${words[index].substring(0, subIndex)}${blink ? "|" : " "}`} 
+    <span className="text-unam-gold typewriter-cursor">
+      {words[index].substring(0, subIndex)}
     </span>
   );
 };

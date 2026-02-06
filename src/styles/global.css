@@ -18,3 +18,14 @@ h1, h2, h3, h4, h5, h6 {
 code {
     @apply font-code;
 }
+
+/* Typewriter Cursor */
+.typewriter-cursor {
+    @apply border-r-2 border-unam-gold pr-1;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { border-color: transparent }
+    50% { border-color: #D59F0F }
+}

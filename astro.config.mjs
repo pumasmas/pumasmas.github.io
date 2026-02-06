@@ -5,13 +5,12 @@ import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+import sitemap from '@astrojs/sitemap';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    tailwind(),
-    react(),
-    mdx()
-  ],
+  site: 'https://pumasmas.github.io',
+  integrations: [tailwind(), react(), mdx(), sitemap()],
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex]

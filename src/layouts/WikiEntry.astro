@@ -3,49 +3,35 @@ import type { CollectionEntry } from 'astro:content';
 import Layout from './Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
+import WikiSidebar from '../components/WikiSidebar.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { DIFFICULTY_COLORS } from '../consts';
 
-type Props = CollectionEntry<'wiki'>['data'];
+type Props = CollectionEntry<'wiki'>['data'] & { slug: string };
 
-const { title, description, difficulty, topic } = Astro.props;
-
-const difficultyColors = {
-    'Newbie': 'bg-gray-600',
-    'Pupil': 'bg-green-600',
-    'Specialist': 'bg-cyan-600',
-    'Expert': 'bg-blue-600',
-    'Candidate Master': 'bg-violet-600',
-    'Master': 'bg-orange-600',
-    'Grandmaster': 'bg-red-600'
-};
+const { title, description, difficulty, topic, slug } = Astro.props;
 ---
 
 <Layout title={`${title} | Wiki Pu++`}>
     <Navbar />
-    <main class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full flex gap-8">
-        <!-- Sidebar placeholder (could be dynamic in future) -->
-        <aside class="hidden lg:block w-64 flex-shrink-0">
-            <div class="sticky top-24">
-                <h3 class="font-bold text-white mb-4 uppercase tracking-wider text-sm">Temas</h3>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li><a href="/wiki" class="hover:text-unam-gold">← Volver al índice</a></li>
-                    <li class="font-bold text-unam-blue">{topic}</li>
-                </ul>
-            </div>
-        </aside>
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8">
+        <WikiSidebar currentSlug={slug} />
 
         <article class="flex-grow max-w-4xl">
+            <Breadcrumbs currentTitle={title} />
+            
             <div class="mb-8 pb-6 border-b border-gray-800">
                 <div class="flex items-center gap-4 mb-4">
                     <span class="text-unam-gold font-code text-sm uppercase tracking-widest">{topic}</span>
-                    <span class={`${difficultyColors[difficulty] || 'bg-gray-600'} text-white text-xs font-bold px-2 py-0.5 rounded`}>
+                    <span class={`${DIFFICULTY_COLORS[difficulty]} text-white text-xs font-bold px-2 py-0.5 rounded`}>
                         {difficulty}
                     </span>
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-4">{title}</h1>
-                <p class="text-xl text-gray-400">{description}</p>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{title}</h1>
+                <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
             </div>
             
-            <div class="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-p:text-gray-300 prose-code:text-unam-gold prose-pre:bg-card-bg prose-pre:border prose-pre:border-gray-800">
+            <div class="prose prose-invert prose-lg max-w-none">
                 <slot />
             </div>
         </article>
