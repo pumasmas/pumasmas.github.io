@@ -9,18 +9,23 @@ import Prerequisites from '../components/Prerequisites.astro';
 import RelatedProblems from '../components/RelatedProblems.astro';
 import WikiNav from '../components/WikiNav.astro';
 import TagBadge from '../components/TagBadge.astro';
+import TableOfContents from '../components/TableOfContents.astro';
 
-type Props = CollectionEntry<'wiki'>['data'] & { slug: string };
+type Props = CollectionEntry<'wiki'>['data'] & {
+  slug: string;
+  headings: { depth: number; slug: string; text: string }[];
+};
 
-const { title, description, difficulty, topic, prerequisites, relatedProblems, slug } = Astro.props;
+const { title, description, difficulty, topic, prerequisites, relatedProblems, slug, headings } =
+  Astro.props;
 ---
 
 <Layout title={`${title} | Wiki Pu++`}>
   <Navbar />
-  <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8">
+  <main class="flex-grow max-w-[90rem] mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8">
     <WikiSidebar currentSlug={slug} />
 
-    <article class="flex-grow max-w-4xl min-w-0">
+    <article class="flex-grow min-w-0 max-w-4xl">
       <Breadcrumbs currentTitle={title} />
 
       <div class="mb-8 pb-6 border-b border-gray-800">
@@ -42,6 +47,8 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
 
       <WikiNav currentSlug={slug} topic={topic} />
     </article>
+
+    <TableOfContents headings={headings} />
   </main>
   <Footer />
   <script src="../scripts/copy-code.js"></script>

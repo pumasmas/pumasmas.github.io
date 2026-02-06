@@ -13,9 +13,9 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'wiki'>;
 
 const entry = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 ---
 
-<WikiEntry {...entry.data} slug={entry.slug}>
+<WikiEntry {...entry.data} slug={entry.slug} headings={headings}>
   <Content />
 </WikiEntry>
