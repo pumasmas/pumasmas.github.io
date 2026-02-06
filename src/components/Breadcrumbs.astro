@@ -1,6 +1,6 @@
 ---
 interface Props {
-    currentTitle?: string;
+  currentTitle?: string;
 }
 
 const { currentTitle } = Astro.props;
@@ -10,37 +10,42 @@ const { pathname } = Astro.url;
 const paths = pathname.split('/').filter(Boolean);
 
 const breadcrumbs = paths.map((path, index) => {
-    const href = `/${paths.slice(0, index + 1).join('/')}`;
-    const label = path.charAt(0).toUpperCase() + path.slice(1).replace(/-/g, ' ');
-    return { label, href };
+  const href = `/${paths.slice(0, index + 1).join('/')}`;
+  const label = path.charAt(0).toUpperCase() + path.slice(1).replace(/-/g, ' ');
+  return { label, href };
 });
 
 // If it's a deep page, the last breadcrumb should probably be the actual title
 if (currentTitle && breadcrumbs.length > 0) {
-    breadcrumbs[breadcrumbs.length - 1].label = currentTitle;
+  breadcrumbs[breadcrumbs.length - 1].label = currentTitle;
 }
 ---
 
 <nav class="flex mb-6 text-sm font-code" aria-label="Breadcrumb">
-    <ol class="flex items-center space-x-2">
-        <li>
-            <a href="/" class="text-gray-500 hover:text-unam-gold transition-colors">
-                <i class="fas fa-home"></i>
+  <ol class="flex items-center space-x-2">
+    <li>
+      <a href="/" class="text-gray-500 hover:text-unam-gold transition-colors">
+        <i class="fas fa-home"></i>
+      </a>
+    </li>
+    {
+      breadcrumbs.map((bc, index) => (
+        <li class="flex items-center space-x-2">
+          <span class="text-gray-700">/</span>
+          {index === breadcrumbs.length - 1 ? (
+            <span
+              class="text-unam-gold font-semibold truncate max-w-[200px] md:max-w-none"
+              aria-current="page"
+            >
+              {bc.label}
+            </span>
+          ) : (
+            <a href={bc.href} class="text-gray-500 hover:text-gray-300 transition-colors">
+              {bc.label}
             </a>
+          )}
         </li>
-        {breadcrumbs.map((bc, index) => (
-            <li class="flex items-center space-x-2">
-                <span class="text-gray-700">/</span>
-                {index === breadcrumbs.length - 1 ? (
-                    <span class="text-unam-gold font-semibold truncate max-w-[200px] md:max-w-none" aria-current="page">
-                        {bc.label}
-                    </span>
-                ) : (
-                    <a href={bc.href} class="text-gray-500 hover:text-gray-300 transition-colors">
-                        {bc.label}
-                    </a>
-                )}
-            </li>
-        ))}
-    </ol>
+      ))
+    }
+  </ol>
 </nav>

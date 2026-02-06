@@ -10,35 +10,38 @@ This platform serves as the central hub for our community, hosting training reso
 
 ## Features
 
-*   **Modern Stack:** Built with [Astro](https://astro.build) for high performance and zero-JS default.
-*   **Knowledge Base:** A structured **Wiki** for algorithms and data structures, supporting **LaTeX** math rendering via KaTeX.
-*   **Blog Engine:** Markdown-based news and announcements system.
-*   **Interactive UI:** Dynamic components (timers, visualizations) powered by **React**.
-*   **Theming:** Dark mode design inspired by GitHub, with official UNAM color accents.
+- **Modern Stack:** Built with [Astro](https://astro.build) for high performance and zero-JS default.
+- **Knowledge Base:** A structured **Wiki** for algorithms and data structures, supporting **LaTeX** math rendering via KaTeX.
+- **Blog Engine:** Markdown-based news and announcements system.
+- **Interactive UI:** Dynamic components (timers, visualizations) powered by **React**.
+- **Theming:** Dark mode design inspired by GitHub, with official UNAM color accents.
 
 ## Tech Stack
 
-*   **Framework:** Astro 5.0
-*   **Styling:** Tailwind CSS
-*   **Interactivity:** React
-*   **Content:** MDX (Markdown + JSX)
-*   **Math Rendering:** Remark Math + Rehype KaTeX
+- **Framework:** Astro 5.0
+- **Styling:** Tailwind CSS
+- **Interactivity:** React
+- **Content:** MDX (Markdown + JSX)
+- **Math Rendering:** Remark Math + Rehype KaTeX
 
 ## Getting Started
 
 ### Prerequisites
-*   Node.js (v18.14.1 or higher)
-*   npm
+
+- Node.js (v18.14.1 or higher)
+- npm
 
 ### Installation
 
 1.  **Clone the repository:**
+
     ```bash
     git clone https://github.com/pumasmas/pumasmas.github.io.git
     cd pumasmas.github.io
     ```
 
 2.  **Install dependencies:**
+
     ```bash
     npm install
     ```
@@ -78,6 +81,7 @@ npm run build
 We welcome contributions from members and the open-source community!
 
 ### Adding a Wiki Entry
+
 1.  Create a new `.mdx` file in `src/content/wiki/`.
 2.  Add the required frontmatter:
     ```yaml
@@ -91,6 +95,7 @@ We welcome contributions from members and the open-source community!
 3.  Write your content using Markdown and LaTeX (e.g., `$O(n \log n)$`).
 
 ### Reporting Issues
+
 Found a bug or have a feature request? Please open an Issue.
 
 ## License

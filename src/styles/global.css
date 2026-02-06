@@ -1,33 +1,43 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600&display=swap');
 
 /* KaTeX Styles */
-@import "katex/dist/katex.min.css";
+@import 'katex/dist/katex.min.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-    @apply bg-bg-dark text-text-main font-body;
+  @apply bg-bg-dark text-text-main font-body;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-text-bright;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-bold text-text-bright;
 }
 
 code {
-    @apply font-code;
+  @apply font-code;
 }
 
 /* Typewriter Cursor */
 .typewriter-cursor {
-    @apply border-r-2 border-unam-gold pr-1;
-    animation: blink 1s step-end infinite;
+  @apply border-r-2 border-unam-gold pr-1;
+  animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
-    from, to { border-color: transparent }
-    50% { border-color: #D59F0F }
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #d59f0f;
+  }
 }
 
 /* Rehype Pretty Code - Line Numbers */
@@ -38,7 +48,7 @@ code {
 code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
-  
+
   /* Styling */
   display: inline-block;
   width: 1rem;
@@ -47,10 +57,10 @@ code > [data-line]::before {
   color: gray;
 }
 
-code[data-line-numbers-max-digits="2"] > [data-line]::before {
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
   width: 2rem;
 }
 
-code[data-line-numbers-max-digits="3"] > [data-line]::before {
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
   width: 3rem;
 }

@@ -17,9 +17,15 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
       return;
     }
 
-    const timeout = setTimeout(() => {
-      setSubIndex((prev) => prev + (reverse ? -1 : 1));
-    }, Math.max(reverse ? 75 : subIndex === words[index].length ? 1000 : speed, parseInt(Math.random() * 50)));
+    const timeout = setTimeout(
+      () => {
+        setSubIndex((prev) => prev + (reverse ? -1 : 1));
+      },
+      Math.max(
+        reverse ? 75 : subIndex === words[index].length ? 1000 : speed,
+        parseInt(Math.random() * 50)
+      )
+    );
 
     return () => clearTimeout(timeout);
   }, [subIndex, index, reverse, words, speed, pause]);

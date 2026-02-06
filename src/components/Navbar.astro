@@ -10,18 +10,20 @@ import { NAV_LINKS } from '../consts';
           Pu<span class="text-unam-gold">++</span>
         </a>
       </div>
-      
+
       <!-- Desktop Menu -->
       <div class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-8">
-          {NAV_LINKS.map((link) => (
-            <a
-              href={link.href}
-              class="text-text-main hover:text-unam-blue px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
-            >
-              {link.name}
-            </a>
-          ))}
+          {
+            NAV_LINKS.map((link) => (
+              <a
+                href={link.href}
+                class="text-text-main hover:text-unam-blue px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
+              >
+                {link.name}
+              </a>
+            ))
+          }
           <a
             href="https://github.com/pumasmas"
             target="_blank"
@@ -35,11 +37,11 @@ import { NAV_LINKS } from '../consts';
 
       <!-- Mobile menu button -->
       <div class="-mr-2 flex md:hidden">
-        <button 
+        <button
           id="mobile-menu-button"
-          type="button" 
-          class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" 
-          aria-controls="mobile-menu" 
+          type="button"
+          class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+          aria-controls="mobile-menu"
           aria-expanded="false"
         >
           <span class="sr-only">Open main menu</span>
@@ -52,14 +54,16 @@ import { NAV_LINKS } from '../consts';
   <!-- Mobile Menu -->
   <div class="hidden md:hidden bg-bg-dark border-b border-gray-800" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      {NAV_LINKS.map((link) => (
-        <a
-          href={link.href}
-          class="text-text-main hover:text-unam-blue block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
-        >
-          {link.name}
-        </a>
-      ))}
+      {
+        NAV_LINKS.map((link) => (
+          <a
+            href={link.href}
+            class="text-text-main hover:text-unam-blue block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
+          >
+            {link.name}
+          </a>
+        ))
+      }
       <a
         href="https://github.com/pumasmas"
         target="_blank"
@@ -82,7 +86,7 @@ import { NAV_LINKS } from '../consts';
       const isExpanded = button.getAttribute('aria-expanded') === 'true';
       button.setAttribute('aria-expanded', String(!isExpanded));
       menu.classList.toggle('hidden');
-      
+
       // Toggle icons
       icon.classList.toggle('fa-bars');
       icon.classList.toggle('fa-times');
@@ -90,7 +94,7 @@ import { NAV_LINKS } from '../consts';
 
     // Close menu when clicking a link
     const links = menu.querySelectorAll('a');
-    links.forEach(link => {
+    links.forEach((link) => {
       link.addEventListener('click', () => {
         menu.classList.add('hidden');
         button.setAttribute('aria-expanded', 'false');

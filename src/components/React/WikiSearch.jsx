@@ -66,7 +66,9 @@ const WikiSearch = ({ entries }) => {
                     <span className="font-bold text-white group-hover:text-unam-blue transition-colors">
                       {item.data.title}
                     </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}>
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
+                    >
                       {item.data.difficulty}
                     </span>
                   </div>
@@ -74,9 +76,7 @@ const WikiSearch = ({ entries }) => {
                     <span className="text-xs text-unam-gold font-code uppercase tracking-tighter">
                       {item.data.topic}
                     </span>
-                    <span className="text-xs text-gray-500 truncate">
-                      {item.data.description}
-                    </span>
+                    <span className="text-xs text-gray-500 truncate">{item.data.description}</span>
                   </div>
                 </a>
               ))}

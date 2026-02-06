@@ -23,6 +23,7 @@ Sea $dp[i][w]$ el valor máximo que podemos obtener considerando solo los primer
 ### Transición
 
 Para cada objeto $i$, tenemos dos opciones:
+
 1.  **No llevarlo:** El valor es el mismo que con $i-1$ objetos y capacidad $w$.
 2.  **Llevarlo:** Sumamos su valor $v_i$ al mejor valor obtenido con $i-1$ objetos y capacidad $w - weight_i$ (solo si $w \ge weight_i$).
 

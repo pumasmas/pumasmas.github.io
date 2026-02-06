@@ -4,11 +4,11 @@ import WikiEntry from '../../layouts/WikiEntry.astro';
 import { render } from 'astro:content';
 
 export async function getStaticPaths() {
-	const entries = await getCollection('wiki');
-	return entries.map((entry) => ({
-		params: { slug: entry.slug },
-		props: entry,
-	}));
+  const entries = await getCollection('wiki');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: entry,
+  }));
 }
 type Props = CollectionEntry<'wiki'>;
 
@@ -17,5 +17,5 @@ const { Content } = await render(entry);
 ---
 
 <WikiEntry {...entry.data}>
-	<Content />
+  <Content />
 </WikiEntry>

@@ -9,19 +9,20 @@ interface Props {
 
 const { text, type, difficultyLevel } = Astro.props;
 
-let classes = "text-xs font-bold px-2 py-0.5 rounded transition-transform hover:scale-105 inline-block cursor-pointer";
-let href = "/wiki"; // Default fallback
+let classes =
+  'text-xs font-bold px-2 py-0.5 rounded transition-transform hover:scale-105 inline-block cursor-pointer';
+let href = '/wiki'; // Default fallback
 
 if (type === 'difficulty') {
-    const colorClass = difficultyLevel ? DIFFICULTY_COLORS[difficultyLevel] : 'bg-gray-600';
-    classes = `${classes} ${colorClass} text-white`;
-    // Future: href = `/wiki?difficulty=${text}`;
+  const colorClass = difficultyLevel ? DIFFICULTY_COLORS[difficultyLevel] : 'bg-gray-600';
+  classes = `${classes} ${colorClass} text-white`;
+  // Future: href = `/wiki?difficulty=${text}`;
 } else {
-    classes = `${classes} text-unam-gold border border-unam-gold/30 hover:bg-unam-gold/10 font-code uppercase tracking-widest`;
-    // Future: href = `/wiki?topic=${text}`;
+  classes = `${classes} text-unam-gold border border-unam-gold/30 hover:bg-unam-gold/10 font-code uppercase tracking-widest`;
+  // Future: href = `/wiki?topic=${text}`;
 }
 ---
 
 <a href={href} class={classes}>
-    {text}
+  {text}
 </a>

@@ -29,7 +29,7 @@ bool visited[1000];
 void dfs(int u) {
     visited[u] = true;
     // Procesar nodo u (ej. imprimir, contar)
-    
+
     for (int v : adj[u]) {
         if (!visited[v]) {
             dfs(v);
