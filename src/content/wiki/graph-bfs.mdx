@@ -1,0 +1,67 @@
+---
+title: 'Búsqueda en Amplitud (BFS)'
+description: 'El algoritmo fundamental para recorrer grafos y encontrar el camino más corto en grafos no ponderados.'
+difficulty: 'Pupil'
+topic: 'Teoría de Grafos'
+prerequisites: ['time-complexity']
+relatedProblems:
+  - name: 'Message Route'
+    url: 'https://cses.fi/problemset/task/1667'
+    platform: 'CSES'
+  - name: 'Shortest Path in Binary Matrix'
+    url: 'https://leetcode.com/problems/shortest-path-in-binary-matrix/'
+    platform: 'LeetCode'
+lastUpdated: 2026-02-01
+---
+
+La **Búsqueda en Amplitud** (Breadth-First Search o BFS) es un algoritmo para recorrer o buscar elementos en un grafo. Comienza en un nodo raíz y explora todos los vecinos de este nodo antes de pasar a los vecinos de los vecinos.
+
+## ¿Cómo funciona?
+
+BFS utiliza una estructura de datos **Cola (Queue)** para mantener el orden de visita "primero en entrar, primero en salir" (FIFO).
+
+1.  Insertar el nodo inicial en la cola y marcarlo como visitado.
+2.  Mientras la cola no esté vacía:
+    3.  Sacar el primer nodo $u$ de la cola.
+    4.  Para cada vecino $v$ de $u$:
+        5.  Si $v$ no ha sido visitado:
+            6.  Marcarlo como visitado.
+            7.  Insertarlo en la cola.
+            8.  (Opcional) Guardar la distancia o el padre para reconstruir el camino.
+
+### Implementación en C++
+
+```cpp
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+vector<int> adj[1000];
+bool visited[1000];
+int dist[1000];
+
+void bfs(int start) {
+    queue<int> q;
+    q.push(start);
+    visited[start] = true;
+    dist[start] = 0;
+
+    while (!q.empty()) {
+        int u = q.front();
+        q.pop();
+
+        for (int v : adj[u]) {
+            if (!visited[v]) {
+                visited[v] = true;
+                dist[v] = dist[u] + 1;
+                q.push(v);
+            }
+        }
+    }
+}
+```
+
+## Propiedad Clave: Camino Más Corto
+
+En un grafo **no ponderado** (donde todas las aristas tienen peso 1), BFS garantiza encontrar el camino más corto desde el nodo inicial a cualquier otro nodo alcanzable.

@@ -1,0 +1,50 @@
+---
+title: 'El Problema de la Mochila (Knapsack)'
+description: 'Uno de los problemas clásicos de optimización combinatoria. Aprende a seleccionar objetos para maximizar el valor sin exceder el peso.'
+difficulty: 'Pupil'
+topic: 'Programación Dinámica'
+prerequisites: ['intro-dp']
+relatedProblems:
+  - name: 'Knapsack 1'
+    url: 'https://atcoder.jp/contests/dp/tasks/dp_d'
+    platform: 'AtCoder'
+  - name: 'Partition Equal Subset Sum'
+    url: 'https://leetcode.com/problems/partition-equal-subset-sum/'
+    platform: 'LeetCode'
+lastUpdated: 2026-01-20
+---
+
+El **0/1 Knapsack Problem** plantea la siguiente pregunta: Dado un conjunto de objetos, cada uno con un peso y un valor, ¿cuáles objetos debes llevar en tu mochila para maximizar el valor total sin que el peso exceda la capacidad $W$?
+
+## Definición del Estado
+
+Sea $dp[i][w]$ el valor máximo que podemos obtener considerando solo los primeros $i$ objetos con una capacidad de mochila actual de $w$.
+
+### Transición
+
+Para cada objeto $i$, tenemos dos opciones:
+1.  **No llevarlo:** El valor es el mismo que con $i-1$ objetos y capacidad $w$.
+2.  **Llevarlo:** Sumamos su valor $v_i$ al mejor valor obtenido con $i-1$ objetos y capacidad $w - weight_i$ (solo si $w \ge weight_i$).
+
+$$
+dp[i][w] = \max(dp[i-1][w], \quad v_i + dp[i-1][w - weight_i])
+$$
+
+### Implementación
+
+```cpp
+// N: número de objetos, W: capacidad máxima
+// wt[]: pesos, val[]: valores
+
+for (int i = 1; i <= N; i++) {
+    for (int w = 0; w <= W; w++) {
+        if (w >= wt[i-1]) {
+            dp[i][w] = max(dp[i-1][w], val[i-1] + dp[i-1][w - wt[i-1]]);
+        } else {
+            dp[i][w] = dp[i-1][w];
+        }
+    }
+}
+```
+
+Podemos optimizar el espacio a $O(W)$ usando un arreglo 1D e iterando hacia atrás.
