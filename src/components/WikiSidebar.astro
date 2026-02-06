@@ -24,63 +24,50 @@ const groupedEntries = entries.reduce(
 const topics = Object.keys(groupedEntries).sort();
 ---
 
-<aside class="hidden lg:block w-64 flex-shrink-0">
-  <div class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pr-4 custom-scrollbar">
-    <div class="mb-8">
-      <a
-        href="/wiki"
-        class="text-unam-gold hover:text-yellow-500 text-sm font-code flex items-center gap-2 transition-colors"
-      >
-        <i class="fas fa-arrow-left"></i> Índice de Wiki
-      </a>
-    </div>
-
-    {
-      topics.map((topic) => {
-        // Check if this topic contains the current page
-        const isOpen = groupedEntries[topic].some((e) => e.slug === currentSlug);
-
-        return (
-          <details class="mb-6 group" open={isOpen}>
-            <summary class="font-bold text-white mb-3 uppercase tracking-wider text-xs opacity-50 cursor-pointer list-none flex justify-between items-center hover:opacity-100 transition-opacity">
-              {topic}
-              <i class="fas fa-chevron-down transform group-open:rotate-180 transition-transform text-[10px]" />
-            </summary>
-            <ul class="space-y-2 border-l border-gray-800 ml-1">
-              {groupedEntries[topic].map((entry) => (
-                <li>
-                  <a
-                    href={`/wiki/${entry.slug}`}
-                    class={`block pl-4 py-1 text-sm transition-colors border-l -ml-[1px] ${
-                      currentSlug === entry.slug
-                        ? 'text-unam-blue border-unam-blue font-semibold'
-                        : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-600'
-                    }`}
-                  >
-                    {entry.data.title}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        );
-      })
-    }
+<nav class="w-full">
+  <div class="mb-8">
+    <a
+      href="/wiki"
+      class="text-unam-gold hover:text-yellow-500 text-sm font-code flex items-center gap-2 transition-colors"
+    >
+      <i class="fas fa-arrow-left"></i> Índice de Wiki
+    </a>
   </div>
-</aside>
+
+  {
+    topics.map((topic) => {
+      // Check if this topic contains the current page
+      const isOpen = groupedEntries[topic].some((e) => e.slug === currentSlug);
+
+      return (
+        <details class="mb-6 group" open={isOpen}>
+          <summary class="font-bold text-white mb-3 uppercase tracking-wider text-xs opacity-50 cursor-pointer list-none flex justify-between items-center hover:opacity-100 transition-opacity">
+            {topic}
+            <i class="fas fa-chevron-down transform group-open:rotate-180 transition-transform text-[10px]" />
+          </summary>
+          <ul class="space-y-2 border-l border-gray-800 ml-1">
+            {groupedEntries[topic].map((entry) => (
+              <li>
+                <a
+                  href={`/wiki/${entry.slug}`}
+                  class={`block pl-4 py-1 text-sm transition-colors border-l -ml-[1px] ${
+                    currentSlug === entry.slug
+                      ? 'text-unam-blue border-unam-blue font-semibold'
+                      : 'text-gray-400 border-transparent hover:text-gray-200 hover:border-gray-600'
+                  }`}
+                >
+                  {entry.data.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      );
+    })
+  }
+</nav>
 
 <style>
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #1f2937;
-    border-radius: 10px;
-  }
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #374151;
-  }
+  /* Scrollbar styles moved to parent or kept if needed for internal scrolling, 
+     but usually sidebar scrolling is on the container */
 </style>
