@@ -1,5 +1,9 @@
 ---
 import { NAV_LINKS } from '../consts';
+import GlobalSearch from './React/GlobalSearch.jsx';
+import { getCollection } from 'astro:content';
+
+const searchEntries = await getCollection('wiki');
 ---
 
 <nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-bg-dark/90 border-b border-gray-800">
@@ -12,8 +16,10 @@ import { NAV_LINKS } from '../consts';
       </div>
 
       <!-- Desktop Menu -->
-      <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
+      <div class="hidden md:flex items-center gap-6">
+        <GlobalSearch client:idle entries={searchEntries} />
+
+        <div class="flex items-baseline space-x-6">
           {
             NAV_LINKS.map((link) => (
               <a
@@ -36,7 +42,9 @@ import { NAV_LINKS } from '../consts';
       </div>
 
       <!-- Mobile menu button -->
-      <div class="-mr-2 flex md:hidden">
+      <div class="flex items-center gap-4 md:hidden">
+        <GlobalSearch client:idle entries={searchEntries} />
+
         <button
           id="mobile-menu-button"
           type="button"
