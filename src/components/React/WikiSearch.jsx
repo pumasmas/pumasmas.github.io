@@ -84,7 +84,7 @@ const WikiSearch = ({ entries }) => {
           ) : (
             <div className="px-4 py-6 text-center text-gray-500">
               <i className="fas fa-ghost mb-2 block text-2xl"></i>
-              No se encontraron resultados para "{query}"
+              No se encontraron resultados para &quot;{query}&quot;
             </div>
           )}
         </div>
