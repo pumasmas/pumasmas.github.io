@@ -1,0 +1,21 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import WikiEntry from '../../layouts/WikiEntry.astro';
+import { render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const entries = await getCollection('wiki');
+	return entries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: entry,
+	}));
+}
+type Props = CollectionEntry<'wiki'>;
+
+const entry = Astro.props;
+const { Content } = await render(entry);
+---
+
+<WikiEntry {...entry.data}>
+	<Content />
+</WikiEntry>

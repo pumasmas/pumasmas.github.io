@@ -1,0 +1,46 @@
+---
+const links = [
+  { name: 'Nosotros', href: '/#about' },
+  { name: 'Blog', href: '/blog' },
+  { name: 'Wiki', href: '/wiki' },
+];
+---
+
+<nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-bg-dark/90 border-b border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex-shrink-0">
+        <a href="/" class="font-code font-bold text-2xl text-text-bright">
+          Pu<span class="text-unam-gold">++</span>
+        </a>
+      </div>
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-8">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              class="text-text-main hover:text-unam-blue px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
+            >
+              {link.name}
+            </a>
+          ))}
+          <a
+            href="https://github.com/pupp-unam"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2"
+          >
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </div>
+      </div>
+      <!-- Mobile menu button placeholder (functionality can be added later) -->
+      <div class="-mr-2 flex md:hidden">
+        <button type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false">
+          <span class="sr-only">Open main menu</span>
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>

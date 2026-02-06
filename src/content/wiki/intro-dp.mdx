@@ -1,0 +1,39 @@
+---
+title: 'Introducción a la Programación Dinámica'
+description: 'Conceptos básicos de DP: Memoización y Tabulación.'
+difficulty: 'Pupil'
+topic: 'Dynamic Programming'
+lastUpdated: '2026-02-05'
+---
+
+La **Programación Dinámica** (DP) es una técnica para resolver problemas complejos dividiéndolos en subproblemas más simples y almacenando sus resultados para evitar cálculos redundantes.
+
+## Fibonacci: El ejemplo clásico
+
+La sucesión de Fibonacci se define como:
+
+$$
+F_n = F_{n-1} + F_{n-2}
+$$
+
+Con casos base $F_0 = 0$ y $F_1 = 1$.
+
+### Enfoque Recursivo (Ineficiente)
+
+La complejidad es exponencial $O(2^n)$.
+
+### Enfoque con Memoización (Top-Down)
+
+Guardamos los valores ya calculados en un arreglo `memo`.
+
+```cpp
+long long memo[100];
+
+long long fib(int n) {
+    if (n <= 1) return n;
+    if (memo[n] != -1) return memo[n];
+    return memo[n] = fib(n-1) + fib(n-2);
+}
+```
+
+La complejidad se reduce a $O(n)$.

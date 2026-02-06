@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Navbar from '../../components/Navbar.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const entries = await getCollection('wiki');
+
+// Group by Topic
+const topics = [...new Set(entries.map(e => e.data.topic))];
+---
+
+<Layout title="Wiki de Algoritmos | Pu++">
+    <Navbar />
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+        <div class="mb-12">
+            <h1 class="text-4xl font-bold text-white mb-4">Wiki de Algoritmos</h1>
+            <p class="text-gray-400 text-lg">
+                Nuestra base de conocimiento comunitaria. Desde estructuras de datos básicas hasta técnicas avanzadas.
+            </p>
+        </div>
+
+        <div class="space-y-12">
+            {topics.map(topic => (
+                <section>
+                    <h2 class="text-2xl font-bold text-unam-gold mb-6 border-b border-gray-800 pb-2 flex items-center gap-3">
+                        <i class="fas fa-folder-open"></i> {topic}
+                    </h2>
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        {entries.filter(e => e.data.topic === topic).map(entry => (
+                            <a href={`/wiki/${entry.slug}`} class="block bg-card-bg p-6 rounded-lg border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="font-bold text-white text-lg">{entry.data.title}</h3>
+                                    <span class="text-xs font-bold bg-gray-700 text-gray-300 px-2 py-1 rounded">
+                                        {entry.data.difficulty}
+                                    </span>
+                                </div>
+                                <p class="text-sm text-gray-400 line-clamp-2">{entry.data.description}</p>
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            ))}
+        </div>
+    </main>
+    <Footer />
+</Layout>
