@@ -78,21 +78,26 @@ npm run build
 
 ## Contributing
 
-We welcome contributions from members and the open-source community!
+We welcome contributions from members and the open-source community! Whether you want to fix a typo, add a new algorithm explanation, or improve the code.
 
-### Adding a Wiki Entry
+### 📚 Creating Content (Wiki & Blog)
 
-1.  Create a new `.mdx` file in `src/content/wiki/`.
-2.  Add the required frontmatter:
-    ```yaml
-    ---
-    title: 'Segment Tree'
-    description: 'Querys en rangos en tiempo logarítmico.'
-    difficulty: 'Expert'
-    topic: 'Data Structures'
-    ---
-    ```
-3.  Write your content using Markdown and LaTeX (e.g., `$O(n \log n)$`).
+If you want to write a new article or tutorial, please read our **[Content Creation Guide](CONTRIBUTING_CONTENT.md)**.
+
+It covers:
+*   Folder structure
+*   Frontmatter schemas (Metadata)
+*   How to add Prerequisites and Practice Problems
+*   Using LaTeX for math formulas
+
+### 🛠️ Development
+
+1.  **Fork** the repository.
+2.  **Clone** your fork.
+3.  Create a **branch** for your feature/fix.
+4.  Make your changes.
+5.  Run `npm run format` and `npm run lint` to ensure code quality.
+6.  Submit a **Pull Request**.
 
 ### Reporting Issues
 
