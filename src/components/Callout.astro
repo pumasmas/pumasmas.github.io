@@ -1,0 +1,54 @@
+---
+interface Props {
+  type?: 'note' | 'tip' | 'important' | 'warning' | 'caution';
+  title?: string;
+}
+
+const { type = 'note', title } = Astro.props;
+
+const styles = {
+  note: {
+    container: 'border-blue-500 bg-blue-500/10',
+    iconColor: 'text-blue-500',
+    icon: 'fa-info-circle',
+    defaultTitle: 'Nota',
+  },
+  tip: {
+    container: 'border-green-500 bg-green-500/10',
+    iconColor: 'text-green-500',
+    icon: 'fa-lightbulb',
+    defaultTitle: 'Tip',
+  },
+  important: {
+    container: 'border-violet-500 bg-violet-500/10',
+    iconColor: 'text-violet-500',
+    icon: 'fa-comment-alt',
+    defaultTitle: 'Importante',
+  },
+  warning: {
+    container: 'border-orange-500 bg-orange-500/10',
+    iconColor: 'text-orange-500',
+    icon: 'fa-exclamation-triangle',
+    defaultTitle: 'Advertencia',
+  },
+  caution: {
+    container: 'border-red-500 bg-red-500/10',
+    iconColor: 'text-red-500',
+    icon: 'fa-fire',
+    defaultTitle: 'Precaución',
+  },
+};
+
+const currentStyle = styles[type];
+const displayTitle = title || currentStyle.defaultTitle;
+---
+
+<div class={`my-6 rounded-r-lg border-l-4 p-4 ${currentStyle.container}`}>
+  <div class="flex items-center gap-2 mb-2">
+    <i class={`fas ${currentStyle.icon} ${currentStyle.iconColor} text-lg`}></i>
+    <strong class="text-white font-bold block">{displayTitle}</strong>
+  </div>
+  <div class="text-gray-300 text-base leading-relaxed">
+    <slot />
+  </div>
+</div>
