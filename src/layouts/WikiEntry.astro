@@ -5,11 +5,14 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WikiSidebar from '../components/WikiSidebar.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
-import { DIFFICULTY_COLORS } from '../consts';
+import Prerequisites from '../components/Prerequisites.astro';
+import RelatedProblems from '../components/RelatedProblems.astro';
+import WikiNav from '../components/WikiNav.astro';
+import TagBadge from '../components/TagBadge.astro';
 
 type Props = CollectionEntry<'wiki'>['data'] & { slug: string };
 
-const { title, description, difficulty, topic, slug } = Astro.props;
+const { title, description, difficulty, topic, prerequisites, relatedProblems, slug } = Astro.props;
 ---
 
 <Layout title={`${title} | Wiki Pu++`}>
@@ -17,24 +20,29 @@ const { title, description, difficulty, topic, slug } = Astro.props;
     <main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full flex flex-col lg:flex-row gap-8">
         <WikiSidebar currentSlug={slug} />
 
-        <article class="flex-grow max-w-4xl">
+        <article class="flex-grow max-w-4xl min-w-0">
             <Breadcrumbs currentTitle={title} />
             
             <div class="mb-8 pb-6 border-b border-gray-800">
                 <div class="flex items-center gap-4 mb-4">
-                    <span class="text-unam-gold font-code text-sm uppercase tracking-widest">{topic}</span>
-                    <span class={`${DIFFICULTY_COLORS[difficulty]} text-white text-xs font-bold px-2 py-0.5 rounded`}>
-                        {difficulty}
-                    </span>
+                    <TagBadge text={topic} type="topic" />
+                    <TagBadge text={difficulty} type="difficulty" difficultyLevel={difficulty} />
                 </div>
                 <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{title}</h1>
                 <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
             </div>
             
+            {prerequisites && <Prerequisites slugs={prerequisites} />}
+
             <div class="prose prose-invert prose-lg max-w-none">
                 <slot />
             </div>
+
+            {relatedProblems && <RelatedProblems problems={relatedProblems} />}
+            
+            <WikiNav currentSlug={slug} topic={topic} />
         </article>
     </main>
     <Footer />
+    <script src="../scripts/copy-code.js"></script>
 </Layout>

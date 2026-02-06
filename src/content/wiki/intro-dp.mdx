@@ -1,39 +1,47 @@
 ---
 title: 'Introducción a la Programación Dinámica'
-description: 'Conceptos básicos de DP: Memoización y Tabulación.'
-difficulty: 'Pupil'
-topic: 'Dynamic Programming'
-lastUpdated: '2026-02-05'
+description: 'Aprende los conceptos básicos de la Programación Dinámica, una técnica poderosa para optimizar algoritmos recursivos.'
+difficulty: 'Newbie'
+topic: 'Programación Dinámica'
+prerequisites: ['recursion-basics', 'time-complexity']
+relatedProblems:
+  - name: 'Fibonacci Number'
+    url: 'https://leetcode.com/problems/fibonacci-number/'
+    platform: 'LeetCode'
+  - name: 'Frog 1'
+    url: 'https://atcoder.jp/contests/dp/tasks/dp_a'
+    platform: 'AtCoder'
+lastUpdated: 2024-01-25
 ---
 
-La **Programación Dinámica** (DP) es una técnica para resolver problemas complejos dividiéndolos en subproblemas más simples y almacenando sus resultados para evitar cálculos redundantes.
+La Programación Dinámica (DP) es una técnica de diseño de algoritmos que consiste en resolver un problema complejo dividiéndolo en subproblemas más simples...
 
-## Fibonacci: El ejemplo clásico
+## ¿Qué es la Programación Dinámica?
 
-La sucesión de Fibonacci se define como:
+En esencia, la DP es simplemente **recursión optimizada**. Si tienes una solución recursiva que calcula el mismo subproblema múltiples veces, puedes usar DP para guardar el resultado la primera vez que lo calculas y reutilizarlo después.
 
-$$
-F_n = F_{n-1} + F_{n-2}
-$$
+### Ejemplo: Fibonacci
 
-Con casos base $F_0 = 0$ y $F_1 = 1$.
-
-### Enfoque Recursivo (Ineficiente)
-
-La complejidad es exponencial $O(2^n)$.
-
-### Enfoque con Memoización (Top-Down)
-
-Guardamos los valores ya calculados en un arreglo `memo`.
+La secuencia de Fibonacci se define como:
+$$ F_n = F_{n-1} + F_{n-2} $$
+con casos base $F_0 = 0, F_1 = 1$.
 
 ```cpp
-long long memo[100];
+// Versión recursiva ineficiente
+int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}
+```
 
-long long fib(int n) {
+Podemos optimizar esto usando **memoización**:
+
+```cpp
+// Versión con DP (Memoización)
+int memo[100];
+int fib(int n) {
     if (n <= 1) return n;
     if (memo[n] != -1) return memo[n];
     return memo[n] = fib(n-1) + fib(n-2);
 }
 ```
-
-La complejidad se reduce a $O(n)$.

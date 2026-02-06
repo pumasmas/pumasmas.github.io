@@ -24,6 +24,11 @@ const wiki = defineCollection({
         topic: z.string(),
         prerequisites: z.array(z.string()).optional(), // Slugs of other wiki entries
         lastUpdated: z.coerce.date().optional(),
+        relatedProblems: z.array(z.object({
+            name: z.string(),
+            url: z.string().url(),
+            platform: z.string(),
+        })).optional(),
     }),
 });
 

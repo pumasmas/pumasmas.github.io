@@ -1,18 +1,18 @@
-# Design Document: Pu++ Web Portal (v2.1)
+# Design Document: Pu++ Web Portal (v2.2)
 
 ## 1. Project Overview
-The **Pu++ Web Portal** serves as the central hub for the Competitive Programming Club at the Faculty of Sciences, UNAM. This document outlines the design for version 2.1, focusing on mobile responsiveness, enhanced navigation, and better content discoverability.
+The **Pu++ Web Portal** serves as the central hub for the Competitive Programming Club at the Faculty of Sciences, UNAM. This document outlines the design for version 2.2, focusing on **Learning Experience Improvements**, **Navigation enhancements**, and **Interactive Utilities**.
 
 ## 2. Technology Stack
 
 ### Core Framework
 *   **Astro:** Chosen for its "Island Architecture," delivering zero JavaScript to the client by default while allowing rich interactivity where needed.
-*   **Integrations:** `@astrojs/sitemap` (New) for SEO.
+*   **Integrations:** `@astrojs/sitemap` for SEO.
 
 ### Styling
 *   **Tailwind CSS:** Utility-first framework.
 *   **Theme:** Dark Mode default (GitHub Dark Dimmed aesthetic) with UNAM Gold and Blue accents.
-*   **Animations:** CSS-based animations for UI elements (cursor, transitions) instead of JS-heavy implementations where possible.
+*   **Animations:** CSS-based animations for UI elements (cursor, transitions).
 
 ### Content & Rendering
 *   **MDX:** For rich content in Blog and Wiki.
@@ -20,49 +20,59 @@ The **Pu++ Web Portal** serves as the central hub for the Competitive Programmin
 *   **Content Collections:** Type-safe schemas for `blog` and `wiki`.
 
 ### Interactivity
-*   **React:** Used for complex stateful components (Search, Interactive Visualizations).
-*   **Vanilla JS:** For lightweight UI interactions (Mobile Menu toggling) to avoid heavy framework overhead for simple tasks.
+*   **React:** Used for complex stateful components (Search).
+*   **Vanilla JS:** For lightweight UI interactions (Mobile Menu, Code Copy, Sidebar toggles).
 
-## 3. UI/UX Improvements
+## 3. New Features (v2.2)
 
-### Navigation
-*   **Mobile First:** A responsive navbar with a functional hamburger menu for mobile devices.
-*   **Sidebar Navigation (Wiki):** A dynamic, auto-generated sidebar for the Wiki section that groups entries by topic, allowing seamless browsing without returning to the index.
-*   **Breadcrumbs:** Clear path indication (e.g., `Wiki > Dynamic Programming > Intro`) on deep pages.
+### A. Enhanced Learning Experience
+*   **Prerequisites Display:** Explicitly list required knowledge at the top of wiki articles with links to those specific entries.
+*   **Next/Previous Navigation:** Footer navigation within a Wiki topic to guide users through a curriculum-like flow.
+*   **Related Problems:** A dedicated section at the end of articles listing practice problems (Codeforces, LeetCode, etc.) to reinforce learning.
 
-### Visual Polish
-*   **Typewriter Effect:** Refactored to use CSS animations for the cursor to prevent layout shifts and improve accessibility.
-*   **Consistent Theming:** Centralized configuration for difficulty colors (Codeforces style) and navigation links.
+### B. UI/UX Refinements
+*   **Collapsible Sidebar:** The Wiki sidebar will group entries by topic. Topics will be collapsible, with the current topic expanded by default.
+*   **Interactive Badges:** Difficulty and Topic badges in headers will be clickable, filtering the Wiki index (or linking to a search query).
+*   **Code Block Utilities:** A "Copy" button will overlay on hover for all code blocks to facilitate easy testing of algorithms.
 
 ## 4. Content Architecture
 
-### A. Blog (`src/content/blog`)
-*   **Fields:** `title`, `date`, `author`, `tags`, `description`, `coverImage`.
+### Wiki Collection (`src/content/wiki`)
+Updated schema to support new features:
+*   **Fields:**
+    *   `title` (string)
+    *   `difficulty` (enum: Newbie -> Grandmaster)
+    *   `topic` (string)
+    *   `prerequisites` (array of slugs) - *Used for cross-linking.*
+    *   `relatedProblems` (array of objects) - *New field.*
+        *   `name` (string)
+        *   `url` (string)
+        *   `platform` (string) - e.g., "Codeforces", "LeetCode".
 
-### B. Wiki (`src/content/wiki`)
-*   **Fields:** `title`, `difficulty` (Newbie -> Grandmaster), `topic`, `prerequisites`.
-*   **Organization:** Entries are grouped by `topic` in the sidebar.
+## 5. Component Updates
 
-## 5. SEO & Meta Data
-*   **Open Graph:** Comprehensive OG tags (Title, Description, Image, Type) for social sharing.
-*   **Sitemap:** Automatic generation of `sitemap-index.xml` and `sitemap-0.xml`.
-*   **Canonical URLs:** Ensure preventing duplicate content issues.
+*   **`WikiEntry.astro`**:
+    *   Inject `Prerequisites` component at the top.
+    *   Inject `RelatedProblems` component at the bottom.
+    *   Add `PrevNextNav` component at the bottom.
+    *   Include script for "Copy Code".
+*   **`WikiSidebar.astro`**:
+    *   Add `<details>`/`<summary>` or JS-based toggle for topics.
+*   **`TagLink.astro` (New)**:
+    *   Reusable component for clickable Difficulty/Topic badges.
 
 ## 6. Directory Structure Updates
 
 ```text
 /
-├── public/
 ├── src/
 │   ├── components/
-│   │   ├── BaseHead.astro       # New: Centralized <head> meta tags
-│   │   ├── Breadcrumbs.astro    # New: Breadcrumb navigation
-│   │   ├── Navbar.astro         # Updated: Mobile menu logic
-│   │   ├── WikiSidebar.astro    # New: Dynamic sidebar
-│   │   └── React/
-│   │       └── Typewriter.jsx   # Updated: CSS-based cursor
-│   ├── consts.ts                # New: Centralized constants (Nav links, difficulty colors)
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   │   ├── Prerequisites.astro  # New: Lists prerequisite links
+│   │   ├── RelatedProblems.astro# New: Lists practice problems
+│   │   ├── WikiNav.astro        # New: Next/Prev buttons
+│   │   ├── TagBadge.astro       # New: Clickable badges
+│   │   └── ...
+│   ├── scripts/
+│   │   └── copy-code.js         # New: Logic for copy buttons
+│   └── ...
 ```

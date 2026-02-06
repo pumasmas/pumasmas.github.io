@@ -1,59 +1,57 @@
-# Implementation Plan: Pu++ Web Portal v2.1 Improvements
+# Implementation Plan: Pu++ Web Portal v2.2 Improvements
 
-This plan details the steps to implement the identified improvements for the Pu++ website, prioritizing functional fixes and user experience.
+This plan details the steps to implement the enhanced learning features and UI improvements for the Pu++ website.
 
-## Phase 1: Core Navigation Fixes
-**Goal:** Ensure the site is navigable on all devices.
+## Phase 1: Content Schema & Data Structure
+**Goal:** Extend the Wiki content model to support new educational features.
 
-- [ ] **Mobile Navbar Logic:**
-    - [ ] Update `src/components/Navbar.astro` to include a mobile menu overlay (hidden by default).
-    - [ ] Add a client-side `<script>` to toggle the menu visibility when the hamburger button is clicked.
-    - [ ] Ensure the menu closes when a link is clicked or the user clicks outside.
-- [ ] **Centralize Configuration:**
-    - [ ] Create `src/consts.ts` to export `NAV_LINKS`, `SITE_TITLE`, `SITE_DESCRIPTION`, and `DIFFICULTY_COLORS`.
-    - [ ] Refactor `Navbar.astro` and `Footer.astro` to consume `NAV_LINKS` from `src/consts.ts`.
+- [ ] **Update Content Config:**
+    - [ ] Modify `src/content/config.ts` for the `wiki` collection.
+    - [ ] Add `relatedProblems` schema (array of objects with name, url, platform).
+- [ ] **Create Mock Content:**
+    - [ ] Update `src/content/wiki/intro-dp.mdx` (or create a new entry) to include `prerequisites` and `relatedProblems` data for testing.
 
-## Phase 2: Wiki Experience Enhancement
-**Goal:** Improve navigation within the Knowledge Base.
+## Phase 2: Component Implementation
+**Goal:** Build the visual blocks for the new features.
 
-- [ ] **Dynamic Sidebar:**
-    - [ ] Create `src/components/WikiSidebar.astro`.
-    - [ ] Implement logic to fetch all wiki entries via `getCollection('wiki')`.
-    - [ ] Group entries by `topic` and render them as a nested list.
-    - [ ] Highlight the active page in the sidebar.
-    - [ ] Integrate this component into `src/layouts/WikiEntry.astro`, replacing the placeholder.
-- [ ] **Breadcrumbs:**
-    - [ ] Create `src/components/Breadcrumbs.astro`.
-    - [ ] Logic to parse the current URL path and generate breadcrumb links (Home > Wiki > Topic > Title).
-    - [ ] Add this component to the top of `WikiEntry.astro` and `BlogPost.astro`.
+- [ ] **Prerequisites Component:**
+    - [ ] Create `src/components/Prerequisites.astro`.
+    - [ ] Logic: Accept an array of slugs, fetch the corresponding entries to get their titles, and render a list of links.
+- [ ] **Related Problems Component:**
+    - [ ] Create `src/components/RelatedProblems.astro`.
+    - [ ] Logic: Render a styled card listing the external problem links with platform icons/labels.
+- [ ] **Wiki Navigation Component:**
+    - [ ] Create `src/components/WikiNav.astro`.
+    - [ ] Logic: Accept `currentSlug` and `topic`. Find the current entry in the topic list and determine the Previous and Next entries.
+- [ ] **Interactive Badges:**
+    - [ ] Create `src/components/TagBadge.astro`.
+    - [ ] Logic: Link to `/wiki?topic=...` or `/wiki?difficulty=...` (or just visual for now if filter pages don't exist, linking to search).
 
-## Phase 3: SEO & Meta Data
-**Goal:** Improve social sharing and search engine visibility.
+## Phase 3: Layout Integration
+**Goal:** Assemble the components into the Wiki Article page.
 
-- [ ] **BaseHead Component:**
-    - [ ] Create `src/components/BaseHead.astro` to encapsulate common `<head>` tags.
-    - [ ] Add Open Graph tags (`og:title`, `og:description`, `og:image`, `og:url`).
-    - [ ] Add Twitter Card tags.
-    - [ ] Replace the `<head>` content in `src/layouts/Layout.astro` with this new component.
-- [ ] **Sitemap:**
-    - [ ] Install `@astrojs/sitemap`: `npx astro add sitemap`.
-    - [ ] Update `astro.config.mjs` to include the site URL (required for sitemap generation).
+- [ ] **Update `WikiEntry.astro`:**
+    - [ ] Import and place `<Prerequisites />` below the title/description.
+    - [ ] Import and place `<RelatedProblems />` at the bottom of the `<article>`.
+    - [ ] Import and place `<WikiNav />` at the very end.
+    - [ ] Replace static text badges with `<TagBadge />`.
 
-## Phase 4: UI/UX Refinement
-**Goal:** Polish visual elements and code quality.
+## Phase 4: UI/UX Enhancements
+**Goal:** Improve usability and interactivity.
 
-- [ ] **Refactor Typewriter:**
-    - [ ] Update `src/components/React/Typewriter.jsx`.
-    - [ ] Remove the manual text-based cursor state.
-    - [ ] Add a CSS class (e.g., `.cursor-blink`) that uses `::after` content and animation.
-- [ ] **Type Safety:**
-    - [ ] Update `src/layouts/WikiEntry.astro` to import `DIFFICULTY_COLORS` from `src/consts.ts`.
-    - [ ] Ensure proper typing for the difficulty keys.
+- [ ] **Collapsible Sidebar:**
+    - [ ] Modify `src/components/WikiSidebar.astro`.
+    - [ ] Use HTML `<details>` and `<summary>` for topics to allow native collapsing.
+    - [ ] Ensure the group containing the *current* page is open by default.
+- [ ] **Copy Code Button:**
+    - [ ] Create `src/scripts/copy-code.js`.
+    - [ ] Logic: Find all `pre` blocks, append a "Copy" button. On click, copy text content to clipboard and show a "Copied!" feedback state.
+    - [ ] Import this script in `WikiEntry.astro` (or globally in `Layout.astro` if desired).
 
 ## Phase 5: Verification
-**Goal:** Confirm all improvements work as expected.
+**Goal:** Ensure everything works seamlessly.
 
-- [ ] **Mobile Test:** Verify the navbar opens/closes on small screens.
-- [ ] **Sidebar Test:** Verify the wiki sidebar lists all topics and highlights the current page.
-- [ ] **SEO Test:** Use a tool (or browser inspector) to verify OG tags are present.
-- [ ] **Build Test:** Run `npm run build` to ensure no type errors or build failures.
+- [ ] **Data Check:** Verify that invalid slugs in `prerequisites` don't crash the build (handle gracefully).
+- [ ] **Navigation Check:** Verify Next/Prev buttons correctly navigate through a topic's entries.
+- [ ] **Interaction Check:** Test the "Copy" button on code blocks.
+- [ ] **Visual Check:** Ensure the new sections (Problems, Prerequisites) look consistent with the site theme.

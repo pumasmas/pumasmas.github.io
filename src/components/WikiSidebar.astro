@@ -29,9 +29,16 @@ const topics = Object.keys(groupedEntries).sort();
             </a>
         </div>
 
-        {topics.map(topic => (
-            <div class="mb-6">
-                <h3 class="font-bold text-white mb-3 uppercase tracking-wider text-xs opacity-50">{topic}</h3>
+        {topics.map(topic => {
+            // Check if this topic contains the current page
+            const isOpen = groupedEntries[topic].some(e => e.slug === currentSlug);
+            
+            return (
+            <details class="mb-6 group" open={isOpen}>
+                <summary class="font-bold text-white mb-3 uppercase tracking-wider text-xs opacity-50 cursor-pointer list-none flex justify-between items-center hover:opacity-100 transition-opacity">
+                    {topic}
+                    <i class="fas fa-chevron-down transform group-open:rotate-180 transition-transform text-[10px]"></i>
+                </summary>
                 <ul class="space-y-2 border-l border-gray-800 ml-1">
                     {groupedEntries[topic].map(entry => (
                         <li>
@@ -48,8 +55,8 @@ const topics = Object.keys(groupedEntries).sort();
                         </li>
                     ))}
                 </ul>
-            </div>
-        ))}
+            </details>
+        )})}
     </div>
 </aside>
 
