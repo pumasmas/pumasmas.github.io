@@ -2,13 +2,11 @@
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
+import WikiBrowser from '../../components/React/WikiBrowser.jsx';
 import { getCollection } from 'astro:content';
 import { DIFFICULTY_COLORS } from '../../consts';
 
 const entries = await getCollection('wiki');
-
-// Group by Topic
-const topics = [...new Set(entries.map((e) => e.data.topic))];
 ---
 
 <Layout title="Wiki de Algoritmos | Pu++">
@@ -22,57 +20,8 @@ const topics = [...new Set(entries.map((e) => e.data.topic))];
       </p>
     </div>
 
-    <!-- Hero Search Trigger -->
-    <div class="relative w-full max-w-2xl mx-auto mb-12">
-      <button
-        id="hero-search-trigger"
-        class="w-full flex items-center pl-11 pr-4 py-4 bg-card-bg border border-gray-800 rounded-2xl text-left text-gray-500 hover:border-unam-blue transition-all shadow-xl group"
-      >
-        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-          <i class="fas fa-search text-gray-500 group-hover:text-unam-gold transition-colors"></i>
-        </div>
-        Buscar algoritmos, temas o conceptos...
-      </button>
-    </div>
-
-    <div class="space-y-12">
-      {
-        topics.map((topic) => (
-          <section>
-            <h2 class="text-2xl font-bold text-unam-gold mb-6 border-b border-gray-800 pb-2 flex items-center gap-3">
-              <i class="fas fa-folder-open" /> {topic}
-            </h2>
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {entries
-                .filter((e) => e.data.topic === topic)
-                .map((entry) => (
-                  <a
-                    href={`/wiki/${entry.slug}`}
-                    class="block bg-card-bg p-6 rounded-lg border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all"
-                  >
-                    <div class="flex justify-between items-start mb-2">
-                      <h3 class="font-bold text-white text-lg">{entry.data.title}</h3>
-                      <span
-                        class={`text-[10px] font-bold text-white px-2 py-1 rounded ${DIFFICULTY_COLORS[entry.data.difficulty] || 'bg-gray-600'}`}
-                      >
-                        {entry.data.difficulty}
-                      </span>
-                    </div>
-                    <p class="text-sm text-gray-400 line-clamp-2">{entry.data.description}</p>
-                  </a>
-                ))}
-            </div>
-          </section>
-        ))
-      }
-    </div>
+    <!-- Interactive Wiki Browser -->
+    <WikiBrowser client:load initialEntries={entries} difficultyColors={DIFFICULTY_COLORS} />
   </main>
   <Footer />
-
-  <script>
-    const heroTrigger = document.getElementById('hero-search-trigger');
-    heroTrigger?.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('pumasmas:open-search'));
-    });
-  </script>
 </Layout>
