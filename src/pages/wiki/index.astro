@@ -2,7 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import Navbar from '../../components/Navbar.astro';
 import Footer from '../../components/Footer.astro';
-import WikiSearch from '../../components/React/WikiSearch.jsx';
 import { getCollection } from 'astro:content';
 
 const entries = await getCollection('wiki');
@@ -22,7 +21,18 @@ const topics = [...new Set(entries.map((e) => e.data.topic))];
       </p>
     </div>
 
-    <WikiSearch client:load entries={entries} />
+    <!-- Hero Search Trigger -->
+    <div class="relative w-full max-w-2xl mx-auto mb-12">
+      <button
+        id="hero-search-trigger"
+        class="w-full flex items-center pl-11 pr-4 py-4 bg-card-bg border border-gray-800 rounded-2xl text-left text-gray-500 hover:border-unam-blue transition-all shadow-xl group"
+      >
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <i class="fas fa-search text-gray-500 group-hover:text-unam-gold transition-colors"></i>
+        </div>
+        Buscar algoritmos, temas o conceptos...
+      </button>
+    </div>
 
     <div class="space-y-12">
       {
@@ -55,4 +65,11 @@ const topics = [...new Set(entries.map((e) => e.data.topic))];
     </div>
   </main>
   <Footer />
+
+  <script>
+    const heroTrigger = document.getElementById('hero-search-trigger');
+    heroTrigger?.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('pumasmas:open-search'));
+    });
+  </script>
 </Layout>

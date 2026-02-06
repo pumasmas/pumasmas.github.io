@@ -23,7 +23,7 @@ const GlobalSearch = ({ entries }) => {
     return fuse.search(query).slice(0, 8);
   }, [fuse, query]);
 
-  // Keyboard Shortcuts (Ctrl+K to open, Esc to close)
+  // Keyboard Shortcuts (Ctrl+K to open, Esc to close) and Custom Event Listener
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -34,8 +34,16 @@ const GlobalSearch = ({ entries }) => {
         setIsOpen(false);
       }
     };
+
+    const handleCustomOpen = () => setIsOpen(true);
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('pumasmas:open-search', handleCustomOpen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('pumasmas:open-search', handleCustomOpen);
+    };
   }, []);
 
   // Focus input when opened
