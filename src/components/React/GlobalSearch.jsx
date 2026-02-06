@@ -101,99 +101,100 @@ const GlobalSearch = ({ entries }) => {
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-[70] flex items-start justify-center pt-[15vh] px-4"
-          role="button"
-          tabIndex={-1}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') setIsOpen(false);
-          }}
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsOpen(false);
-          }}
-        >
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div className="fixed inset-0 z-[70]">
+          {/* Backdrop Layer - Handles Click to Close */}
+          <div
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            role="button"
+            tabIndex={-1}
+            onClick={() => setIsOpen(false)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') setIsOpen(false);
+            }}
+          ></div>
 
-          {/* Modal Content */}
-          <div className="relative w-full max-w-2xl bg-card-bg border border-gray-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[70vh]">
-            {/* Search Input */}
-            <div className="flex items-center border-b border-gray-700 p-4">
-              <i className="fas fa-search text-unam-gold text-lg mr-4"></i>
-              <input
-                ref={inputRef}
-                type="text"
-                className="flex-grow bg-transparent text-white text-lg placeholder-gray-500 focus:outline-none"
-                placeholder="Buscar algoritmos, temas..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              <button
-                onClick={() => setIsOpen(false)}
-                className="text-gray-500 hover:text-white px-2"
-              >
-                <kbd className="text-xs border border-gray-600 rounded px-1">ESC</kbd>
-              </button>
-            </div>
+          {/* Layout Container - Centers Modal */}
+          <div className="absolute inset-0 flex items-start justify-center pt-[15vh] px-4 pointer-events-none">
+            {/* Modal Content - Pointer Events Auto to allow interaction */}
+            <div className="relative w-full max-w-2xl bg-card-bg border border-gray-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[70vh] pointer-events-auto">
+              {/* Search Input */}
+              <div className="flex items-center border-b border-gray-700 p-4">
+                <i className="fas fa-search text-unam-gold text-lg mr-4"></i>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  className="flex-grow bg-transparent text-white text-lg placeholder-gray-500 focus:outline-none"
+                  placeholder="Buscar algoritmos, temas..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                />
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="text-gray-500 hover:text-white px-2"
+                >
+                  <kbd className="text-xs border border-gray-600 rounded px-1">ESC</kbd>
+                </button>
+              </div>
 
-            {/* Results List */}
-            <div className="overflow-y-auto custom-scrollbar" ref={resultsRef}>
-              {results.length > 0 ? (
-                <div className="p-2">
-                  <div className="text-xs font-bold text-gray-500 px-3 py-2 uppercase tracking-wider">
-                    Wiki
+              {/* Results List */}
+              <div className="overflow-y-auto custom-scrollbar" ref={resultsRef}>
+                {results.length > 0 ? (
+                  <div className="p-2">
+                    <div className="text-xs font-bold text-gray-500 px-3 py-2 uppercase tracking-wider">
+                      Wiki
+                    </div>
+                    {results.map(({ item }, index) => (
+                      <a
+                        key={item.slug}
+                        href={`/wiki/${item.slug}`}
+                        className={`block px-3 py-3 rounded-lg transition-colors cursor-pointer ${
+                          index === activeIndex ? 'bg-unam-blue/10' : 'hover:bg-gray-800'
+                        }`}
+                        onClick={() => setIsOpen(false)}
+                        onMouseEnter={() => setActiveIndex(index)}
+                      >
+                        <div className="flex justify-between items-center mb-1">
+                          <span
+                            className={`font-bold transition-colors ${index === activeIndex ? 'text-unam-blue' : 'text-white'}`}
+                          >
+                            {item.data.title}
+                          </span>
+                          <span
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
+                          >
+                            {item.data.difficulty}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs text-unam-gold font-code uppercase tracking-tighter">
+                            {item.data.topic}
+                          </span>
+                        </div>
+                      </a>
+                    ))}
                   </div>
-                  {results.map(({ item }, index) => (
-                    <a
-                      key={item.slug}
-                      href={`/wiki/${item.slug}`}
-                      className={`block px-3 py-3 rounded-lg transition-colors cursor-pointer ${
-                        index === activeIndex ? 'bg-unam-blue/10' : 'hover:bg-gray-800'
-                      }`}
-                      onClick={() => setIsOpen(false)}
-                      onMouseEnter={() => setActiveIndex(index)}
-                    >
-                      <div className="flex justify-between items-center mb-1">
-                        <span
-                          className={`font-bold transition-colors ${index === activeIndex ? 'text-unam-blue' : 'text-white'}`}
-                        >
-                          {item.data.title}
-                        </span>
-                        <span
-                          className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
-                        >
-                          {item.data.difficulty}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-unam-gold font-code uppercase tracking-tighter">
-                          {item.data.topic}
-                        </span>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              ) : query ? (
-                <div className="p-8 text-center text-gray-500">
-                  <i className="fas fa-ghost mb-3 block text-3xl opacity-50"></i>
-                  No encontramos nada para &quot;<span className="text-white">{query}</span>&quot;
-                </div>
-              ) : (
-                <div className="p-8 text-center text-gray-500">
-                  <p>Escribe para buscar en la documentación...</p>
-                </div>
-              )}
-            </div>
+                ) : query ? (
+                  <div className="p-8 text-center text-gray-500">
+                    <i className="fas fa-ghost mb-3 block text-3xl opacity-50"></i>
+                    No encontramos nada para &quot;<span className="text-white">{query}</span>&quot;
+                  </div>
+                ) : (
+                  <div className="p-8 text-center text-gray-500">
+                    <p>Escribe para buscar en la documentación...</p>
+                  </div>
+                )}
+              </div>
 
-            {/* Footer */}
-            <div className="border-t border-gray-800 px-4 py-2 text-xs text-gray-500 flex justify-between">
-              <span>
-                <i className="fas fa-level-down-alt rotate-90 mr-1"></i> Seleccionar
-              </span>
-              <span>
-                <i className="fas fa-arrow-up mr-1"></i> <i className="fas fa-arrow-down mr-1"></i>{' '}
-                Navegar
-              </span>
+              {/* Footer */}
+              <div className="border-t border-gray-800 px-4 py-2 text-xs text-gray-500 flex justify-between">
+                <span>
+                  <i className="fas fa-level-down-alt rotate-90 mr-1"></i> Seleccionar
+                </span>
+                <span>
+                  <i className="fas fa-arrow-up mr-1"></i>{' '}
+                  <i className="fas fa-arrow-down mr-1"></i> Navegar
+                </span>
+              </div>
             </div>
           </div>
         </div>
