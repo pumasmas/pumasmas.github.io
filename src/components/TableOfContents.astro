@@ -1,0 +1,73 @@
+---
+interface Props {
+  headings: {
+    depth: number;
+    slug: string;
+    text: string;
+  }[];
+}
+
+const { headings } = Astro.props;
+const filteredHeadings = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+
+if (filteredHeadings.length === 0) {
+  return null;
+}
+---
+
+<aside class="hidden xl:block w-64 flex-shrink-0">
+  <nav class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pl-4 border-l border-gray-800">
+    <h2 class="text-xs font-bold text-white mb-4 uppercase tracking-wider opacity-50">
+      En esta página
+    </h2>
+    <ul class="space-y-3">
+      {
+        filteredHeadings.map((h) => (
+          <li class={`${h.depth === 3 ? 'ml-4' : ''}`}>
+            <a
+              href={`#${h.slug}`}
+              data-toc-link
+              data-slug={h.slug}
+              class="block text-sm text-gray-400 hover:text-unam-blue transition-colors duration-200 leading-tight"
+            >
+              {h.text}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</aside>
+
+<script>
+  // Scroll-spy logic to highlight the active heading
+  const observerOptions = {
+    root: null,
+    rootMargin: '-100px 0px -66%',
+    threshold: 1.0,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute('id');
+        const tocLinks = document.querySelectorAll('[data-toc-link]');
+
+        tocLinks.forEach((link) => {
+          if (link.getAttribute('data-slug') === id) {
+            link.classList.add('text-unam-blue', 'font-semibold');
+            link.classList.remove('text-gray-400');
+          } else {
+            link.classList.remove('text-unam-blue', 'font-semibold');
+            link.classList.add('text-gray-400');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  // Track all H2 and H3 headings
+  document.querySelectorAll('article h2, article h3').forEach((heading) => {
+    observer.observe(heading);
+  });
+</script>

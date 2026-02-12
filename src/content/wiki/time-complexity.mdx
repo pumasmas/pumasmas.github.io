@@ -1,0 +1,34 @@
+---
+title: 'Complejidad Temporal (Big O)'
+description: 'Aprende a analizar la eficiencia de tus algoritmos para evitar el temido Time Limit Exceeded (TLE).'
+difficulty: 'Newbie'
+topic: 'Fundamentos'
+lastUpdated: 2025-08-15
+---
+
+En la programación competitiva, no basta con que el código funcione; debe ser **rápido**. La notación **Big O** nos ayuda a estimar cómo crecerá el tiempo de ejecución con respecto al tamaño de la entrada ($N$).
+
+## Complejidades Comunes
+
+| Notación      | Nombre       | Entrada Típica ($N$) | Ejemplo                                 |
+| :------------ | :----------- | :------------------- | :-------------------------------------- |
+| $O(1)$        | Constante    | -                    | Acceso a array, Operaciones aritméticas |
+| $O(\log N)$   | Logarítmica  | $10^{18}$            | Búsqueda Binaria                        |
+| $O(N)$        | Lineal       | $10^7$ - $10^8$      | Iterar un array simple                  |
+| $O(N \log N)$ | Linealítmica | $10^5$ - $10^6$      | Ordenamiento (Merge Sort)               |
+| $O(N^2)$      | Cuadrática   | $5000$               | Bucles anidados                         |
+| $O(2^N)$      | Exponencial  | $20$ - $25$          | Recursión simple de Fibonacci           |
+
+### Ejemplo Práctico
+
+Analicemos este bucle:
+
+```cpp
+// O(N)
+for (int i = 0; i < n; i++) {
+    // O(1)
+    cout << i << endl;
+}
+```
+
+Si $N = 10^8$, este código tardará aproximadamente **1 segundo** en C++.

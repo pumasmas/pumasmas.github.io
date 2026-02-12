@@ -1,0 +1,75 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentSlug: string;
+  topic: string;
+}
+
+const { currentSlug, topic } = Astro.props;
+
+const allEntries = await getCollection('wiki');
+// Filter entries by the current topic and sort them (assuming some order, or just alphabetical/date if not specified)
+// In the Sidebar, they are just pushed to the array.
+// To ensure consistent ordering between Sidebar and Nav, we should sort or trust the source order.
+// Let's sort by title for now to be deterministic, or if there's an 'order' field.
+// The existing sidebar just groups them. Let's assume title sort for consistency with how a sidebar might usually do it,
+// OR just finding neighbors in the raw collection might be flaky if collection order isn't guaranteed.
+// Let's filter by topic.
+const topicEntries = allEntries
+  .filter((e) => e.data.topic === topic)
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+// NOTE: If the sidebar uses a different sort, this will be inconsistent.
+// I recall checking Sidebar logic - it groups but doesn't explicitly sort entries inside the group,
+// so it uses filesystem order or however getCollection returns them.
+// Ideally, I should match the sidebar logic.
+// The Sidebar code I read earlier:
+// `groupedEntries[topic].push(entry);`
+// and `topics = Object.keys...sort()`
+// So the entries inside a topic are in `getCollection` order.
+// I should probably NOT sort here to match the sidebar if the sidebar doesn't sort.
+// However, usually one wants a determined order.
+// Let's stick to the natural collection order for now to match the sidebar's current behavior.
+
+const currentIndex = topicEntries.findIndex((e) => e.slug === currentSlug);
+const prev = currentIndex > 0 ? topicEntries[currentIndex - 1] : null;
+const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex + 1] : null;
+---
+
+<div class="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-800">
+  {
+    prev ? (
+      <a
+        href={`/wiki/${prev.slug}`}
+        class="flex flex-col p-4 rounded-xl border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all text-left group"
+      >
+        <span class="text-xs text-gray-500 mb-1 group-hover:text-unam-blue transition-colors">
+          <i class="fas fa-arrow-left mr-1" /> Anterior
+        </span>
+        <span class="font-bold text-white group-hover:text-unam-blue transition-colors truncate">
+          {prev.data.title}
+        </span>
+      </a>
+    ) : (
+      <div /> /* Spacer */
+    )
+  }
+
+  {
+    next ? (
+      <a
+        href={`/wiki/${next.slug}`}
+        class="flex flex-col items-end p-4 rounded-xl border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all text-right group"
+      >
+        <span class="text-xs text-gray-500 mb-1 group-hover:text-unam-blue transition-colors">
+          Siguiente <i class="fas fa-arrow-right ml-1" />
+        </span>
+        <span class="font-bold text-white group-hover:text-unam-blue transition-colors truncate">
+          {next.data.title}
+        </span>
+      </a>
+    ) : (
+      <div />
+    )
+  }
+</div>

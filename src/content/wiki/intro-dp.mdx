@@ -1,0 +1,47 @@
+---
+title: 'Introducción a la Programación Dinámica'
+description: 'Aprende los conceptos básicos de la Programación Dinámica, una técnica poderosa para optimizar algoritmos recursivos.'
+difficulty: 'Newbie'
+topic: 'Programación Dinámica'
+prerequisites: ['recursion-basics', 'time-complexity']
+relatedProblems:
+  - name: 'Fibonacci Number'
+    url: 'https://leetcode.com/problems/fibonacci-number/'
+    platform: 'LeetCode'
+  - name: 'Frog 1'
+    url: 'https://atcoder.jp/contests/dp/tasks/dp_a'
+    platform: 'AtCoder'
+lastUpdated: 2024-01-25
+---
+
+La Programación Dinámica (DP) es una técnica de diseño de algoritmos que consiste en resolver un problema complejo dividiéndolo en subproblemas más simples...
+
+## ¿Qué es la Programación Dinámica?
+
+En esencia, la DP es simplemente **recursión optimizada**. Si tienes una solución recursiva que calcula el mismo subproblema múltiples veces, puedes usar DP para guardar el resultado la primera vez que lo calculas y reutilizarlo después.
+
+### Ejemplo: Fibonacci
+
+La secuencia de Fibonacci se define como:
+$$ F*n = F*{n-1} + F\_{n-2} $$
+con casos base $F_0 = 0, F_1 = 1$.
+
+```cpp
+// Versión recursiva ineficiente
+int fib(int n) {
+    if (n <= 1) return n;
+    return fib(n-1) + fib(n-2);
+}
+```
+
+Podemos optimizar esto usando **memoización**:
+
+```cpp
+// Versión con DP (Memoización)
+int memo[100];
+int fib(int n) {
+    if (n <= 1) return n;
+    if (memo[n] != -1) return memo[n];
+    return memo[n] = fib(n-1) + fib(n-2);
+}
+```

@@ -1,0 +1,32 @@
+---
+import { DIFFICULTY_COLORS } from '../consts';
+
+interface Props {
+  text: string;
+  type: 'difficulty' | 'topic';
+  difficultyLevel?: keyof typeof DIFFICULTY_COLORS;
+  href?: string;
+}
+
+const { text, type, difficultyLevel, href } = Astro.props;
+
+let classes =
+  'text-xs font-bold px-2 py-0.5 rounded transition-transform hover:scale-105 inline-block';
+
+if (href) {
+  classes += ' cursor-pointer';
+}
+
+if (type === 'difficulty') {
+  const colorClass = difficultyLevel ? DIFFICULTY_COLORS[difficultyLevel] : 'bg-gray-600';
+  classes = `${classes} ${colorClass} text-white`;
+} else {
+  classes = `${classes} text-unam-gold border border-unam-gold/30 hover:bg-unam-gold/10 font-code uppercase tracking-widest`;
+}
+
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag href={href} class={classes}>
+  {text}
+</Tag>

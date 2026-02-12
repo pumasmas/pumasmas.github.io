@@ -1,0 +1,40 @@
+---
+title: 'Fundamentos de Recursión'
+description: 'Entiende cómo las funciones pueden llamarse a sí mismas para resolver problemas dividiéndolos en casos más pequeños.'
+difficulty: 'Newbie'
+topic: 'Fundamentos'
+relatedProblems:
+  - name: 'Recursion Problems'
+    url: 'https://recursion.example.com'
+    platform: 'Kattis'
+lastUpdated: 2025-08-10
+---
+
+La **recursión** es una técnica de programación donde una función se llama a sí misma para resolver una instancia más pequeña del problema.
+
+## Estructura de una Función Recursiva
+
+Toda función recursiva debe tener dos partes principales:
+
+1.  **Caso Base:** La condición que detiene la recursión.
+2.  **Caso Recursivo:** La parte donde la función se llama a sí misma con un argumento modificado.
+
+```cpp
+void cuentaRegresiva(int n) {
+    // Caso Base
+    if (n == 0) {
+        cout << "¡Despegue!" << endl;
+        return;
+    }
+
+    // Proceso
+    cout << n << endl;
+
+    // Caso Recursivo
+    cuentaRegresiva(n - 1);
+}
+```
+
+### La Pila de Llamadas (Call Stack)
+
+Es importante entender que cada llamada recursiva consume memoria en el stack. Si la recursión es muy profunda, puede ocurrir un **Stack Overflow**.
