@@ -1,0 +1,72 @@
+---
+title: 'Fundamentos de C++'
+description: 'Aprende a crear, compilar y ejecutar tu primer programa en C++ para programación competitiva.'
+difficulty: 'Newbie'
+topic: 'Introducción'
+lastUpdated: 2026-02-14
+---
+
+import Terminal from '../../components/Terminal.astro';
+
+# Introducción a C++
+
+C++ es el lenguaje estándar en la programación competitiva debido a su eficiencia y su potente biblioteca estándar (STL). En esta guía aprenderás los pasos básicos para empezar.
+
+## 1. Tu primer programa
+
+Crea un archivo llamado `hello.cpp`. El código más básico que utilizaremos sigue esta estructura:
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    cout << "¡Hola, Pu++!" << endl;
+    return 0;
+}
+```
+
+### Explicación rápida:
+
+- `#include <iostream>`: Permite la entrada y salida de datos.
+- `using namespace std;`: Nos ahorra escribir `std::` antes de cada comando.
+- `int main()`: Es el punto de entrada de nuestro programa.
+
+## 2. Compilación y Ejecución
+
+Para transformar tu código en un programa ejecutable, necesitas un compilador como `g++`.
+
+<Terminal
+  user="pumasmas"
+  machine="laptop"
+  dir="~/basicos"
+  commands={[{ text: 'g++ hello.cpp -o hello' }, { text: './hello', output: ['¡Hola, Pu++!'] }]}
+/>
+
+### Detalles del comando:
+
+- `g++`: El compilador.
+- `hello.cpp`: Tu archivo de código fuente.
+- `-o hello`: Indica el nombre del archivo de salida (ejecutable).
+
+## 3. Tips para Programación Competitiva
+
+En el club, solemos usar un "template" para agilizar la escritura y mejorar el rendimiento. Un punto clave es incluir todos los headers de una vez:
+
+```cpp
+#include <bits/stdc++.h> // Incluye casi toda la STL
+using namespace std;
+
+int main() {
+    // Optimización de entrada/salida
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    // Tu lógica aquí
+
+    return 0;
+}
+```
+
+¡Ahora estás listo para resolver tu primer problema!
