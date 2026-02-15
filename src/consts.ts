@@ -56,7 +56,7 @@ export const FEATURES = [
 ];
 
 export const SOCIAL_LINKS = {
-  discord: 'https://discord.gg/your-invite-link',
+  discord: 'https://discord.gg/3XmN4PdDnK',
   email: 'pumasmas@ciencias.unam.mx',
 };
 
