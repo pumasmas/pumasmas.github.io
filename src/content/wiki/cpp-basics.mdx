@@ -7,6 +7,7 @@ lastUpdated: 2026-02-14
 ---
 
 import Terminal from '../../components/Terminal.astro';
+import Callout from '../../components/Callout.astro';
 
 # Introducción a C++
 
@@ -27,15 +28,19 @@ int main() {
 }
 ```
 
-### Explicación rápida:
-
-- `#include <iostream>`: Permite la entrada y salida de datos.
-- `using namespace std;`: Nos ahorra escribir `std::` antes de cada comando.
-- `int main()`: Es el punto de entrada de nuestro programa.
+<Callout type="note" title="Punto de Entrada">
+  Todo programa en C++ debe tener una función `int main()`. Es el lugar donde el sistema operativo
+  inicia la ejecución de tu código.
+</Callout>
 
 ## 2. Compilación y Ejecución
 
 Para transformar tu código en un programa ejecutable, necesitas un compilador como `g++`.
+
+<Callout type="important" title="Instalación">
+  Si usas Linux (como Ubuntu), puedes instalarlo con: `sudo apt install build-essential`. En
+  Windows, recomendamos usar **MSYS2** o **MinGW**.
+</Callout>
 
 <Terminal
   user="pumasmas"
@@ -44,18 +49,22 @@ Para transformar tu código en un programa ejecutable, necesitas un compilador c
   commands={[{ text: 'g++ hello.cpp -o hello' }, { text: './hello', output: ['¡Hola, Pu++!'] }]}
 />
 
-### Detalles del comando:
-
-- `g++`: El compilador.
-- `hello.cpp`: Tu archivo de código fuente.
-- `-o hello`: Indica el nombre del archivo de salida (ejecutable).
+<Callout type="caution" title="Nombres de archivo">
+  Evita usar espacios en los nombres de tus archivos (ej. `mi programa.cpp`). Esto puede causar
+  errores en la terminal. Prefiere `mi_programa.cpp` o `miPrograma.cpp`.
+</Callout>
 
 ## 3. Tips para Programación Competitiva
 
-En el club, solemos usar un "template" para agilizar la escritura y mejorar el rendimiento. Un punto clave es incluir todos los headers de una vez:
+En el club, solemos usar un "template" para agilizar la escritura y mejorar el rendimiento.
+
+<Callout type="tip" title="La Navaja Suiza">
+Utiliza `#include <bits/stdc++.h>` para incluir casi toda la biblioteca estándar de una sola vez. Esto es legal en la mayoría de los concursos (ICPC, Codeforces). 
+Aunque puede aumentar el tiempo de compilación de tu código.
+</Callout>
 
 ```cpp
-#include <bits/stdc++.h> // Incluye casi toda la STL
+#include <bits/stdc++.h>
 using namespace std;
 
 int main() {
