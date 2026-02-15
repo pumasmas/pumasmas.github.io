@@ -17,10 +17,10 @@ const wikiEntries = (await getCollection('wiki'))
   .slice(0, 3);
 
 const stats = [
-  { value: '40+', label: 'Miembros Activos' },
-  { value: 'Top 8%', label: 'Regional ICPC 2025' },
-  { value: 'Weekly', label: 'Simulaciones' },
-  { value: '24/7', label: 'Discord Community' },
+  { value: 'Top 1', label: 'ICPC Mexico 2024' },
+  { value: 'Finalistas', label: 'Mundiales ICPC' },
+  { value: '100%', label: 'Comunidad Colaborativa' },
+  { value: 'Big Tech', label: 'Alumni en FAANG' },
 ];
 
 const features = [
@@ -40,6 +40,9 @@ const features = [
     desc: 'Colabora en nuestros repositorios y mejora tus habilidades de Ingeniería de Software.',
   },
 ];
+
+const homeDescription =
+  'En Pu++, somos la comunidad de alto rendimiento de programación competitiva. Transformamos tu curiosidad en una ventaja competitiva, llevando tu lógica desde los fundamentos hasta el podio.';
 ---
 
 <Layout title="Pu++ | Club de Programación Competitiva UNAM">
@@ -85,8 +88,7 @@ const features = [
           <p
             class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed"
           >
-            Somos la comunidad oficial de entrenamiento para el <strong>ICPC</strong>. Elevamos tu
-            nivel de programación competitiva desde cero hasta el podio.
+            {homeDescription}
           </p>
 
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
