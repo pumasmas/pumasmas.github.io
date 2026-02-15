@@ -49,7 +49,9 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
   return (
     <span className="inline-flex items-center">
       {/* The Text */}
-      <span>{words[index] ? words[index].substring(0, subIndex) : ''}</span>
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-unam-blue to-cyan-400">
+        {words[index] ? words[index].substring(0, subIndex) : ''}
+      </span>
 
       {/* The Cursor */}
       <span
