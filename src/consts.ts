@@ -33,3 +33,31 @@ export const STATS: Stat[] = [
   { value: '100', suffix: '%', label: 'Comunidad Colaborativa' },
   { value: 'Big Tech', label: 'Alumni en FAANG' },
 ];
+
+export const HOME_DESCRIPTION =
+  'En Pu++, somos la comunidad de alto rendimiento de programación competitiva. Transformamos tu curiosidad en una ventaja competitiva, llevando tu lógica desde los fundamentos hasta el podio.';
+
+export const FEATURES = [
+  {
+    icon: 'fa-brain',
+    title: 'Algoritmos Avanzados',
+    desc: 'Domina Grafos, Programación Dinámica, Segment Trees y Geometría Computacional con nuestras guías.',
+  },
+  {
+    icon: 'fa-trophy',
+    title: 'ICPC Training',
+    desc: 'Simulaciones semanales con problemsets reales de regionales pasadas y Codeforces Gym.',
+  },
+  {
+    icon: 'fa-code-branch',
+    title: 'Comunidad Open Source',
+    desc: 'Colabora en nuestros repositorios y mejora tus habilidades de Ingeniería de Software.',
+  },
+];
+
+export const SOCIAL_LINKS = {
+  discord: 'https://discord.gg/your-invite-link',
+  email: 'pumasmas@ciencias.unam.mx',
+};
+
+export const TYPEWRITER_WORDS = ['el Código.', 'la Entrevista.', 'tu Futuro.', 'el Ranking.'];
