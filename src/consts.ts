@@ -61,3 +61,16 @@ export const SOCIAL_LINKS = {
 };
 
 export const TYPEWRITER_WORDS = ['el Código.', 'la Entrevista.', 'tu Futuro.', 'el Ranking.'];
+
+export const TERMINAL_COMMANDS = [
+  { text: 'g++ solution.cpp -o main' },
+  {
+    text: './main < input.txt',
+    output: [
+      'Running on test 1... <span class="text-green-400">PASSED</span>',
+      'Running on test 2... <span class="text-green-400">PASSED</span>',
+      'Running on test 3... <span class="text-green-400">PASSED</span>',
+    ],
+    isSuccess: true,
+  },
+];
