@@ -2,11 +2,12 @@
 title: 'Manejo de Entrada y Salida'
 description: 'Optimiza tu código con Fast I/O y aprende los patrones comunes para leer datos en concursos.'
 difficulty: 'Newbie'
-topic: 'Técnicas Básicas'
+topic: 'Introducción'
 lastUpdated: 2026-02-14
 ---
 
 import Terminal from '../../components/Terminal.astro';
+import Callout from '../../components/Callout.astro';
 
 # Entrada y Salida en C++
 
@@ -14,21 +15,20 @@ En la programación competitiva, la velocidad con la que tu programa lee y escri
 
 ## 1. Fast I/O: El Truco de Velocidad
 
-Por defecto, `cin` y `cout` de C++ están sincronizados con las funciones de C (`scanf` y `printf`). Esta sincronización es lenta. Para desactivarla, siempre incluye estas líneas al inicio de tu `main`:
+Por defecto, `cin` y `cout` de C++ están sincronizados con las funciones de C (`scanf` y `printf`). Esta sincronización es lenta.
 
-```cpp
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    // Tu código aquí
-}
-```
+<Callout type="tip" title="Optimización Estándar">
+  Incluye estas líneas al inicio de tu `main` para acelerar drásticamente la lectura y escritura:
+  ```cpp ios_base::sync_with_stdio(false); cin.tie(NULL); ```
+</Callout>
 
-### ¿Por qué `
+### ¿Por qué `\n` en lugar de `endl`?
 
-`en lugar de`endl`?
-`endl`no solo imprime un salto de línea, sino que también vacía el búfer (*buffer flush*), lo cual es una operación muy costosa. Usa`
-` para ser mucho más rápido.
+<Callout type="important">
+  `endl` no solo imprime un salto de línea, sino que también vacía el búfer (*buffer flush*), lo
+  cual es una operación muy costosa. **Usa `\n`** para ser mucho más rápido en problemas con mucha
+  salida.
+</Callout>
 
 ## 2. Patrones Comunes de Entrada
 
@@ -70,33 +70,16 @@ while (cin >> n && n != 0) {
 
 ## 3. `cin` vs `getline`
 
-- **`cin >> variable`**: Lee hasta encontrar un espacio, tabulación o salto de línea.
+- **`cin >> variable`**: Lee hasta encontrar un espacio, tab o salto de línea.
 - **`getline(cin, string_variable)`**: Lee una línea completa, incluyendo espacios.
 
-**¡Cuidado!** Si usas `cin >>` seguido de `getline`, debes limpiar el salto de línea que queda en el búfer:
-
+<Callout type="warning" title="Peligro: Mezclando cin y getline">
+Si usas `cin >>` seguido de `getline`, debes limpiar el salto de línea que queda en el búfer:
 ```cpp
 int n;
 string s;
 cin >> n;
-cin.ignore(); // Limpia el '
-' sobrante
+cin.ignore(); // Limpia el '\n' sobrante
 getline(cin, s);
 ```
-
-<Terminal
-  user="pumasmas"
-  machine="laptop"
-  dir="~/basicos"
-  commands={[
-    {
-      text: 'g++ solution.cpp -o solution',
-    },
-    {
-      text: './solution < input.txt',
-      output: ['Procesando caso 1...', 'Procesando caso 2...', 'Hecho.'],
-    },
-  ]}
-/>
-
-**Siguiente paso recomendado:** Aprender sobre la [STL (Standard Template Library)](/wiki/stl-basics) para manejar estructuras de datos eficientes.
+</Callout>
