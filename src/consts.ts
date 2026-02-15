@@ -19,3 +19,17 @@ export const DIFFICULTY_COLORS = {
 } as const;
 
 export type Difficulty = keyof typeof DIFFICULTY_COLORS;
+
+export interface Stat {
+  value: string;
+  label: string;
+  prefix?: string;
+  suffix?: string;
+}
+
+export const STATS: Stat[] = [
+  { prefix: 'Top', value: '1', label: 'ICPC Mexico 2024' },
+  { value: 'Finalistas', label: 'Mundiales ICPC' },
+  { value: '100', suffix: '%', label: 'Comunidad Colaborativa' },
+  { value: 'Big Tech', label: 'Alumni en FAANG' },
+];

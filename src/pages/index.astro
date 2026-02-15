@@ -1,27 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Typewriter from '../components/React/Typewriter.jsx';
 import TagBadge from '../components/TagBadge.astro';
-import { DIFFICULTY_COLORS } from '../consts';
+import { DIFFICULTY_COLORS, STATS } from '../consts';
+import { getLatestWikiEntries } from '../utils/wiki';
 
 // Fetch latest 3 Wiki entries
-const wikiEntries = (await getCollection('wiki'))
-  .sort((a, b) => {
-    const dateA = a.data.lastUpdated || new Date(0);
-    const dateB = b.data.lastUpdated || new Date(0);
-    return dateB.valueOf() - dateA.valueOf();
-  })
-  .slice(0, 3);
-
-const stats = [
-  { value: 'Top 1', label: 'ICPC Mexico 2024' },
-  { value: 'Finalistas', label: 'Mundiales ICPC' },
-  { value: '100%', label: 'Comunidad Colaborativa' },
-  { value: 'Big Tech', label: 'Alumni en FAANG' },
-];
+const wikiEntries = await getLatestWikiEntries(3);
 
 const features = [
   {
@@ -165,10 +152,20 @@ const homeDescription =
       <div class="max-w-7xl mx-auto px-4">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {
-            stats.map((stat) => (
+            STATS.map((stat) => (
               <div class="text-center group cursor-default">
                 <h3 class="text-3xl md:text-4xl font-bold text-white mb-2 group-hover:text-unam-gold transition-colors">
+                  {stat.prefix && (
+                    <span class="text-lg md:text-xl font-medium mr-1 opacity-70">
+                      {stat.prefix}
+                    </span>
+                  )}
                   {stat.value}
+                  {stat.suffix && (
+                    <span class="text-lg md:text-xl font-medium ml-1 opacity-70">
+                      {stat.suffix}
+                    </span>
+                  )}
                 </h3>
                 <p class="font-code text-xs md:text-sm text-gray-500 uppercase tracking-wider">
                   {stat.label}
