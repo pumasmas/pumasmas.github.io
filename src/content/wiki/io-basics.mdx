@@ -1,0 +1,102 @@
+---
+title: 'Manejo de Entrada y Salida'
+description: 'Optimiza tu código con Fast I/O y aprende los patrones comunes para leer datos en concursos.'
+difficulty: 'Newbie'
+topic: 'Técnicas Básicas'
+lastUpdated: 2026-02-14
+---
+
+import Terminal from '../../components/Terminal.astro';
+
+# Entrada y Salida en C++
+
+En la programación competitiva, la velocidad con la que tu programa lee y escribe datos puede ser la diferencia entre un "Accepted" y un "Time Limit Exceeded" (TLE).
+
+## 1. Fast I/O: El Truco de Velocidad
+
+Por defecto, `cin` y `cout` de C++ están sincronizados con las funciones de C (`scanf` y `printf`). Esta sincronización es lenta. Para desactivarla, siempre incluye estas líneas al inicio de tu `main`:
+
+```cpp
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    // Tu código aquí
+}
+```
+
+### ¿Por qué `
+
+`en lugar de`endl`?
+`endl`no solo imprime un salto de línea, sino que también vacía el búfer (*buffer flush*), lo cual es una operación muy costosa. Usa`
+` para ser mucho más rápido.
+
+## 2. Patrones Comunes de Entrada
+
+Los problemas suelen entregar los datos de tres formas principales:
+
+### A. Número fijo de casos de prueba
+
+El problema te dice cuántas veces debes ejecutar tu lógica.
+
+```cpp
+int t;
+cin >> t;
+while (t--) {
+    solve(); // Tu función con la lógica
+}
+```
+
+### B. Hasta el fin del archivo (EOF)
+
+Útil cuando no sabes cuántos datos vienen. `cin` devuelve `false` cuando ya no hay nada que leer.
+
+```cpp
+int n;
+while (cin >> n) {
+    // Procesar n
+}
+```
+
+### C. Centinela (ej. Terminar en 0)
+
+El programa se detiene cuando lee un valor específico.
+
+```cpp
+int n;
+while (cin >> n && n != 0) {
+    // Procesar n
+}
+```
+
+## 3. `cin` vs `getline`
+
+- **`cin >> variable`**: Lee hasta encontrar un espacio, tabulación o salto de línea.
+- **`getline(cin, string_variable)`**: Lee una línea completa, incluyendo espacios.
+
+**¡Cuidado!** Si usas `cin >>` seguido de `getline`, debes limpiar el salto de línea que queda en el búfer:
+
+```cpp
+int n;
+string s;
+cin >> n;
+cin.ignore(); // Limpia el '
+' sobrante
+getline(cin, s);
+```
+
+<Terminal
+  user="pumasmas"
+  machine="laptop"
+  dir="~/basicos"
+  commands={[
+    {
+      text: 'g++ solution.cpp -o solution',
+    },
+    {
+      text: './solution < input.txt',
+      output: ['Procesando caso 1...', 'Procesando caso 2...', 'Hecho.'],
+    },
+  ]}
+/>
+
+**Siguiente paso recomendado:** Aprender sobre la [STL (Standard Template Library)](/wiki/stl-basics) para manejar estructuras de datos eficientes.
