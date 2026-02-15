@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
   const [index, setIndex] = useState(0);
