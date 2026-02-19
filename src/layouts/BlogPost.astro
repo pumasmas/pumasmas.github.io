@@ -4,6 +4,7 @@ import Layout from './Layout.astro';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { Image } from 'astro:assets';
 
 type Props = CollectionEntry<'blog'>['data'];
 
@@ -46,11 +47,11 @@ const formattedDate = pubDate.toLocaleDateString('es-MX', {
         </div>
         {
           heroImage && (
-            <img
+            <Image
               width={1020}
               height={510}
               src={heroImage}
-              alt=""
+              alt={`Imagen de portada para ${title}`}
               class="mt-8 rounded-xl shadow-2xl"
             />
           )
