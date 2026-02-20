@@ -209,9 +209,11 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
                 <div className="pt-4 mt-auto border-t border-gray-800/50 flex items-center justify-between text-[10px] text-gray-500 font-code uppercase tracking-wider">
                   <span className="flex items-center">
                     <i className="fas fa-calendar-alt mr-2 text-unam-gold/50"></i>
-                    {entry.data.lastUpdated
-                      ? new Date(entry.data.lastUpdated).toLocaleDateString()
-                      : 'Reciente'}
+                    <span suppressHydrationWarning>
+                      {entry.data.lastUpdated
+                        ? new Date(entry.data.lastUpdated).toLocaleDateString()
+                        : 'Reciente'}
+                    </span>
                   </span>
                   <span className="group-hover:text-unam-blue transition-colors">
                     Leer más <i className="fas fa-arrow-right ml-1"></i>
