@@ -35,7 +35,7 @@ export const STATS: Stat[] = [
 ];
 
 export const HOME_DESCRIPTION =
-  'En Pu++, somos la comunidad de alto rendimiento de programación competitiva. Transformamos tu curiosidad en una ventaja competitiva, llevando tu lógica desde los fundamentos hasta el podio.';
+  'En Pu++, somos la comunidad de programación competitiva de la Facultad de Ciencias. Transformamos tu curiosidad en una ventaja competitiva, llevando tu lógica desde los fundamentos hasta el podio.';
 
 export const FEATURES = [
   {
