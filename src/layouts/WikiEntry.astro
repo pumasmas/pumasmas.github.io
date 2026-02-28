@@ -115,31 +115,33 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
   <script src="../scripts/copy-code.js"></script>
 
   <script>
-    const toggleBtn = document.getElementById('wiki-menu-toggle');
-    const closeBtn = document.getElementById('wiki-drawer-close');
-    const drawer = document.getElementById('wiki-drawer');
-    const backdrop = document.getElementById('wiki-drawer-backdrop');
+    document.addEventListener('astro:page-load', () => {
+      const toggleBtn = document.getElementById('wiki-menu-toggle');
+      const closeBtn = document.getElementById('wiki-drawer-close');
+      const drawer = document.getElementById('wiki-drawer');
+      const backdrop = document.getElementById('wiki-drawer-backdrop');
 
-    function openDrawer() {
-      if (drawer && backdrop) {
-        drawer.classList.remove('-translate-x-full');
-        drawer.setAttribute('aria-hidden', 'false');
-        backdrop.classList.remove('opacity-0');
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      function openDrawer() {
+        if (drawer && backdrop) {
+          drawer.classList.remove('-translate-x-full');
+          drawer.setAttribute('aria-hidden', 'false');
+          backdrop.classList.remove('opacity-0');
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
       }
-    }
 
-    function closeDrawer() {
-      if (drawer && backdrop) {
-        drawer.classList.add('-translate-x-full');
-        drawer.setAttribute('aria-hidden', 'true');
-        backdrop.classList.add('opacity-0');
-        document.body.style.overflow = '';
+      function closeDrawer() {
+        if (drawer && backdrop) {
+          drawer.classList.add('-translate-x-full');
+          drawer.setAttribute('aria-hidden', 'true');
+          backdrop.classList.add('opacity-0');
+          document.body.style.overflow = '';
+        }
       }
-    }
 
-    toggleBtn?.addEventListener('click', openDrawer);
-    closeBtn?.addEventListener('click', closeDrawer);
-    backdrop?.addEventListener('click', closeDrawer);
+      toggleBtn?.addEventListener('click', openDrawer);
+      closeBtn?.addEventListener('click', closeDrawer);
+      backdrop?.addEventListener('click', closeDrawer);
+    });
   </script>
 </Layout>
