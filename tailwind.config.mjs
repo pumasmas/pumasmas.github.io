@@ -6,6 +6,22 @@ export default {
   theme: {
     extend: {
       colors: {
+        primary: 'hsl(var(--color-primary) / <alpha-value>)',
+        accent: 'hsl(var(--color-accent) / <alpha-value>)',
+        bg: {
+          base: 'hsl(var(--color-bg-base) / <alpha-value>)',
+          surface: 'hsl(var(--color-bg-surface) / <alpha-value>)',
+        },
+        border: {
+          DEFAULT: 'hsl(var(--color-border) / <alpha-value>)',
+          hover: 'hsl(var(--color-border-hover) / <alpha-value>)',
+        },
+        text: {
+          base: 'hsl(var(--color-text-base) / <alpha-value>)',
+          muted: 'hsl(var(--color-text-muted) / <alpha-value>)',
+          bright: 'hsl(var(--color-text-bright) / <alpha-value>)',
+        },
+        // Legacy colors mapped for backwards compatibility during refactor
         'unam-gold': '#D59F0F',
         'unam-blue': '#3b82f6',
         'bg-dark': '#0d1117',
@@ -21,31 +37,32 @@ export default {
         DEFAULT: {
           css: {
             maxWidth: 'none',
-            color: theme('colors.text-main'),
+            color: theme('colors.text.base'),
             hr: {
-              borderColor: theme('colors.gray.800'),
+              borderColor: theme('colors.border.DEFAULT'),
               marginTop: '2em',
               marginBottom: '2em',
             },
             'h1, h2, h3, h4': {
-              color: theme('colors.text-bright'),
+              color: theme('colors.text.bright'),
               scrollMarginTop: '6rem',
             },
             a: {
-              color: theme('colors.unam-blue'),
+              color: theme('colors.primary'),
               textDecoration: 'none',
               '&:hover': {
                 textDecoration: 'underline',
-                color: theme('colors.blue.400'),
+                color: theme('colors.primary'),
+                opacity: 0.8,
               },
             },
             strong: {
-              color: theme('colors.white'),
+              color: theme('colors.text.bright'),
             },
             code: {
-              color: theme('colors.unam-gold'),
+              color: theme('colors.accent'),
               fontFamily: theme('fontFamily.code'),
-              backgroundColor: 'rgba(213, 159, 15, 0.1)', // unam-gold with opacity
+              backgroundColor: 'hsla(var(--color-accent) / 0.1)', // accent with opacity
               padding: '0.2em 0.4em',
               borderRadius: '0.25rem',
               fontWeight: '400',
@@ -57,8 +74,8 @@ export default {
               content: '""',
             },
             pre: {
-              backgroundColor: theme('colors.card-bg'),
-              border: `1px solid ${theme('colors.gray.800')}`,
+              backgroundColor: theme('colors.bg.surface'),
+              border: `1px solid ${theme('colors.border.DEFAULT')}`,
               borderRadius: '0.5rem',
               padding: '1rem',
               code: {
@@ -69,12 +86,12 @@ export default {
               },
             },
             blockquote: {
-              borderLeftColor: theme('colors.unam-gold'),
-              color: theme('colors.gray.400'),
+              borderLeftColor: theme('colors.accent'),
+              color: theme('colors.text.muted'),
               fontStyle: 'italic',
             },
             'ul > li::marker': {
-              color: theme('colors.unam-gold'),
+              color: theme('colors.accent'),
             },
           },
         },

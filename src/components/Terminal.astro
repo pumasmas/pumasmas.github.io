@@ -21,16 +21,16 @@ const { user = 'user', machine = 'pumasmas', dir = '~/contest', commands } = Ast
   >
   </div>
   <div
-    class="relative rounded-xl bg-[#0d1117] border border-gray-800 shadow-2xl overflow-hidden transform transition-transform group-hover:rotate-1"
+    class="relative rounded-xl bg-[#0d1117] border border-border shadow-2xl overflow-hidden transform transition-transform group-hover:rotate-1"
   >
     <!-- Terminal Header -->
-    <div class="flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-gray-800">
+    <div class="flex items-center justify-between px-4 py-3 bg-[#161b22] border-b border-border">
       <div class="flex gap-2">
         <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
         <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
         <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
       </div>
-      <div class="text-xs text-gray-500 font-code">{user}@{machine}:{dir}</div>
+      <div class="text-xs text-text-muted font-code">{user}@{machine}:{dir}</div>
       <div class="w-12"></div>
     </div>
     <!-- Terminal Body -->
@@ -39,12 +39,12 @@ const { user = 'user', machine = 'pumasmas', dir = '~/contest', commands } = Ast
         commands.map((cmd) => (
           <div class="space-y-1">
             <div class="flex">
-              <span class="text-unam-gold mr-2">➜</span>
+              <span class="text-accent mr-2">➜</span>
               <span class="text-cyan-400">~</span>
-              <span class="text-gray-400 ml-2">{cmd.text}</span>
+              <span class="text-text-muted ml-2">{cmd.text}</span>
             </div>
             {cmd.output && (
-              <div class="text-gray-300 pt-1">
+              <div class="text-text-base pt-1">
                 {cmd.output.map((line) => (
                   <Fragment set:html={line + '<br />'} />
                 ))}
@@ -60,7 +60,7 @@ const { user = 'user', machine = 'pumasmas', dir = '~/contest', commands } = Ast
         ))
       }
       <div class="flex pt-2 animate-pulse">
-        <span class="text-unam-gold mr-2">➜</span>
+        <span class="text-accent mr-2">➜</span>
         <span class="text-cyan-400">~</span>
         <span class="w-2 h-5 bg-gray-500 ml-2"></span>
       </div>

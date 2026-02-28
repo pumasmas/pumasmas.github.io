@@ -6,12 +6,12 @@ import { getCollection } from 'astro:content';
 const searchEntries = await getCollection('wiki');
 ---
 
-<nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-bg-dark/90 border-b border-gray-800">
+<nav class="sticky top-0 z-50 w-full backdrop-blur-md bg-bg-base/90 border-b border-border">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex-shrink-0">
         <a href="/" class="font-code font-bold text-2xl text-text-bright">
-          Pu<span class="text-unam-gold">++</span>
+          Pu<span class="text-accent">++</span>
         </a>
       </div>
 
@@ -24,7 +24,7 @@ const searchEntries = await getCollection('wiki');
             NAV_LINKS.map((link) => (
               <a
                 href={link.href}
-                class="text-text-main hover:text-unam-blue px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
+                class="text-text-main hover:text-primary px-3 py-2 rounded-md text-sm font-semibold transition-colors duration-200"
               >
                 {link.name}
               </a>
@@ -34,7 +34,7 @@ const searchEntries = await getCollection('wiki');
             href="https://github.com/pumasmas"
             target="_blank"
             rel="noopener noreferrer"
-            class="bg-gray-800 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2"
+            class="bg-border hover:bg-gray-700 text-text-bright px-4 py-2 rounded-md text-sm font-semibold transition-colors duration-200 flex items-center gap-2"
           >
             <i class="fab fa-github"></i> GitHub
           </a>
@@ -48,7 +48,7 @@ const searchEntries = await getCollection('wiki');
         <button
           id="mobile-menu-button"
           type="button"
-          class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none"
+          class="bg-border inline-flex items-center justify-center p-2 rounded-md text-text-muted hover:text-text-bright hover:bg-gray-700 focus:outline-none"
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -60,13 +60,13 @@ const searchEntries = await getCollection('wiki');
   </div>
 
   <!-- Mobile Menu -->
-  <div class="hidden md:hidden bg-bg-dark border-b border-gray-800" id="mobile-menu">
+  <div class="hidden md:hidden bg-bg-base border-b border-border" id="mobile-menu">
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       {
         NAV_LINKS.map((link) => (
           <a
             href={link.href}
-            class="text-text-main hover:text-unam-blue block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
+            class="text-text-main hover:text-primary block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
           >
             {link.name}
           </a>
@@ -76,7 +76,7 @@ const searchEntries = await getCollection('wiki');
         href="https://github.com/pumasmas"
         target="_blank"
         rel="noopener noreferrer"
-        class="text-text-main hover:text-unam-blue block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
+        class="text-text-main hover:text-primary block px-3 py-2 rounded-md text-base font-semibold transition-colors duration-200"
       >
         GitHub
       </a>

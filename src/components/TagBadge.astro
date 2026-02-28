@@ -19,9 +19,9 @@ if (href) {
 
 if (type === 'difficulty') {
   const colorClass = difficultyLevel ? DIFFICULTY_COLORS[difficultyLevel] : 'bg-gray-600';
-  classes = `${classes} ${colorClass} text-white`;
+  classes = `${classes} ${colorClass} text-text-bright`;
 } else {
-  classes = `${classes} text-unam-gold border border-unam-gold/30 hover:bg-unam-gold/10 font-code uppercase tracking-widest`;
+  classes = `${classes} text-accent border border-accent/30 hover:bg-accent/10 font-code uppercase tracking-widest`;
 }
 
 const Tag = href ? 'a' : 'span';

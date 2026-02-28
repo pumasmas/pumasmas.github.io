@@ -90,11 +90,11 @@ const GlobalSearch = ({ entries }) => {
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-3 py-1.5 text-gray-400 bg-gray-800/50 hover:bg-gray-800 hover:text-white border border-gray-700 hover:border-gray-600 rounded-lg transition-all text-sm group"
+        className="flex items-center gap-2 px-3 py-1.5 text-text-muted bg-border/50 hover:bg-border hover:text-text-bright border border-border hover:border-gray-600 rounded-lg transition-all text-sm group"
       >
-        <i className="fas fa-search group-hover:text-unam-gold transition-colors"></i>
+        <i className="fas fa-search group-hover:text-accent transition-colors"></i>
         <span className="hidden sm:inline">Buscar...</span>
-        <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-xs text-gray-500 bg-gray-900 border border-gray-700 rounded font-code">
+        <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-xs text-text-muted bg-gray-900 border border-border rounded font-code">
           Ctrl K
         </kbd>
       </button>
@@ -116,21 +116,21 @@ const GlobalSearch = ({ entries }) => {
           {/* Layout Container - Centers Modal */}
           <div className="absolute inset-0 flex items-start justify-center pt-[15vh] px-4 pointer-events-none">
             {/* Modal Content - Pointer Events Auto to allow interaction */}
-            <div className="relative w-full max-w-2xl bg-card-bg border border-gray-700 rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[70vh] pointer-events-auto">
+            <div className="relative w-full max-w-2xl bg-bg-surface border border-border rounded-xl shadow-2xl overflow-hidden flex flex-col max-h-[70vh] pointer-events-auto">
               {/* Search Input */}
-              <div className="flex items-center border-b border-gray-700 p-4">
-                <i className="fas fa-search text-unam-gold text-lg mr-4"></i>
+              <div className="flex items-center border-b border-border p-4">
+                <i className="fas fa-search text-accent text-lg mr-4"></i>
                 <input
                   ref={inputRef}
                   type="text"
-                  className="flex-grow bg-transparent text-white text-lg placeholder-gray-500 focus:outline-none"
+                  className="flex-grow bg-transparent text-text-bright text-lg placeholder-gray-500 focus:outline-none"
                   placeholder="Buscar algoritmos, temas..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                 />
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-500 hover:text-white px-2"
+                  className="text-text-muted hover:text-text-bright px-2"
                 >
                   <kbd className="hidden sm:inline-block text-xs border border-gray-600 rounded px-1">
                     ESC
@@ -142,7 +142,7 @@ const GlobalSearch = ({ entries }) => {
               <div className="overflow-y-auto custom-scrollbar" ref={resultsRef}>
                 {results.length > 0 ? (
                   <div className="p-2">
-                    <div className="text-xs font-bold text-gray-500 px-3 py-2 uppercase tracking-wider">
+                    <div className="text-xs font-bold text-text-muted px-3 py-2 uppercase tracking-wider">
                       Wiki
                     </div>
                     {results.map(({ item }, index) => (
@@ -150,25 +150,25 @@ const GlobalSearch = ({ entries }) => {
                         key={item.slug}
                         href={`/wiki/${item.slug}`}
                         className={`block px-3 py-3 rounded-lg transition-colors cursor-pointer ${
-                          index === activeIndex ? 'bg-unam-blue/10' : 'hover:bg-gray-800'
+                          index === activeIndex ? 'bg-primary/10' : 'hover:bg-border'
                         }`}
                         onClick={() => setIsOpen(false)}
                         onMouseEnter={() => setActiveIndex(index)}
                       >
                         <div className="flex justify-between items-center mb-1">
                           <span
-                            className={`font-bold transition-colors ${index === activeIndex ? 'text-unam-blue' : 'text-white'}`}
+                            className={`font-bold transition-colors ${index === activeIndex ? 'text-primary' : 'text-text-bright'}`}
                           >
                             {item.data.title}
                           </span>
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded text-white ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded text-text-bright ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
                           >
                             {item.data.difficulty}
                           </span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-unam-gold font-code uppercase tracking-tighter">
+                          <span className="text-xs text-accent font-code uppercase tracking-tighter">
                             {item.data.topic}
                           </span>
                         </div>
@@ -176,19 +176,20 @@ const GlobalSearch = ({ entries }) => {
                     ))}
                   </div>
                 ) : query ? (
-                  <div className="p-8 text-center text-gray-500">
+                  <div className="p-8 text-center text-text-muted">
                     <i className="fas fa-ghost mb-3 block text-3xl opacity-50"></i>
-                    No encontramos nada para &quot;<span className="text-white">{query}</span>&quot;
+                    No encontramos nada para &quot;<span className="text-text-bright">{query}</span>
+                    &quot;
                   </div>
                 ) : (
-                  <div className="p-8 text-center text-gray-500">
+                  <div className="p-8 text-center text-text-muted">
                     <p>Escribe para buscar en la documentación...</p>
                   </div>
                 )}
               </div>
 
               {/* Footer */}
-              <div className="hidden sm:flex border-t border-gray-800 px-4 py-2 text-xs text-gray-500 justify-between">
+              <div className="hidden sm:flex border-t border-border px-4 py-2 text-xs text-text-muted justify-between">
                 <span>
                   <i className="fas fa-level-down-alt rotate-90 mr-1"></i> Seleccionar
                 </span>

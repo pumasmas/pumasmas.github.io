@@ -17,7 +17,7 @@ function setupCopyButtons() {
     // Create the button
     const button = document.createElement('button');
     button.className =
-      'copy-code-btn absolute top-2 right-2 text-gray-400 hover:text-white bg-gray-700/50 hover:bg-gray-700 rounded p-1.5 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100';
+      'copy-code-btn absolute top-2 right-2 text-text-muted hover:text-text-bright bg-border/50 hover:bg-border rounded p-1.5 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100';
     button.innerHTML = '<i class="fas fa-copy"></i>';
     button.ariaLabel = 'Copiar código';
     button.title = 'Copiar';

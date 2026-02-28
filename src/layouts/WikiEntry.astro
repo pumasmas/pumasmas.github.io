@@ -29,15 +29,15 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
     <div class="lg:hidden w-full">
       <button
         id="wiki-menu-toggle"
-        class="w-full flex items-center justify-between px-4 py-3 bg-card-bg border border-gray-800 rounded-lg text-white font-semibold hover:border-unam-blue transition-colors"
+        class="w-full flex items-center justify-between px-4 py-3 bg-bg-surface border border-border rounded-lg text-text-bright font-semibold hover:border-border-hover transition-colors"
       >
         <span class="flex items-center gap-2">
-          <i class="fas fa-list text-unam-gold"></i>
+          <i class="fas fa-list text-accent"></i>
 
           Explorar Temas
         </span>
 
-        <i class="fas fa-chevron-right text-gray-500 text-sm"></i>
+        <i class="fas fa-chevron-right text-text-muted text-sm"></i>
       </button>
     </div>
 
@@ -59,14 +59,14 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
       <!-- Drawer Content -->
 
       <aside
-        class="relative w-4/5 max-w-sm h-full bg-bg-dark border-r border-gray-800 flex flex-col shadow-2xl"
+        class="relative w-4/5 max-w-sm h-full bg-bg-base border-r border-border flex flex-col shadow-2xl"
       >
-        <div class="flex items-center justify-between p-4 border-b border-gray-800">
-          <span class="font-bold text-white text-lg">Índice</span>
+        <div class="flex items-center justify-between p-4 border-b border-border">
+          <span class="font-bold text-text-bright text-lg">Índice</span>
 
           <button
             id="wiki-drawer-close"
-            class="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+            class="p-2 text-text-muted hover:text-text-bright hover:bg-border rounded-lg transition-colors"
           >
             <i class="fas fa-times text-xl"></i>
           </button>
@@ -89,13 +89,13 @@ const { title, description, difficulty, topic, prerequisites, relatedProblems, s
     <article class="flex-grow min-w-0 max-w-4xl">
       <Breadcrumbs currentTitle={title} />
 
-      <div class="mb-8 pb-6 border-b border-gray-800">
+      <div class="mb-8 pb-6 border-b border-border">
         <div class="flex items-center gap-4 mb-4">
           <TagBadge text={topic} type="topic" href="/wiki" />
           <TagBadge text={difficulty} type="difficulty" difficultyLevel={difficulty} href="/wiki" />
         </div>
-        <h1 class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight">{title}</h1>
-        <p class="text-xl text-gray-400 leading-relaxed">{description}</p>
+        <h1 class="text-4xl md:text-5xl font-bold text-text-bright mb-4 leading-tight">{title}</h1>
+        <p class="text-xl text-text-muted leading-relaxed">{description}</p>
       </div>
 
       {prerequisites && <Prerequisites slugs={prerequisites} />}

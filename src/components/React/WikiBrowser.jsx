@@ -68,16 +68,16 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
   return (
     <div className="space-y-8">
       {/* Horizontal Filter Bar */}
-      <div className="bg-card-bg p-4 rounded-2xl border border-gray-800 flex flex-col md:flex-row gap-4 items-center shadow-xl">
+      <div className="bg-bg-surface p-4 rounded-2xl border border-border flex flex-col md:flex-row gap-4 items-center shadow-xl">
         {/* Search Input */}
         <div className="relative flex-1 w-full">
-          <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <i className="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-text-muted"></i>
           <input
             type="text"
             placeholder="Buscar algoritmos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-bg-dark border border-gray-700 rounded-xl pl-11 pr-4 py-2.5 text-white text-sm focus:border-unam-blue focus:outline-none transition-all"
+            className="w-full bg-bg-base border border-border rounded-xl pl-11 pr-4 py-2.5 text-text-bright text-sm focus:border-unam-blue focus:outline-none transition-all"
           />
         </div>
 
@@ -86,7 +86,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
           <div className="relative flex-1 md:w-48" ref={topicRef}>
             <button
               onClick={() => setIsTopicOpen(!isTopicOpen)}
-              className="w-full bg-bg-dark border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white flex justify-between items-center hover:border-gray-500 transition-colors"
+              className="w-full bg-bg-base border border-border rounded-xl px-4 py-2.5 text-sm text-text-bright flex justify-between items-center hover:border-border-hover transition-colors"
             >
               <span className="truncate">
                 {selectedTopics.size === 0 ? 'Temas' : `${selectedTopics.size} seleccionados`}
@@ -96,19 +96,21 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
               ></i>
             </button>
             {isTopicOpen && (
-              <div className="absolute z-50 mt-2 w-full min-w-[200px] bg-card-bg border border-gray-700 rounded-xl shadow-2xl p-2 max-h-64 overflow-y-auto">
+              <div className="absolute z-50 mt-2 w-full min-w-[200px] bg-bg-surface border border-border rounded-xl shadow-2xl p-2 max-h-64 overflow-y-auto">
                 {allTopics.map((topic) => (
                   <label
                     key={topic}
-                    className="flex items-center gap-3 px-3 py-2 hover:bg-gray-800 rounded-lg cursor-pointer transition-colors group"
+                    className="flex items-center gap-3 px-3 py-2 hover:bg-border rounded-lg cursor-pointer transition-colors group"
                   >
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-gray-600 bg-bg-dark text-unam-blue focus:ring-0"
+                      className="w-4 h-4 rounded border-border bg-bg-base text-primary focus:ring-0"
                       checked={selectedTopics.has(topic)}
                       onChange={() => toggleTopic(topic)}
                     />
-                    <span className="text-sm text-gray-300 group-hover:text-white">{topic}</span>
+                    <span className="text-sm text-text-base group-hover:text-text-bright">
+                      {topic}
+                    </span>
                   </label>
                 ))}
               </div>
@@ -119,7 +121,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
           <div className="relative flex-1 md:w-48" ref={difficultyRef}>
             <button
               onClick={() => setIsDifficultyOpen(!isDifficultyOpen)}
-              className="w-full bg-bg-dark border border-gray-700 rounded-xl px-4 py-2.5 text-sm text-white flex justify-between items-center hover:border-gray-500 transition-colors"
+              className="w-full bg-bg-base border border-border rounded-xl px-4 py-2.5 text-sm text-text-bright flex justify-between items-center hover:border-border-hover transition-colors"
             >
               <span className="truncate">
                 {selectedDifficulties.size === 0
@@ -131,20 +133,20 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
               ></i>
             </button>
             {isDifficultyOpen && (
-              <div className="absolute z-50 mt-2 w-full min-w-[200px] bg-card-bg border border-gray-700 rounded-xl shadow-2xl p-2">
+              <div className="absolute z-50 mt-2 w-full min-w-[200px] bg-bg-surface border border-border rounded-xl shadow-2xl p-2">
                 {allDifficulties.map((diff) => (
                   <label
                     key={diff}
-                    className="flex items-center gap-3 px-3 py-2 hover:bg-gray-800 rounded-lg cursor-pointer transition-colors group"
+                    className="flex items-center gap-3 px-3 py-2 hover:bg-border rounded-lg cursor-pointer transition-colors group"
                   >
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-gray-600 bg-bg-dark text-unam-blue focus:ring-0"
+                      className="w-4 h-4 rounded border-border bg-bg-base text-primary focus:ring-0"
                       checked={selectedDifficulties.has(diff)}
                       onChange={() => toggleDifficulty(diff)}
                     />
                     <span
-                      className={`text-[10px] font-bold text-white px-2 py-0.5 rounded ${difficultyColors[diff]}`}
+                      className={`text-[10px] font-bold text-text-bright px-2 py-0.5 rounded ${difficultyColors[diff]}`}
                     >
                       {diff}
                     </span>
@@ -163,7 +165,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
               setSelectedDifficulties(new Set());
               setSearchQuery('');
             }}
-            className="text-xs text-unam-gold hover:text-white transition-colors whitespace-nowrap px-2"
+            className="text-xs text-accent hover:text-text-bright transition-colors whitespace-nowrap px-2"
           >
             Limpiar filtros
           </button>
@@ -172,9 +174,9 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
 
       {/* Results Header */}
       <div className="flex justify-between items-center px-2">
-        <h2 className="text-xl font-bold text-white">
+        <h2 className="text-xl font-bold text-text-bright">
           Recursos{' '}
-          <span className="text-gray-500 text-sm font-normal ml-2">
+          <span className="text-text-muted text-sm font-normal ml-2">
             ({filteredEntries.length} encontrados)
           </span>
         </h2>
@@ -187,35 +189,35 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
             <a
               key={entry.slug}
               href={`/wiki/${entry.slug}`}
-              className="group block bg-card-bg rounded-2xl border border-gray-800 hover:border-unam-gold/50 transition-all hover:shadow-2xl hover:shadow-unam-gold/5 overflow-hidden flex flex-col h-full"
+              className="group block bg-bg-surface rounded-2xl border border-border hover:border-accent/50 transition-all hover:shadow-2xl hover:shadow-unam-gold/5 overflow-hidden flex flex-col h-full"
             >
               <div className="p-6 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-4">
-                  <span className="text-[10px] font-bold text-unam-gold border border-unam-gold/30 px-2 py-1 rounded-lg font-code uppercase tracking-widest bg-unam-gold/5">
+                  <span className="text-[10px] font-bold text-accent border border-accent/30 px-2 py-1 rounded-lg font-code uppercase tracking-widest bg-accent/5">
                     {entry.data.topic}
                   </span>
                   <span
-                    className={`text-[10px] font-bold text-white px-2 py-1 rounded-lg ${difficultyColors[entry.data.difficulty] || 'bg-gray-600'}`}
+                    className={`text-[10px] font-bold text-text-bright px-2 py-1 rounded-lg ${difficultyColors[entry.data.difficulty] || 'bg-border'}`}
                   >
                     {entry.data.difficulty}
                   </span>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-unam-blue transition-colors">
+                <h3 className="text-lg font-bold text-text-bright mb-2 group-hover:text-primary transition-colors">
                   {entry.data.title}
                 </h3>
-                <p className="text-sm text-gray-400 line-clamp-3 mb-6 flex-grow leading-relaxed">
+                <p className="text-sm text-text-muted line-clamp-3 mb-6 flex-grow leading-relaxed">
                   {entry.data.description}
                 </p>
-                <div className="pt-4 mt-auto border-t border-gray-800/50 flex items-center justify-between text-[10px] text-gray-500 font-code uppercase tracking-wider">
+                <div className="pt-4 mt-auto border-t border-border/50 flex items-center justify-between text-[10px] text-text-muted font-code uppercase tracking-wider">
                   <span className="flex items-center">
-                    <i className="fas fa-calendar-alt mr-2 text-unam-gold/50"></i>
+                    <i className="fas fa-calendar-alt mr-2 text-accent/50"></i>
                     <span suppressHydrationWarning>
                       {entry.data.lastUpdated
                         ? new Date(entry.data.lastUpdated).toLocaleDateString()
                         : 'Reciente'}
                     </span>
                   </span>
-                  <span className="group-hover:text-unam-blue transition-colors">
+                  <span className="group-hover:text-primary transition-colors">
                     Leer más <i className="fas fa-arrow-right ml-1"></i>
                   </span>
                 </div>
@@ -224,12 +226,12 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
           ))}
         </div>
       ) : (
-        <div className="text-center py-24 bg-card-bg/50 rounded-3xl border border-dashed border-gray-800">
-          <div className="w-16 h-16 bg-gray-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <i className="fas fa-search text-2xl text-gray-600"></i>
+        <div className="text-center py-24 bg-bg-surface/50 rounded-3xl border border-dashed border-border">
+          <div className="w-16 h-16 bg-border/50 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i className="fas fa-search text-2xl text-text-muted"></i>
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">No se encontraron algoritmos</h3>
-          <p className="text-gray-500 max-w-xs mx-auto">
+          <h3 className="text-xl font-bold text-text-bright mb-2">No se encontraron algoritmos</h3>
+          <p className="text-text-muted max-w-xs mx-auto">
             Ajusta los filtros o intenta con términos más generales.
           </p>
         </div>

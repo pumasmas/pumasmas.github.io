@@ -36,17 +36,17 @@ const prev = currentIndex > 0 ? topicEntries[currentIndex - 1] : null;
 const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex + 1] : null;
 ---
 
-<div class="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-800">
+<div class="grid grid-cols-2 gap-4 mt-8 pt-8 border-t border-border">
   {
     prev ? (
       <a
         href={`/wiki/${prev.slug}`}
-        class="flex flex-col p-4 rounded-xl border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all text-left group"
+        class="flex flex-col p-4 rounded-xl border border-border hover:border-border-hover hover:bg-border/50 transition-all text-left group"
       >
-        <span class="text-xs text-gray-500 mb-1 group-hover:text-unam-blue transition-colors">
+        <span class="text-xs text-text-muted mb-1 group-hover:text-primary transition-colors">
           <i class="fas fa-arrow-left mr-1" /> Anterior
         </span>
-        <span class="font-bold text-white group-hover:text-unam-blue transition-colors truncate">
+        <span class="font-bold text-text-bright group-hover:text-primary transition-colors truncate">
           {prev.data.title}
         </span>
       </a>
@@ -59,12 +59,12 @@ const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex 
     next ? (
       <a
         href={`/wiki/${next.slug}`}
-        class="flex flex-col items-end p-4 rounded-xl border border-gray-800 hover:border-unam-blue hover:bg-gray-800/50 transition-all text-right group"
+        class="flex flex-col items-end p-4 rounded-xl border border-border hover:border-border-hover hover:bg-border/50 transition-all text-right group"
       >
-        <span class="text-xs text-gray-500 mb-1 group-hover:text-unam-blue transition-colors">
+        <span class="text-xs text-text-muted mb-1 group-hover:text-primary transition-colors">
           Siguiente <i class="fas fa-arrow-right ml-1" />
         </span>
-        <span class="font-bold text-white group-hover:text-unam-blue transition-colors truncate">
+        <span class="font-bold text-text-bright group-hover:text-primary transition-colors truncate">
           {next.data.title}
         </span>
       </a>

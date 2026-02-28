@@ -16,8 +16,8 @@ if (filteredHeadings.length === 0) {
 ---
 
 <aside class="hidden xl:block w-64 flex-shrink-0">
-  <nav class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pl-4 border-l border-gray-800">
-    <h2 class="text-xs font-bold text-white mb-4 uppercase tracking-wider opacity-50">
+  <nav class="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto pl-4 border-l border-border">
+    <h2 class="text-xs font-bold text-text-bright mb-4 uppercase tracking-wider opacity-50">
       En esta página
     </h2>
     <ul class="space-y-3">
@@ -28,7 +28,7 @@ if (filteredHeadings.length === 0) {
               href={`#${h.slug}`}
               data-toc-link
               data-slug={h.slug}
-              class="block text-sm text-gray-400 hover:text-unam-blue transition-colors duration-200 leading-tight"
+              class="block text-sm text-text-muted hover:text-primary transition-colors duration-200 leading-tight"
             >
               {h.text}
             </a>
@@ -55,11 +55,11 @@ if (filteredHeadings.length === 0) {
 
         tocLinks.forEach((link) => {
           if (link.getAttribute('data-slug') === id) {
-            link.classList.add('text-unam-blue', 'font-semibold');
-            link.classList.remove('text-gray-400');
+            link.classList.add('text-primary', 'font-semibold');
+            link.classList.remove('text-text-muted');
           } else {
-            link.classList.remove('text-unam-blue', 'font-semibold');
-            link.classList.add('text-gray-400');
+            link.classList.remove('text-primary', 'font-semibold');
+            link.classList.add('text-text-muted');
           }
         });
       }

@@ -56,7 +56,7 @@ const Typewriter = ({ words, speed = 150, pause = 2000 }) => {
       {/* The Cursor */}
       <span
         className={`
-          ml-1 w-[3px] md:w-[5px] h-[1em] bg-unam-gold 
+          ml-1 w-[3px] md:w-[5px] h-[1em] bg-accent 
           transition-opacity duration-100
           shadow-[0_0_10px_rgba(213,159,15,0.8)]
           ${blink ? 'opacity-100' : 'opacity-0'}

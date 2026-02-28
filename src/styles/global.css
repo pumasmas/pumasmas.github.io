@@ -7,8 +7,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    /* Brand Colors (HSL values for opacity support) */
+    --color-primary: 217 91% 60%; /* Equivalent to #3b82f6 (unam-blue) */
+    --color-accent: 44 87% 45%; /* Equivalent to #D59F0F (unam-gold) */
+
+    /* Backgrounds */
+    --color-bg-base: 220 28% 7%; /* Equivalent to #0d1117 */
+    --color-bg-surface: 214 21% 11%; /* Equivalent to #161b22 */
+
+    /* Semantic UI Elements */
+    --color-border: 215 14% 34%; /* Replacement for gray-800/700 */
+    --color-border-hover: 217 91% 60%; /* Swap to primary on hover */
+
+    /* Text */
+    --color-text-base: 210 16% 82%; /* Replacement for text-main / gray-300 */
+    --color-text-muted: 215 16% 65%; /* Replacement for gray-400 / gray-500 */
+    --color-text-bright: 0 0% 100%; /* Replacement for white */
+  }
+}
+
 body {
-  @apply bg-bg-dark text-text-main font-body;
+  @apply bg-bg-base text-text-base font-body;
 }
 
 h1,
