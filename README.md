@@ -85,10 +85,11 @@ We welcome contributions from members and the open-source community! Whether you
 If you want to write a new article or tutorial, please read our **[Content Creation Guide](CONTRIBUTING_CONTENT.md)**.
 
 It covers:
-*   Folder structure
-*   Frontmatter schemas (Metadata)
-*   How to add Prerequisites and Practice Problems
-*   Using LaTeX for math formulas
+
+- Folder structure
+- Frontmatter schemas (Metadata)
+- How to add Prerequisites and Practice Problems
+- Using LaTeX for math formulas
 
 ### 🛠️ Development
 

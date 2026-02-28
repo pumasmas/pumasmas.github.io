@@ -10,7 +10,7 @@ export default [
   {
     ignores: ['dist', 'node_modules', '.astro', '.env', '.env.*', '**/*.d.ts'],
   },
-  
+
   // Base config for all JS/TS files
   {
     files: ['**/*.{js,mjs,cjs,ts,tsx,jsx}'],

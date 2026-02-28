@@ -1,0 +1,63 @@
+---
+import Typewriter from '../React/Typewriter.jsx';
+import Terminal from '../Terminal.astro';
+import { HOME_DESCRIPTION, TYPEWRITER_WORDS, TERMINAL_COMMANDS } from '../../consts';
+---
+
+<section class="relative min-h-[85vh] flex items-center justify-center overflow-hidden pt-16">
+  <!-- Background Effects -->
+  <div class="absolute inset-0 bg-bg-dark z-0">
+    <!-- Grid Pattern -->
+    <div
+      class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"
+    >
+    </div>
+    <!-- Gradient Glow -->
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-unam-blue/20 blur-[120px] rounded-full opacity-50"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 grid lg:grid-cols-2 gap-12 items-center">
+    <!-- Text Content -->
+    <div class="text-center lg:text-left">
+      <div
+        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-unam-gold/10 border border-unam-gold/20 text-unam-gold text-xs font-code mb-6"
+      >
+        <span class="w-2 h-2 rounded-full bg-unam-gold animate-pulse"></span>
+        FACULTAD DE CIENCIAS - UNAM
+      </div>
+
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+        Domina <br />
+        <Typewriter client:visible words={TYPEWRITER_WORDS} />
+      </h1>
+
+      <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+        {HOME_DESCRIPTION}
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+        <a
+          href="#join"
+          class="group px-8 py-3.5 bg-unam-blue hover:bg-blue-600 text-white font-semibold rounded-lg transition-all shadow-lg shadow-unam-blue/25 flex items-center justify-center gap-2"
+        >
+          Unirme al Club
+          <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+        </a>
+        <a
+          href="/wiki"
+          class="px-8 py-3.5 bg-card-bg border border-gray-700 hover:border-unam-gold text-gray-300 hover:text-white font-code font-semibold rounded-lg transition-all"
+        >
+          $ cat wiki_intro
+        </a>
+      </div>
+    </div>
+
+    <!-- Visual Content (Terminal) -->
+    <div class="hidden lg:block">
+      <Terminal commands={TERMINAL_COMMANDS} />
+    </div>
+  </div>
+</section>
