@@ -30,7 +30,7 @@ const wikiEntries = await getLatestWikiEntries(3);
       {
         wikiEntries.map((entry) => (
           <a href={`/wiki/${entry.slug}`} class="group flex flex-col">
-            <article class="flex-1 bg-bg-surface border border-border rounded-xl p-6 hover:border-accent/50 hover:shadow-lg hover:shadow-unam-gold/10 transition-all flex flex-col">
+            <article class="flex-1 bg-bg-surface border border-border rounded-xl p-6 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/10 transition-all flex flex-col">
               <div class="flex justify-between items-start mb-4">
                 <TagBadge text={entry.data.topic} type="topic" />
                 <TagBadge

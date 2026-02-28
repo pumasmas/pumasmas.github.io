@@ -52,8 +52,8 @@ const topics = Object.keys(groupedEntries).sort();
                   href={`/wiki/${entry.slug}`}
                   class={`block pl-4 py-1 text-sm transition-colors border-l -ml-[1px] ${
                     currentSlug === entry.slug
-                      ? 'text-primary border-unam-blue font-semibold'
-                      : 'text-text-muted border-transparent hover:text-gray-200 hover:border-gray-600'
+                      ? 'text-primary border-primary font-semibold'
+                      : 'text-text-muted border-transparent hover:text-text-bright hover:border-border'
                   }`}
                 >
                   {entry.data.title}

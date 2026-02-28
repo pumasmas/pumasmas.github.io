@@ -77,7 +77,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
             placeholder="Buscar algoritmos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-bg-base border border-border rounded-xl pl-11 pr-4 py-2.5 text-text-bright text-sm focus:border-unam-blue focus:outline-none transition-all"
+            className="w-full bg-bg-base border border-border rounded-xl pl-11 pr-4 py-2.5 text-text-bright text-sm focus:border-primary focus:outline-none transition-all"
           />
         </div>
 
@@ -189,7 +189,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
             <a
               key={entry.slug}
               href={`/wiki/${entry.slug}`}
-              className="group block bg-bg-surface rounded-2xl border border-border hover:border-accent/50 transition-all hover:shadow-2xl hover:shadow-unam-gold/5 overflow-hidden flex flex-col h-full"
+              className="group block bg-bg-surface rounded-2xl border border-border hover:border-accent/50 transition-all hover:shadow-2xl hover:shadow-accent/5 overflow-hidden flex flex-col h-full"
             >
               <div className="p-6 flex flex-col h-full">
                 <div className="flex justify-between items-start mb-4">

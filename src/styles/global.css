@@ -10,21 +10,30 @@
 @layer base {
   :root {
     /* Brand Colors (HSL values for opacity support) */
-    --color-primary: 217 91% 60%; /* Equivalent to #3b82f6 (unam-blue) */
-    --color-accent: 44 87% 45%; /* Equivalent to #D59F0F (unam-gold) */
+    --color-primary: 217 91% 60%;
+    /* Equivalent to #3b82f6 (unam-blue) */
+    --color-accent: 44 87% 45%;
+    /* Equivalent to #D59F0F (unam-gold) */
 
     /* Backgrounds */
-    --color-bg-base: 220 28% 7%; /* Equivalent to #0d1117 */
-    --color-bg-surface: 214 21% 11%; /* Equivalent to #161b22 */
+    --color-bg-base: 220 28% 7%;
+    /* Equivalent to #0d1117 */
+    --color-bg-surface: 214 21% 11%;
+    /* Equivalent to #161b22 */
 
     /* Semantic UI Elements */
-    --color-border: 215 14% 34%; /* Replacement for gray-800/700 */
-    --color-border-hover: 217 91% 60%; /* Swap to primary on hover */
+    --color-border: 215 14% 34%;
+    /* Replacement for gray-800/700 */
+    --color-border-hover: 217 91% 60%;
+    /* Swap to primary on hover */
 
     /* Text */
-    --color-text-base: 210 16% 82%; /* Replacement for text-main / gray-300 */
-    --color-text-muted: 215 16% 65%; /* Replacement for gray-400 / gray-500 */
-    --color-text-bright: 0 0% 100%; /* Replacement for white */
+    --color-text-base: 210 16% 82%;
+    /* Replacement for text-main / gray-300 */
+    --color-text-muted: 215 16% 65%;
+    /* Replacement for gray-400 / gray-500 */
+    --color-text-bright: 0 0% 100%;
+    /* Replacement for white */
   }
 }
 
@@ -47,17 +56,19 @@ code {
 
 /* Typewriter Cursor */
 .typewriter-cursor {
-  @apply border-r-2 border-unam-gold pr-1;
+  @apply border-r-2 border-accent pr-1;
   animation: blink 1s step-end infinite;
 }
 
 @keyframes blink {
+
   from,
   to {
     border-color: transparent;
   }
+
   50% {
-    border-color: #d59f0f;
+    border-color: hsl(var(--color-accent));
   }
 }
 
@@ -66,7 +77,7 @@ code {
   counter-reset: line;
 }
 
-code > [data-line]::before {
+code>[data-line]::before {
   counter-increment: line;
   content: counter(line);
 
@@ -78,10 +89,10 @@ code > [data-line]::before {
   color: gray;
 }
 
-code[data-line-numbers-max-digits='2'] > [data-line]::before {
+code[data-line-numbers-max-digits='2']>[data-line]::before {
   width: 2rem;
 }
 
-code[data-line-numbers-max-digits='3'] > [data-line]::before {
+code[data-line-numbers-max-digits='3']>[data-line]::before {
   width: 3rem;
 }
