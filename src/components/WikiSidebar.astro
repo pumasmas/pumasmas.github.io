@@ -50,7 +50,7 @@ const topics = Object.keys(groupedEntries).sort();
               <li>
                 <a
                   href={`/wiki/${entry.slug}`}
-                  class={`block pl-4 py-1 text-sm transition-colors border-l -ml-[1px] ${
+                  class={`block pl-4 py-1 text-sm transition-colors border-l -ml-px ${
                     currentSlug === entry.slug
                       ? 'text-primary border-primary font-semibold'
                       : 'text-text-muted border-transparent hover:text-text-bright hover:border-border'

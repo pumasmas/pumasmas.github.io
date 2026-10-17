@@ -77,7 +77,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
             placeholder="Buscar algoritmos..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-bg-base border border-border rounded-xl pl-11 pr-4 py-2.5 text-text-bright text-sm focus:border-primary focus:outline-none transition-all"
+            className="w-full bg-bg-base border border-border rounded-xl pl-11 pr-4 py-2.5 text-text-bright text-sm focus:border-primary focus:outline-hidden transition-all"
           />
         </div>
 
@@ -104,7 +104,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
                   >
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-border bg-bg-base text-primary focus:ring-0"
+                      className="w-4 h-4 rounded-sm border-border bg-bg-base text-primary focus:ring-0"
                       checked={selectedTopics.has(topic)}
                       onChange={() => toggleTopic(topic)}
                     />
@@ -141,12 +141,12 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
                   >
                     <input
                       type="checkbox"
-                      className="w-4 h-4 rounded border-border bg-bg-base text-primary focus:ring-0"
+                      className="w-4 h-4 rounded-sm border-border bg-bg-base text-primary focus:ring-0"
                       checked={selectedDifficulties.has(diff)}
                       onChange={() => toggleDifficulty(diff)}
                     />
                     <span
-                      className={`text-[10px] font-bold text-text-bright px-2 py-0.5 rounded ${difficultyColors[diff]}`}
+                      className={`text-[10px] font-bold text-text-bright px-2 py-0.5 rounded-sm ${difficultyColors[diff]}`}
                     >
                       {diff}
                     </span>
@@ -205,7 +205,7 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
                 <h3 className="text-lg font-bold text-text-bright mb-2 group-hover:text-primary transition-colors">
                   {entry.data.title}
                 </h3>
-                <p className="text-sm text-text-muted line-clamp-3 mb-6 flex-grow leading-relaxed">
+                <p className="text-sm text-text-muted line-clamp-3 mb-6 grow leading-relaxed">
                   {entry.data.description}
                 </p>
                 <div className="pt-4 mt-auto border-t border-border/50 flex items-center justify-between text-[10px] text-text-muted font-code uppercase tracking-wider">
