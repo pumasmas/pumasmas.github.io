@@ -71,7 +71,7 @@ const GlobalSearch = ({ entries }) => {
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (results[activeIndex]) {
-          window.location.href = `/wiki/${results[activeIndex].item.slug}`;
+          window.location.href = `/wiki/${results[activeIndex].item.id}`;
         }
       }
     };
@@ -147,8 +147,8 @@ const GlobalSearch = ({ entries }) => {
                     </div>
                     {results.map(({ item }, index) => (
                       <a
-                        key={item.slug}
-                        href={`/wiki/${item.slug}`}
+                        key={item.id}
+                        href={`/wiki/${item.id}`}
                         className={`block px-3 py-3 rounded-lg transition-colors cursor-pointer ${
                           index === activeIndex ? 'bg-primary/10' : 'hover:bg-border'
                         }`}

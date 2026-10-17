@@ -187,8 +187,8 @@ const WikiBrowser = ({ initialEntries, difficultyColors }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredEntries.map((entry) => (
             <a
-              key={entry.slug}
-              href={`/wiki/${entry.slug}`}
+              key={entry.id}
+              href={`/wiki/${entry.id}`}
               className="group block bg-bg-surface rounded-2xl border border-border hover:border-accent/50 transition-all hover:shadow-2xl hover:shadow-accent/5 overflow-hidden flex flex-col h-full"
             >
               <div className="p-6 flex flex-col h-full">

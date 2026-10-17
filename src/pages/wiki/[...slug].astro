@@ -7,7 +7,7 @@ import Callout from '../../components/Callout.astro';
 export async function getStaticPaths() {
   const entries = await getCollection('wiki');
   return entries.map((entry) => ({
-    params: { slug: entry.slug },
+    params: { slug: entry.id },
     props: entry,
   }));
 }
@@ -17,6 +17,6 @@ const entry = Astro.props;
 const { Content, headings } = await render(entry);
 ---
 
-<WikiEntry {...entry.data} slug={entry.slug} headings={headings}>
+<WikiEntry {...entry.data} slug={entry.id} headings={headings}>
   <Content components={{ Callout }} />
 </WikiEntry>
