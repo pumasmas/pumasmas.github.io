@@ -11,6 +11,9 @@ import Terminal from '../../components/Terminal.astro';
 import Callout from '../../components/Callout.astro';
 import { Image } from 'astro:assets';
 import fork_image from '../../assets/wiki/contributing/fork.png';
+import contribute_image from '../../assets/wiki/contributing/contribute.png';
+import draft_pr_image from '../../assets/wiki/contributing/draft-pr.png';
+import ready_review_image from '../../assets/wiki/contributing/ready-review.png';
 
 # Contribuir a la Wiki
 
@@ -203,5 +206,45 @@ wiki y corregir cualquier error.
 ## 6. Contribuye a la página oficial
 
 Una vez que hayas hecho commit y push a tus cambios, presiona el botón
-`Contribute` en GitHub para comenzar el proceso de incorporación de tu entrada
-al blog.
+`Contribute` en GitHub y abre un Pull Request para comenzar el proceso de
+incorporación de tu entrada al blog.
+
+<Image
+  src={contribute_image}
+  alt="Captura de pantalla de GitHub mostrando al botón de Contribute"
+/>
+
+Así se mostrará la pantalla donde se genera el Pull Request.
+
+<Image
+  src={draft_pr_image}
+  alt="Captura de pantalla de GitHub mostrando un Pull Request en proceso de ser escrito"
+/>
+
+Es importante que notes las siguientes cosas, pues es ideal que tu Pull Request
+las siga.
+
+- El título del Pull Request empieza con la etiqueta `wiki: `. Así sabemos
+  rápidamente que estas queriendo hacer una entrada a la wiki.
+- Comienza con `ptal @pumasmas/pagina-web`. Esto etiquetará al equipo
+  responsable de revisar e incorporar tus cambios al repositorio oficial.
+- Describe brevemente de qué se trata tu entrada.
+- Permite ediciones de los mantenedores, para que corrijamos por ti problemas
+  pequeños que encontremos.
+
+Si consideras que tu Pull Request tiene todo esto, o lo más importante, abre
+el Draft Pull Request como se indica en la imagen anterior.
+
+Si todavía quieres hacer cambios no hay ningún problema. Cuando estés listo
+para que alguien más revise los cambios y los incorpore, presiona `Ready for
+review`.
+
+<Image
+  src={ready_review_image}
+  alt="Captura de pantalla de GitHub mostrando al botón de Ready for review"
+/>
+
+En este punto es posible que te den feedback o hagan preguntas sobre tu
+entrada, o bien que te digan que todo se ve bien. En dado caso, ¡se incorporará
+tu cambio y será visible en unos pocos minutos desde
+[`https://pumasmas.github.io`](https://pumasmas.github.io)!
