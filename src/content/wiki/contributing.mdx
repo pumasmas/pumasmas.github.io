@@ -1,0 +1,207 @@
+---
+title: 'Contribuir a la Wiki'
+description: '¡Cómo puedes contribuir a esta Wiki que estás leyendo!'
+difficulty: 'Newbie'
+topic: 'Pu++'
+prerequisites: []
+lastUpdated: 2026-10-20
+---
+
+import Terminal from '../../components/Terminal.astro';
+import Callout from '../../components/Callout.astro';
+import { Image } from 'astro:assets';
+import fork_image from '../../assets/wiki/contributing/fork.png';
+
+# Contribuir a la Wiki
+
+¿Así que quieres contribuir a la Wiki?
+
+¡Gracias por tu interés en contribuir al portal de Pu++!
+
+Esta guía te ayudará a crear artículos para la Wiki utilizando nuestro sistema
+basado en Markdown (MDX).
+
+## 1. Repositorio de la Wiki
+
+Primero, accede a [`https://github.com/pumasmas/pumasmas.github.io`](https://github.com/pumasmas/pumasmas.github.io).
+
+Aquí encontrarás el repositorio de código que forma esta página web.
+
+Crea tu _fork_ del repositorio.
+
+<Image src={fork_image} alt="Captura de pantalla de GitHub mostrando al botón de Fork" />
+
+Salvo que se diga lo contrario, trabajarás en el nuevo repositorio que acabas
+de crear por el resto de esta guía.
+
+## 2. Escoge un identificador
+
+Piensa en el identificador que le darás a tu entrada de la wiki. Por ejemplo,
+el identificador de esta página es `contributing`, que puedes verlo al final la
+URL de esta página.
+
+El identificador debe ser un nombre descriptivo en minúsculas y guiones
+(kebab-case).
+
+En esta guía, cuando veas `<tu-id>`, sustituye con el identificador que
+escogiste.
+
+## 3. Estructura de Carpetas
+
+Tu entrada a la wiki vivirá en un único archivo MDX en
+`src/content/wiki/<tu-id>.mdx`.
+
+Si quieres agregar imágenes estas se deberán encontrar en la carpeta
+`src/assets/wiki/<tu-id>/`.
+
+Si quieres agregar archivos PDF u otro tipo de archivos estáticos, agrégalos a
+la carpeta `public/wiki/<tu-id>/`.
+
+<Callout type="caution" title="Identificador único">
+    Ahora es buen momento para asegurarse que el identificador de tu entrada no
+    existe ya. Revisa que no exista el archivo `src/content/wiki/<tu-id>.mdx`.
+
+    Si ya existe, escoge un identificador distinto que tampoco exista ya.
+
+</Callout>
+
+Para comenzar, crea el archivo `src/content/wiki/<tu-id>.mdx` y
+`src/assets/wiki/<tu-id>/.gitkeep`.
+
+## 4. Llenado del Archivo MDX
+
+### I. Frontmatter (Metadatos)
+
+Al inicio del archivo, debes incluir un bloque YAML delimitado por `---`.
+
+```yaml
+---
+title: 'Segment Tree con Lazy Propagation'
+description: 'Optimización para actualizaciones en rango en O(log N).'
+difficulty: 'Expert'
+topic: 'Estructuras de Datos'
+prerequisites: ['segment-tree-basics', 'recursion-basics']
+relatedProblems:
+  - name: 'Horrible Queries'
+    url: 'https://www.spoj.com/problems/HORRIBLE/'
+    platform: 'SPOJ'
+lastUpdated: 2026-02-05
+---
+```
+
+**Campos:**
+
+- `title` (Requerido): Título principal del artículo.
+- `description` (Requerido): Breve resumen que aparece en las tarjetas y búsquedas.
+- `difficulty` (Requerido): Nivel de dificultad.
+  - Opciones: `Newbie`, `Pupil`, `Specialist`, `Expert`, `Candidate Master`, `Master`, `Grandmaster`.
+- `topic` (Requerido): Categoría del tema (ej. "Grafos", "Programación Dinámica"). Esto agrupa la entrada en el menú lateral.
+- `prerequisites` (Opcional): Lista de _slugs_ (nombres de archivo sin extensión) de otros artículos requeridos.
+- `relatedProblems` (Opcional): Lista de problemas para practicar.
+  - `name`: Nombre del problema.
+  - `url`: Link al problema.
+  - `platform`: Juez (Codeforces, LeetCode, etc.).
+
+### II. Contenido
+
+Escribe tu explicación usando Markdown estándar. Puedes usar subtítulos (`##`,
+`###`), listas, negritas, etc.
+
+Puedes apoyarte de los ejemplos en `src/content/wiki/`.
+
+### III. Herramientas y Sintaxis
+
+#### Fórmulas Matemáticas (LaTeX)
+
+Usamos **KaTeX** para renderizar matemáticas.
+
+- En línea: Usa un solo signo de dólar `$ E = mc^2 $`.
+- Bloque: Usa doble signo de dólar.
+  ```latex
+  $$
+  \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+  $$
+  ```
+
+#### Bloques de Código
+
+Usa tres comillas invertidas y especifica el lenguaje (cpp, python, js, etc.).
+El sitio agregará automáticamente un botón de **Copiar**.
+
+```cpp
+// Tu código aquí
+int main() {
+    return 0;
+}
+```
+
+#### Imágenes
+
+Coloca tus imágenes en la carpeta `src/assets/wiki/<tu-id>/`.
+
+Importa el componente de Astro para imágenes y a tu imagen al inicio del
+archivo MDX justo después del frontmatter así:
+
+```javascript
+import { Image } from 'astro:assets';
+import diagrama_grafo from '../../assets/wiki/<tu-id>/diagrama_grafo.png';
+```
+
+Agrega la imagen donde la quieres junto con su texto alternativo así:
+
+```html
+<image src="{diagrama_grafo}" alt="Un diagrama de la gráfica de Petersen" />
+```
+
+<Callout type="caution" title="Unexpected `ExpressionStatement` in code">
+  Si pones un `import` en cualquier lugar de tu archivo MDX que no sea al inicio, te saldrá este
+  error. Se resuelve al simplemente mover los `import` al inicio.
+</Callout>
+
+#### Archivos estáticos
+
+Coloca tus archivos en la carpeta `public/wiki/<tu-id>/` y referéncialas
+directamente con `/wiki/<tu-id>/nombre-imagen.png`.
+
+```markdown
+![Descripción](/wiki/<tu-id>/diagrama-grafo.png)
+```
+
+### IV. Avanzado: Componentes
+
+Puedes crear componentes en `src/components/<tu-id>/MiComponente.tsx` y usarlos
+en tu entrada de la wiki con:
+
+```javascript
+import MiComponente from '../../components/MiComponente';
+<MiComponente client:load />;
+```
+
+Sólo es necesario si quieres comportamiento muy específico.
+
+## 5. Ve tus cambios en acción
+
+Si es tu primera vez, corre `npm install` para instalar las dependencias y
+programas que necesitarás para armar la página.
+
+Para arrancar tu versión de la página corre `npm run dev` y abre
+`http://localhost:4321`.
+
+<Terminal
+  user="pumasmas"
+  machine="laptop"
+  dir="~/pumasmas.github.io"
+  commands={[
+    { text: 'npm install', output: ['added 787 packages, and audited 788 packages in 30s'] },
+    { text: 'npm run dev', output: ['astro  v5.17.1 ready in 1079 ms'] },
+  ]}
+/>
+
+Una vez abierto `localhost:4321` en tu navegador, puedes probar tu entrada a la
+wiki y corregir cualquier error.
+
+## 6. Contribuye a la página oficial
+
+Una vez que hayas hecho commit y push a tus cambios, presiona el botón
+`Contribute` en GitHub para comenzar el proceso de incorporación de tu entrada
+al blog.
