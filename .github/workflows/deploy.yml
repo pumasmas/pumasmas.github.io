@@ -14,15 +14,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install, setup, and upload
-        uses: withastro/action@v3
+      - name: Install and build Astro site
+        uses: withastro/action@v6
         with:
           path: .
+          node-version: 22
           package-manager: npm
-          node-version: 20
 
   deploy:
     needs: build
@@ -30,6 +30,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
