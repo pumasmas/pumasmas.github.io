@@ -1,11 +1,30 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Inter:wght@400;600&display=swap')
+layer(base);
 
 /* KaTeX Styles */
-@import 'katex/dist/katex.min.css';
+@import 'katex/dist/katex.min.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@config '../../tailwind.config.mjs';
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   :root {
@@ -61,7 +80,6 @@ code {
 }
 
 @keyframes blink {
-
   from,
   to {
     border-color: transparent;
@@ -77,7 +95,7 @@ code {
   counter-reset: line;
 }
 
-code>[data-line]::before {
+code > [data-line]::before {
   counter-increment: line;
   content: counter(line);
 
@@ -89,10 +107,10 @@ code>[data-line]::before {
   color: gray;
 }
 
-code[data-line-numbers-max-digits='2']>[data-line]::before {
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
   width: 2rem;
 }
 
-code[data-line-numbers-max-digits='3']>[data-line]::before {
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
   width: 3rem;
 }

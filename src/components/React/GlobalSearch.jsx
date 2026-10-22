@@ -71,7 +71,7 @@ const GlobalSearch = ({ entries }) => {
       } else if (e.key === 'Enter') {
         e.preventDefault();
         if (results[activeIndex]) {
-          window.location.href = `/wiki/${results[activeIndex].item.slug}`;
+          window.location.href = `/wiki/${results[activeIndex].item.id}`;
         }
       }
     };
@@ -94,17 +94,17 @@ const GlobalSearch = ({ entries }) => {
       >
         <i className="fas fa-search group-hover:text-accent transition-colors"></i>
         <span className="hidden sm:inline">Buscar...</span>
-        <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-xs text-text-muted bg-gray-900 border border-border rounded font-code">
+        <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-xs text-text-muted bg-gray-900 border border-border rounded-sm font-code">
           Ctrl K
         </kbd>
       </button>
 
       {/* Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-[70]">
+        <div className="fixed inset-0 z-70">
           {/* Backdrop Layer - Handles Click to Close */}
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-xs"
             role="button"
             tabIndex={-1}
             onClick={() => setIsOpen(false)}
@@ -123,7 +123,7 @@ const GlobalSearch = ({ entries }) => {
                 <input
                   ref={inputRef}
                   type="text"
-                  className="flex-grow bg-transparent text-text-bright text-lg placeholder-gray-500 focus:outline-none"
+                  className="grow bg-transparent text-text-bright text-lg placeholder-gray-500 focus:outline-hidden"
                   placeholder="Buscar algoritmos, temas..."
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -132,7 +132,7 @@ const GlobalSearch = ({ entries }) => {
                   onClick={() => setIsOpen(false)}
                   className="text-text-muted hover:text-text-bright px-2"
                 >
-                  <kbd className="hidden sm:inline-block text-xs border border-gray-600 rounded px-1">
+                  <kbd className="hidden sm:inline-block text-xs border border-gray-600 rounded-sm px-1">
                     ESC
                   </kbd>
                 </button>
@@ -147,8 +147,8 @@ const GlobalSearch = ({ entries }) => {
                     </div>
                     {results.map(({ item }, index) => (
                       <a
-                        key={item.slug}
-                        href={`/wiki/${item.slug}`}
+                        key={item.id}
+                        href={`/wiki/${item.id}`}
                         className={`block px-3 py-3 rounded-lg transition-colors cursor-pointer ${
                           index === activeIndex ? 'bg-primary/10' : 'hover:bg-border'
                         }`}
@@ -162,7 +162,7 @@ const GlobalSearch = ({ entries }) => {
                             {item.data.title}
                           </span>
                           <span
-                            className={`text-[10px] font-bold px-2 py-0.5 rounded text-text-bright ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
+                            className={`text-[10px] font-bold px-2 py-0.5 rounded-sm text-text-bright ${DIFFICULTY_COLORS[item.data.difficulty] || 'bg-gray-600'}`}
                           >
                             {item.data.difficulty}
                           </span>

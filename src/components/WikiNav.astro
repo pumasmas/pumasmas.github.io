@@ -31,7 +31,7 @@ const topicEntries = allEntries
 // However, usually one wants a determined order.
 // Let's stick to the natural collection order for now to match the sidebar's current behavior.
 
-const currentIndex = topicEntries.findIndex((e) => e.slug === currentSlug);
+const currentIndex = topicEntries.findIndex((e) => e.id === currentSlug);
 const prev = currentIndex > 0 ? topicEntries[currentIndex - 1] : null;
 const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex + 1] : null;
 ---
@@ -40,7 +40,7 @@ const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex 
   {
     prev ? (
       <a
-        href={`/wiki/${prev.slug}`}
+        href={`/wiki/${prev.id}`}
         class="flex flex-col p-4 rounded-xl border border-border hover:border-border-hover hover:bg-border/50 transition-all text-left group"
       >
         <span class="text-xs text-text-muted mb-1 group-hover:text-primary transition-colors">
@@ -58,7 +58,7 @@ const next = currentIndex < topicEntries.length - 1 ? topicEntries[currentIndex 
   {
     next ? (
       <a
-        href={`/wiki/${next.slug}`}
+        href={`/wiki/${next.id}`}
         class="flex flex-col items-end p-4 rounded-xl border border-border hover:border-border-hover hover:bg-border/50 transition-all text-right group"
       >
         <span class="text-xs text-text-muted mb-1 group-hover:text-primary transition-colors">

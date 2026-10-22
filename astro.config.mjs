@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import mdx from '@astrojs/mdx';
 import remarkMath from 'remark-math';
@@ -8,10 +7,13 @@ import rehypePrettyCode from 'rehype-pretty-code';
 
 import sitemap from '@astrojs/sitemap';
 
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://pumasmas.github.io',
-  integrations: [tailwind(), react(), mdx(), sitemap()],
+  integrations: [react(), mdx(), sitemap()],
+
   markdown: {
     syntaxHighlight: false,
     remarkPlugins: [remarkMath],
@@ -32,5 +34,9 @@ export default defineConfig({
         },
       ],
     ],
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

@@ -12,7 +12,7 @@ const posts = (await getCollection('blog')).sort(
 
 <Layout title="Blog | Pu++">
   <Navbar />
-  <main class="flex-grow max-w-7xl mx-auto px-4 py-12 w-full">
+  <main class="grow max-w-7xl mx-auto px-4 py-12 w-full">
     <div class="mb-12 text-center">
       <h1 class="text-4xl font-bold text-text-bright mb-4">Blog & Noticias</h1>
       <p class="text-text-muted max-w-2xl mx-auto">
@@ -25,7 +25,7 @@ const posts = (await getCollection('blog')).sort(
       {
         posts.map((post) => (
           <a
-            href={`/blog/${post.slug}`}
+            href={`/blog/${post.id}`}
             class="group bg-bg-surface border border-border rounded-xl overflow-hidden hover:border-border-hover transition-all hover:-translate-y-1"
           >
             {post.data.heroImage && (
@@ -43,7 +43,7 @@ const posts = (await getCollection('blog')).sort(
                   post.data.tags
                     .slice(0, 2)
                     .map((tag) => (
-                      <span class="text-xs font-bold text-primary bg-blue-900/20 px-2 py-1 rounded uppercase">
+                      <span class="text-xs font-bold text-primary bg-blue-900/20 px-2 py-1 rounded-sm uppercase">
                         {tag}
                       </span>
                     ))}

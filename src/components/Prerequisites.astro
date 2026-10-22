@@ -11,8 +11,8 @@ const { slugs } = Astro.props;
 const allEntries = await getCollection('wiki');
 const prerequisites = slugs
   .map((slug) => {
-    const entry = allEntries.find((e) => e.slug === slug);
-    return entry ? { slug: entry.slug, title: entry.data.title } : null;
+    const entry = allEntries.find((e) => e.id === slug);
+    return entry ? { slug: entry.id, title: entry.data.title } : null;
   })
   .filter((e): e is { slug: string; title: string } => e !== null);
 
@@ -32,7 +32,7 @@ if (prerequisites.length === 0) {
       prerequisites.map((prereq) => (
         <li>
           <a
-            href={`/wiki/${prereq.slug}`}
+            href={`/wiki/${prereq.id}`}
             class="inline-block px-3 py-1 bg-primary/10 text-primary hover:bg-primary hover:text-text-bright rounded-full text-sm font-medium transition-colors"
           >
             {prereq.title}

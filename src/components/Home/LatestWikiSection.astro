@@ -29,7 +29,7 @@ const wikiEntries = await getLatestWikiEntries(3);
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       {
         wikiEntries.map((entry) => (
-          <a href={`/wiki/${entry.slug}`} class="group flex flex-col">
+          <a href={`/wiki/${entry.id}`} class="group flex flex-col">
             <article class="flex-1 bg-bg-surface border border-border rounded-xl p-6 hover:border-accent/50 hover:shadow-lg hover:shadow-accent/10 transition-all flex flex-col">
               <div class="flex justify-between items-start mb-4">
                 <TagBadge text={entry.data.topic} type="topic" />
@@ -42,9 +42,7 @@ const wikiEntries = await getLatestWikiEntries(3);
               <h3 class="text-xl font-bold text-text-bright mb-2 group-hover:text-primary transition-colors">
                 {entry.data.title}
               </h3>
-              <p class="text-text-muted text-sm line-clamp-3 mb-4 flex-grow">
-                {entry.data.description}
-              </p>
+              <p class="text-text-muted text-sm line-clamp-3 mb-4 grow">{entry.data.description}</p>
               <div class="flex items-center text-xs text-text-muted font-code pt-4 border-t border-border/50">
                 <i class="fas fa-calendar-alt mr-2" />
                 {entry.data.lastUpdated ? entry.data.lastUpdated.toLocaleDateString() : 'Reciente'}
