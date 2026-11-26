@@ -1,0 +1,731 @@
+---
+title: 'Fast Fourier Transform (FFT)'
+description: 'Qué es la FFT y cómo usarla'
+difficulty: 'Candidate Master'
+topic: 'Métodos numéricos'
+prerequisites: []
+lastUpdated: 2026-11-23
+---
+
+import Terminal from '../../components/Terminal.astro';
+import Callout from '../../components/Callout.astro';
+import { Image } from 'astro:assets';
+
+# Fast Fourier Transform (Transformada de Fourier Rápida)
+
+## Transformada de Fourier
+
+Como brevario cultural, discutiremos brevemente de la transformada de Fourier,
+a pesar de que el artículo trata sobre la FFT. A pesar de ello, es importante
+no confundir la FFT con la transformada de Fourier, ya que son objetos
+relacionados pero distintos.
+
+La transformada de Fourier es una función que asigna una función
+$f:\mathbb{R}\to\mathbb{R}$ a otra $g:\mathbb{R}\to\mathbb{R}$ de tal modo que
+$g$ ``promedia'' en el plano complejo a $f$ si lo enrollaramos alrededor del
+origen, con $f(\omega)$ la amplitud alrededor del centro del plano complejo con
+ángulo $\omega$. Con esa intuición definimos la transformada de Fourier:
+
+$$
+\mathcal{F}\{f\} = g(\omega) = \int_{-\inf^\inf} f(t) e^{-i\omega 2\pi t} \textrm{ d}t
+$$
+
+En términos físicos, la transformada de Fourier es muy útil para analizar
+señales análogas, pues este ``enrollamiento'' en el plano complejo resulta en
+que $g(t)$ nos permita pensar en $f(x)$ como la suma de ondas sinusoidales de
+distintas frecuencias y amplitudes, y $g(t)$ nos da la amplitud de $f(x)$ en la
+frecuencia $t$.
+
+$$
+\mathcal{F}^{-1}\{g\} = f(x) = \int_{-\inf^\inf} f(t) e^{ix 2\pi t} \textrm{ d}t
+$$
+
+Esto es útil por ejemplo para identificar el timbre de instrumentos musicales,
+para hacer aplicaciones para afinar instrumentos, para hacer programas que eliminen
+tonos medios o amplifiquen tonos bajos (al aplicar $\mathcal{F}$, crecer $g(\omega)$
+para frecuencias bajas, y aplicar $\mathcal{F}^{-1}$ para reconstruir el audio),
+etc.
+
+En síntesis, dada una función $f$ en el `dominio de tiempo'', la transformada
+de Fourier $\mathcal{F}$ nos da una nueva función $g$ en el `dominio de
+frecuencia'', donde podemos hacer análisis y manipulaciones distintas a $g$, y
+regresar al ``dominio de tiempo'' usando la transformada de Fourier inversa
+$\mathcal{F}^{-1}$.
+
+## Transformada de Fourier Discreta (DFT)
+
+### ¿Qué es la DFT?
+
+Existe un análogo discreto de la transformada de Fourier, el cual es la
+transformada de Fourier discreta.
+
+Ahora en lugar de pensar qué amplitudes tiene cada onda sinusoidal de
+frecuencias distintas forma mi función continua $f$, pensaremos en que si tengo
+$n$ puntos distintos en el plano con coordenada $x$ distintas todas, ¿cuál es
+el polinomio de grado más justo que pasa por esos puntos?
+
+Por ejemplo, sabemos que si tengo dos puntos distintos con coordenadas $x$
+distintas, hay una línea $y=mx+b$ única que los conecta. Similarmente para
+tres puntos hay una parábola $y=ax^2 + bx + c$ única que los conecta, etc.
+
+Para $n$ puntos con coordenadas $x$ todas distintas debe existir un polinomio
+único de grado $n-1$ que cruce por todos estos puntos. Encontrar este polinomio
+es lo que hace la **Transformada de Fourier Discreta Inversa** (iDFT).
+
+Por el contrario, la Transformada de Fourier Discreta (DFT) hace lo siguiente.
+
+Dado un polinomio $f$ de grado $n-1$, encuentra $n$ puntos con $x$ distintas
+que se encuentran sobre el polinomio. Es decir, me da el conjunto:
+
+$$
+\left\{ \left( x_i, f(x_i) \right) : i \neq j \implies x_i \neq x_j \right\}
+$$
+
+Más aún, no queremos cualquier coordenada $x$, queremos las $n$ ``raíces de
+uno''. Las $n$-raíces de uno son los $n$ valores complejos distintos de $x$
+tales que $x^n = 1$. Así, la Transformada de Fourier Discreta (DFT) me da:
+
+$$
+\left\{ \left( e^{2\pi\frac{i}{n}}, f(e^{2\pi\frac{i}{n}}) \right) : 0 \leq i < n \right\}
+$$
+
+Así, como sabemos las $x$ de estos puntos, podemos plantear la salida de la DFT
+como un conjunto de $n$ valores $y$:
+
+$$
+\left\{ f(e^{2\pi\frac{i}{n}}) : 0 \leq i < n \right\}
+$$
+
+## Transformada de Fourier Rápida (FFT)
+
+Si nos damos cuenta, la DFT y su inversa son asignaciones matemáticas entre
+puntos y polinomios, pero no sabemos hasta ahora cómo se puede obtener.
+
+La Transformada de Fourier Rápida (FFT) es un algoritmo mediante el cual
+podemos obtener la DFT.
+
+### DFT en $O(n^2)$
+
+Si tenemos un polinomio de grado $n-1$ y queremos $n$ puntos sobre el polinomio,
+una manera fácil de obtener la DFT es simplemente dar:
+
+$$
+(e^{2\pi\frac{1}{n}},f(e^{2\pi\frac{1}{n}})), (e^{2\pi\frac{2}{n}},f(e^{2\pi\frac{2}{n}})), \dots, (1, f(1))
+$$
+
+El problema es que cada evaluación de $f$ tomará $O(n)$ pues hay $n$ términos
+en un polinomio de grado $n-1$. Como queremos $n$ puntos esto es $O(n^2)$ pero
+sería válido.
+
+### DFT en $O(n\log n)$
+
+Al algoritmo que desarrollaremos se le conoce como el algoritmo de Cooley-Tukey,
+también conocido como la FFT.
+
+Es un algoritmo divide y vencerás, donde podemos dividir sobre los términos de
+grado par e impar del polinomio, y unir los resultados parciales de manera
+sencilla.
+
+Dado el polinomio $f(x) = a_0 + a_1 x^1 + a_2 x^2 + \dots + a_{n-1} x^{n-1}$,
+lo dividimos en un polinomio para los coeficientes pares, y otro para los impares
+pero a ellos les factorizamos una $x$. Como queremos que se reduzca a la mitad
+el grado de cada uno de estos polinomios, consideraremos que los evaluaremos
+en $x^2$. Así:
+
+$$
+f_{\textrm{par}}(x) = a_0 + a_2 x + a_4 x^2 + a_6 x^3 + \dots + a_{n-2} x^{\frac{n}{2}-1}
+$$
+
+$$
+f_{\textrm{impar}}(x) = a_1 + a_3 x + a_5 x^2 + a_7 x^3 + \dots + a_{n-1} x^{\frac{n}{2}-1}
+$$
+
+Supongamos que encontramos la FFT de $f_{\textrm{par}}$ y $f_{\textrm{impar}}$.
+Notemos que la siguiente expresión es verdadera:
+
+$$
+f(x) = f_{\textrm{par}}(x^2) + x f_{\textrm{impar}}(x^2)
+$$
+
+Así, si la FFT de $f_{\textrm{par}}$ me da la lista de puntos $y_{\textrm{par}}$
+y análogamente $f_{\textrm{impar}}$ da $y_{\textrm{impar}}$, entonces para
+cada $i$ de cero a $\frac{n}{2}-1$:
+
+$$
+y[i] = y_{\textrm{par}}[i] + e^{2\pi\frac{i}{n}}y_{\textrm{impar}}[i] \hspace{4mm} i \in [0,n/2)
+$$
+
+Como $f_{\textrm{par}}$ y $f_{\textrm{impar}}$ tienen grado $n/2$ y su FFT nos
+da $n/2$ puntos, hay que ser un poco más creativos para obtener otros $n/2$ puntos
+de estas dos listas de $n/2$ elementos. El truco es sencillo, para la segunda mitad
+de puntos, podemos hacer el siguiente despeje.
+
+De aquí iniciamos.
+
+$$
+y[i] = y_{\textrm{par}}[i-\frac{n}{2}] + e^{2\pi\frac{i}{n}}y_{\textrm{impar}}[i-\frac{n}{2}] \hspace{4mm} i \in [n/2, n)
+$$
+
+Movemos nuestros índices para que $i$ corra desde cero.
+
+$$
+y[i+n/2] = y_{\textrm{par}}[i] + e^{2\pi\frac{i+n/2}{n}}y_{\textrm{impar}}[i] \hspace{4mm} i \in [0, n/2)
+$$
+
+Separamos $e^{2\pi\frac{i+n/2}{n}}$.
+
+$$
+y[i+n/2] = y_{\textrm{par}}[i] + e^{2\pi\frac{i}{n}}e^{2\pi\frac{n/2}{n}}y_{\textrm{impar}}[i] \hspace{4mm} i \in [0, n/2)
+$$
+
+Simplificamos ya que $e^{2\pi\frac{n/2}{n}} = -1$:
+
+$$
+y[i+n/2] = y_{\textrm{par}}[i] - e^{2\pi\frac{i}{n}}y_{\textrm{impar}}[i] \hspace{4mm} i \in [0, n/2)
+$$
+
+Así, encontramos nuestros $n$ puntos a partir de dos listas de $n/2$ puntos.
+
+En Python el código es muy sencillo. Nótese que asumimos que la longitud de
+$f$ es potencia de dos, lo cual se consigue al agregar ceros hasta llegar a
+la potencia de dos más cercana hacia arriba.
+
+```python
+def fft(f):
+    n = len(f)
+    if n == 1:
+        return [f[0]]
+    f_par, f_impar = f[0::2], f[1::2]
+    y_par, y_impar = fft(f_par), fft(f_impar)
+    epow = lambda i: cos(2*PI*i/n) + 1j*sin(2*PI*i/n)
+    l = [y_par[i] + y_impar[i]*epow(i) for i in range(n//2)]
+    r = [y_par[i] - y_impar[i]*epow(i) for i in range(n//2)]
+    return l + r
+```
+
+### iDFT en $O(n\log n)$
+
+Ahora dados los puntos queremos encontrar el polinomio. Suena como un
+problema más complicado, pero veremos que es casi idéntico.
+
+La clave es que sabemos que (y dependemos en que) los puntos son las $n$-raíces
+de uno.
+
+Es posible notar tras poner la DFT en forma matricial e invertir la matriz para
+despejar los coeficientes del polinomio, que obtenemos la siguiente ecuación:
+
+$$
+a_i = \frac{1}{n}\sum_{j=0}^{n-1}y_je^{-2\pi i\frac{j}{n}}
+$$
+
+Esto es similar a la fórmula que usamos para obtener la DFT en $O(n^2)$ al
+simplemente evaluar el polinomio:
+
+$$
+y_j = \sum_{i=0}^{n-1}a_ie^{2\pi j\frac{i}{n}}
+$$
+
+Por lo tanto, ajustando para incluir la FFT inversa (iFFT) en nuestro código:
+
+```python
+def fft(f, inv=False):
+    n = len(f)
+    if n == 1:
+        return [f[0]]
+    f_par, f_impar = f[0::2], f[1::2]
+    y_par, y_impar = fft(f_par, inv), fft(f_impar, inv)
+    sig, divi = -1 if inv else 1, 2 if inv else 1
+    epow = lambda i: cos(sig*2*PI*i/n) + 1j*sin(sig*2*PI*i/n)
+    l = [(y_par[i] + y_impar[i]*epow(i))/divi for i in range(n//2)]
+    r = [(y_par[i] - y_impar[i]*epow(i))/divi for i in range(n//2)]
+    return l + r
+```
+
+Este código es una version simple pero correcta que se puede usar para obtener
+la FFT y la iFFT en tiempo $O(n \log n)$.
+
+### Optimizaciones
+
+Se puede consultar https://neerc.ifmo.ru/trains/toulouse/2017/fft2.pdf para más
+información. De momento, dejamos una implementación más optimizada del mismo
+algoritmo, que lo implementa de manera iterativa y de manera más amigable
+para las caches, reordenando los datos primero.
+
+```cpp
+using ld = double; // long double no es tan util aqui afaik
+using cx = complex<ld>;
+constexpr ld PI = acos(-1);
+
+int rev[N];
+void init_rev() { // correr una unica vez antes de usar FFT
+    for (int i = 1; i < N; i++)
+        rev[i] = (rev[i>>1] >> 1) + ((i&1) << (P-1));
+}
+
+// Asumimos que |f|=|output|=2^k para algun k natural
+void fft(const vector<cx>& f, vector<cx>& output) {
+    int n = (int)f.size();
+    for (int i = 0; i < n; i++) {
+        output[i] = f[rev[i]];
+    }
+    vector<cx> root(n);
+    root[1] = cx{1,0};
+    int logn = __builtin_ctz(n); // asumimos n = 2^k
+    for (int k = 1; k < logn; k++) {
+        ld t = 2*PI / (1 << (k+1));
+        cx z = cx{cos(t), sin(t)};
+        for (int i = 1 << (k-1); i < (1 << k); i++) {
+            root[2*i] = root[i];
+            root[2*i + 1] = root[i] * z;
+        }
+    }
+    for (int k = 1; k < n; k = k * 2) {
+        for (int i = 0; i < n; i = i + 2*k) {
+            for (int j = 0; j < k-1; k++) {
+                cx z = root[j + k] * output[i+j+k];
+                output[i+j+k] = output[i+j] - z;
+                output[i+j] = output[i + j] + z;
+            }
+        }
+    }
+}
+```
+
+## Aplicaciones de la DFT
+
+### 1. Multiplicación de polinomios
+
+Clasifiquemos algunos distintos formatos en los que se nos puede especificar
+un polinomio de grado $n-1$.
+
+1. Por sus coeficientes: $a_0 + a_1 x + a_2 x^2 + \dots + a_{n-1} x^{n-1}$.
+2. Por sus raíces complejas: $(x-c_0)(x-c_1)(x-c_2)\dots(x-c_{n-1})$.
+3. Por $n$ puntos con $x$ distintas: $(x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)$.
+
+Tener al polinomio en alguno de estos formatos en particular nos puede
+facilitar el hacer operaciones sobre el polinomio.
+
+Notemos que con la DFT podemos ir del formato 1 al 3, y con la iDFT del 3 al 1.
+También es posible que sepan que ir de 1 a 2 es complicado, y en general no es
+posible únicamente con operaciones elementales (por un resultado de Galois).
+
+Si tenemos dos polinomio en la forma 2, multiplicar dos polinomios es trivial,
+pues simplemente concatenamos los productos. Esto podríamos hacerlo en $O(n)$
+fácilmente.
+
+Si tenemos dos polinomios en la forma 3, asumiendo que los $x$ coinciden punto
+a punto, podemos simplemente multiplicar las $y$ punto a punto. Esto podríamos
+hacerlo en $O(n)$ fácilmente.
+
+Si tenemos dos polinomios en la forma 1, es un poco más complicado. Si
+multiplicaríamos del mismo modo que hacemos la multiplicación a mano,
+efectivamente por cada monomio del polinomio derecho multiplicaríamos todo el
+polinomio izquierdo, dándonos un algoritmo $O(n^2)$.
+
+```python
+def pmul(a,b):
+    c = [0]*(len(a) + len(b))
+    for i in range(len(a)):
+        for j in range(len(b)):
+            c[i+j] += a[i] * b[j]
+    return c
+```
+
+Así, la manera usual de multiplicar dos polinomios en la forma 1 es pasarlos
+a la forma 3 con la DFT, multiplicar punto a punto, y regresar a la forma 1
+con la iDFT.
+
+En código:
+
+```python
+def pmul(a, b):
+    f, g, h = fft(a), fft(b), []
+    for i in range(len(f)):
+        h.append(f[i] * g[i])
+    return fft(h, inv=True)
+```
+
+Que equivale a:
+
+```python
+def pmul(a, b):
+    f, g, h = fft(a), fft(b), []
+    for i in range(len(f)):
+        h.append((f[i] * g[i])/len(f))
+    return fft(h[:1] + h[1::-1])
+```
+
+Podemos hacer una única FFT para obtener la FFT de $a$ y $b$ implícitamente si
+los coeficientes del polinomio $a$ son los valores reales de una lista de
+complejos, y los coeficientes del polinomio $b$ son los valores complejos de
+esa lista.
+
+```cpp
+// esperamos que los vectores sean de longitud |a|+|b|-1 con ceros si les falta
+// esperamos que la longitud de los vectores sea potencia de 2
+void pmul(const vector<ld>& a, const vector<ld>& b, vector<ld>& output) {
+    int n = (int)a.size();
+    vector<cx> aux_in(n), aux_mul(n), aux_out(n);
+    for (int i = 0; i < n; i++) {
+        aux_in[i] = cx{a[i], b[i]};
+    }
+    fft(aux_in, aux_out);
+    for (int i = 0; i < n; i++) {
+        int j = (n-i) & (n-1);
+        auto oi2 = aux_out[i] * aux_out[i];
+        auto oj2 = aux_out[j] * aux_out[j];
+        aux_mul[i] = (oj2 - oi2.conj) * cx{0, -0.25/n};
+    }
+    fft(aux_mul, output);
+}
+```
+
+Finalmente, no olvidemos que como el producto de dos polinomios de grados $n$ y
+$m$ es de grado $n+m$, necesitamos que los polinomios tengan ceros al final
+hasta alcanzar la potencia de dos más cercana por arriba a $n+m$ para no
+perder información.
+
+### 2. Contar formas de escojer $(i,j)$ tal que $a[i]+b[j] = k$.
+
+Tengo una lista $a$ y otra $b$ de naturales (si tuviera negativos, sumemos
+un _offset_ a todo valor).
+
+Por fuerza bruta, puedo iterar por cada $i$ y por cada $j$ y a cada posible
+$k$ lo incremento en uno.
+
+```python
+def sum_cnt(a, b):
+    cnt = dict()
+    for x in a:
+        for y in b:
+            if x+y not in cnt:
+                cnt[x+y] = 0
+            cnt[x+y] += 1
+    return cnt
+
+ans = sum_cnt(a,b)
+print(ans[k] if k in ans else 0)
+```
+
+Esto nos toma $O(n^2)$. Notemos que el proceso es casi idéntico a aquél con el cual
+multiplicamos dos polinomios, por lo que podemos codificar nuestros datos en
+un polinomio y usar `pmul`.
+
+La codificación adecuada tiene al $i$-ésimo coeficiente del polinomio de $a$
+como el número de veces que se aparece $i$ en $a$. Caso análogo para $b$.
+
+Ejemplo:
+
+$$
+a = [1,2,3,2] \implies p_a = 0x^0 + 1x^1 + 2x^2 + 1x^3 + 0x^4
+$$
+
+$$
+b = [2,4] \implies p_a = 0x^0 + 0x^1 + 1x^2 + 0x^3 + 1x^4
+$$
+
+De ahí, hacemos `pmul(a,b)` y el $k$-ésimo coeficiente del polinomio resultante
+es la respuesta.
+
+Piensa, ¿por qué esto es correcto?
+
+Intenta multiplicar $p_a$ y $p_b$ a mano y convéncete de que la codificación
+es adecuada.
+
+### 3. Producto punto circular
+
+Dados dos vectores $a$ y $b$ de $n$ elementos, queremos calcular el producto
+punto de $a$ con cada desplazamiento circular de $b$.
+
+Por ejemplo,
+
+$$
+a = [2,0,4], \quad b = [1,10,2]
+$$
+
+- Desplazamiento 0: $2\cdot 1 + 0\cdot 10 + 4\cdot 2 = 10$.
+- Desplazamiento 1: $2\cdot 2 + 0\cdot 1 + 4\cdot 10 = 44$.
+- Desplazamiento 2: $2\cdot 10 + 0\cdot 2 + 4\cdot 1 = 24$.
+
+Para resolverlo, notemos que podemos obtener todos los productos punto
+circulares mediante una multiplicación elemento a elemento de dos DFT.
+
+Primero, construyamos un nuevo arreglo $a'$ invirtiendo circularmente los
+elementos de $a$, i.e. fijamos el primer elemento y aplicamos la reversa al
+resto ($a'[i] = a[(-i) \bmod n]$).
+
+```python
+def inv_circ(a):
+    return a[:1] + a[1::-1]
+```
+
+Por ejemplo, si:
+
+$$
+a = [2,0,4]
+$$
+
+Entonces:
+
+$$
+a' = [2,4,0]
+$$
+
+Ahora calculemos:
+
+$$
+c = \operatorname{IDFT} \left( \operatorname{DFT}(a')\cdot\operatorname{DFT}(b) \right)
+$$
+
+¿Por qué funciona esto?
+
+Recordemos que la DFT de un arreglo $x$ está definida como:
+
+$$
+X[k] = \sum_{i=0}^{n-1}x[i]\omega^{ik}
+$$
+
+donde $\omega=e^{-2\pi i/n}$.
+
+Al aplicar la iDFT al producto de dos DFT, obtenemos:
+
+$$
+c[s] = \sum_{i=0}^{n-1}a'[i]b[(s-i)\bmod n]
+$$
+
+Sustituyendo nuestra definición de $a'$:
+
+$$
+c[s] = \sum_{i=0}^{n-1} a[(-i)\bmod n]b[(s-i)\bmod n]
+$$
+
+Haciendo el cambio de variable $j=(-i)\bmod n$:
+
+$$
+c[s] = \sum_{j=0}^{n-1} a[j]b[(s+j)\bmod n]
+$$
+
+Esto es tal cual lo que queremos.
+
+Por lo tanto, basta con invertir circularmente $a$ y calcular las DFT de ambos
+arreglos, multiplicarlas elemento a elemento y aplicar la iDFT.
+
+Notemos que, a diferencia de la multiplicación convencional de polinomios, no
+necesitamos rellenar los arreglos con ceros.
+
+Aplicando las mismas optimizaciones que `pmul`:
+
+```cpp
+// esperamos que los vectores sean de longitud max(|a|,|b|) con ceros si les falta
+// esperamos que la longitud de los vectores sea potencia de 2
+void circ_mul(const vector<ld>& a, const vector<ld>& b, vector<ld>& output) {
+    int n = (int)a.size();
+    vector<cx> aux_in(n), aux_mul(n), aux_out(n);
+    for (int i = 0; i < n; i++) {
+        aux_in[i] = cx{a[(n-i)%n], b[i]};
+    }
+    fft(aux_in, aux_out);
+    for (int i = 0; i < n; i++) {
+        int j = (n-i) % n;
+        auto oi2 = aux_out[i] * aux_out[i];
+        auto oj2 = aux_out[j] * aux_out[j];
+        aux_mul[i] = (oj2 - oi2.conj) * cx{0, -0.25/n};
+    }
+    fft(aux_mul, output);
+}
+```
+
+### 4. Convoluciones
+
+Formalmente, dados dos arreglos $a$ y $b$, podemos definir dos tipos de
+convolución.
+
+**Convolución convencional (o lineal)**
+
+Definimos su convolución como el arreglo $c$ cuyos elementos son:
+
+$$
+c[k] = \sum_{i+j=k}a[i]b[j]
+$$
+
+Equivalentemente, si consideramos que los elementos fuera de los límites de los
+arreglos valen cero:
+
+$$
+c[k] = \sum_i a[i]b[k-i]
+$$
+
+Esta operación es exactamente la que aparece al multiplicar dos polinomios:
+cada coeficiente del resultado es la suma de los productos de coeficientes
+cuyos exponentes suman $k$.
+
+**Convolución circular**
+
+Si ambos arreglos tienen longitud $n$, también podemos definir su convolución
+circular como:
+
+$$
+c[k] = \sum_{i=0}^{n-1}a[i]b[(k-i)\bmod n]
+$$
+
+La diferencia es que, en lugar de considerar que los elementos fuera de los
+límites valen cero, hacemos que los índices den la vuelta al llegar al final
+del arreglo.
+
+Por ejemplo, después del índice $n-1$ regresamos al índice $0$.
+
+**¿Cómo calcularlas usando la DFT?**
+
+Seguimos el patrón que nos definió `pmul` y `circ_mul`. El código es
+exactamente el mismo para cada convolución lineal (`pmul`) o circular
+(`circ_mul`).
+
+**Con esto podemos entender las tres aplicaciones anteriores:**
+
+1. **Multiplicación de polinomios:** equivale directamente a calcular la
+   convolución convencional de sus coeficientes.
+2. **Contar parejas cuya suma es $k$:** representamos cada arreglo mediante un
+   polinomio donde cada coeficiente indica cuántas veces aparece un valor. La
+   convolución convencional cuenta todas las parejas cuya suma es cada posible
+   $k$.
+3. **Producto punto circular:** invertimos circularmente uno de los arreglos y
+   calculamos la convolución circular con el otro. Los resultados obtenidos
+   corresponden a los productos punto con cada desplazamiento circular.
+
+### 5. Apareamiento de cadenas con comodines
+
+Supongamos que tenemos una cadena $txt$ y un patrón $pat$, y queremos encontrar
+todas las posiciones donde aparece el patrón dentro del texto.
+
+Además, permitiremos que el patrón contenga un carácter comodín (por ejemplo,
+`*`), que puede coincidir con cualquier carácter.
+
+Por ejemplo:
+
+$$
+txt = \texttt{abacaba}
+$$
+
+$$
+pat = \texttt{a*a}
+$$
+
+Queremos encontrar todas las posiciones donde el patrón coincide, ignorando las
+posiciones donde aparece `*`.
+
+**La idea** es convertir cada carácter en un número complejo sobre el círculo unitario:
+
+$$
+f(c)=e^{2\pi i(c-'a')/26}
+$$
+
+De esta manera, dos caracteres iguales producen exactamente el mismo número
+complejo.
+
+Además, si dos caracteres son distintos, podemos usar la siguiente propiedad:
+
+$$
+|f(x)-f(y)|^2 > 0
+$$
+
+Por lo tanto, podemos distinguir entre caracteres iguales y distintos mediante
+una operación algebraica.
+
+Construyamos dos arreglos:
+
+- $a[i] = f(txt[i])$.
+- $b[i] = f(pat[m-1-i])$, invirtiendo el patrón y colocando cero en las posiciones correspondientes a los comodines.
+
+Ahora calculemos:
+
+$$
+c = a * b
+$$
+
+donde $*$ representa la convolución convencional.
+
+Consideremos una posición $s$ del texto. Por la definición de convolución:
+
+$$
+c[s+m-1] = \sum_{j=0}^{m-1}a[s+j]b[m-1-j]
+$$
+
+Como invertimos el patrón, podemos reescribirlo como:
+
+$$
+c[s+m-1] = \sum_{j=0}^{m-1}f(txt[s+j])f(pat[j])
+$$
+
+donde las posiciones con comodines aportan cero.
+
+Si todos los caracteres del patrón que no son comodines coinciden, cada
+producto será:
+
+$$
+f(x)f(x)=f(x)^2
+$$
+
+Sin embargo, aquí hay un detalle: **la suma de estos productos no permite
+distinguir correctamente todos los casos de coincidencia**, pues los números
+complejos pueden cancelarse entre sí.
+
+Para evitarlo, en lugar de utilizar directamente los valores complejos, podemos
+aprovechar que:
+
+$$
+|f(x)-f(y)|^2 = 2-f(x)\overline{f(y)}-\overline{f(x)}f(y)
+$$
+
+Esta expresión vale cero si los caracteres coinciden y es estrictamente
+positiva en caso contrario.
+
+Por lo tanto, podemos sumar estas diferencias para cada posible posición y
+obtener cero exactamente cuando hay una coincidencia completa.
+
+Esto requiere calcular las convoluciones correspondientes a los términos de la
+expresión, utilizando `pmul`.
+
+Así podemos resolver el problema en $O(n\log n)$, en lugar de comparar el
+patrón en cada posición, lo cual tomaría $O(nm)$.
+
+```cpp
+// Apareamiento de cadenas con comodines.
+// Regresa true en las posiciones donde el patrón coincide.
+// Asume que los caracteres son letras minúsculas de la 'a' a la 'z'.
+vector<bool> str_match(const string& txt, const string& pat, char wildcard = '*') {
+    int n = txt.size(), m = pat.size();
+    vector<bool> ans(n, false);
+    if (m > n) return ans;
+    // Necesitamos una convolución de longitud n+m-1.
+    int sz = 1;
+    while (sz < n + m - 1) sz <<= 1;
+    vector<ld> tr(sz), ti(sz), pr(sz), pi(sz);
+    // Codificamos los caracteres del texto como números complejos.
+    for (int i = 0; i < n; i++) {
+        ld t = 2 * acosl(-1) * (txt[i] - 'a') / 26;
+        tr[i] = cosl(t);
+        ti[i] = sinl(t);
+    }
+    // Codificamos el patrón invertido.
+    // Los comodines se representan mediante ceros.
+    int cnt = 0;
+    for (int i = 0; i < m; i++) {
+        if (pat[i] == wildcard) continue;
+        cnt++;
+        ld t = 2 * acosl(-1) * (pat[i] - 'a') / 26;
+        pr[m - 1 - i] = cosl(t);
+        pi[m - 1 - i] = sinl(t);
+    }
+    // Calculamos las dos convoluciones.
+    vector<ld> cr(sz), ci(sz);
+    pmul(tr, pr, cr);
+    pmul(ti, pi, ci);
+    // Un match ocurre cuando la suma de los productos
+    // escalares es igual al número de caracteres sin comodín.
+    for (int i = 0; i + m <= n; i++) {
+        ld dot = cr[i + m - 1] + ci[i + m - 1];
+        ans[i] = fabsl(dot - cnt) < 1e-7L * max(1, cnt);
+    }
+    return ans;
+}
+```
