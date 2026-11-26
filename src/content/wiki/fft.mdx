@@ -22,22 +22,22 @@ relacionados pero distintos.
 
 La transformada de Fourier es una función que asigna una función
 $f:\mathbb{R}\to\mathbb{R}$ a otra $g:\mathbb{R}\to\mathbb{R}$ de tal modo que
-$g$ ``promedia'' en el plano complejo a $f$ si lo enrollaramos alrededor del
+$g$ "promedia" en el plano complejo a $f$ si lo enrollaramos alrededor del
 origen, con $f(\omega)$ la amplitud alrededor del centro del plano complejo con
 ángulo $\omega$. Con esa intuición definimos la transformada de Fourier:
 
 $$
-\mathcal{F}\{f\} = g(\omega) = \int_{-\inf^\inf} f(t) e^{-i\omega 2\pi t} \textrm{ d}t
+\mathcal{F}\{f\} = g(\omega) = \int_{-\infty}^{\infty} f(t) e^{-i\omega 2\pi t} \textrm{ d}t
 $$
 
 En términos físicos, la transformada de Fourier es muy útil para analizar
-señales análogas, pues este ``enrollamiento'' en el plano complejo resulta en
+señales análogas, pues este "enrollamiento" en el plano complejo resulta en
 que $g(t)$ nos permita pensar en $f(x)$ como la suma de ondas sinusoidales de
 distintas frecuencias y amplitudes, y $g(t)$ nos da la amplitud de $f(x)$ en la
 frecuencia $t$.
 
 $$
-\mathcal{F}^{-1}\{g\} = f(x) = \int_{-\inf^\inf} f(t) e^{ix 2\pi t} \textrm{ d}t
+\mathcal{F}^{-1}\{g\} = f(x) = \int_{-\infty}^{\infty} f(t) e^{ix 2\pi t} \textrm{ d}t
 $$
 
 Esto es útil por ejemplo para identificar el timbre de instrumentos musicales,
@@ -46,10 +46,10 @@ tonos medios o amplifiquen tonos bajos (al aplicar $\mathcal{F}$, crecer $g(\ome
 para frecuencias bajas, y aplicar $\mathcal{F}^{-1}$ para reconstruir el audio),
 etc.
 
-En síntesis, dada una función $f$ en el `dominio de tiempo'', la transformada
-de Fourier $\mathcal{F}$ nos da una nueva función $g$ en el `dominio de
-frecuencia'', donde podemos hacer análisis y manipulaciones distintas a $g$, y
-regresar al ``dominio de tiempo'' usando la transformada de Fourier inversa
+En síntesis, dada una función $f$ en el "dominio de tiempo", la transformada
+de Fourier $\mathcal{F}$ nos da una nueva función $g$ en el "dominio de
+frecuencia", donde podemos hacer análisis y manipulaciones distintas a $g$, y
+regresar al "dominio de tiempo" usando la transformada de Fourier inversa
 $\mathcal{F}^{-1}$.
 
 ## Transformada de Fourier Discreta (DFT)
@@ -81,8 +81,8 @@ $$
 \left\{ \left( x_i, f(x_i) \right) : i \neq j \implies x_i \neq x_j \right\}
 $$
 
-Más aún, no queremos cualquier coordenada $x$, queremos las $n$ ``raíces de
-uno''. Las $n$-raíces de uno son los $n$ valores complejos distintos de $x$
+Más aún, no queremos cualquier coordenada $x$, queremos las $n$ "raíces de
+uno". Las $n$-raíces de uno son los $n$ valores complejos distintos de $x$
 tales que $x^n = 1$. Así, la Transformada de Fourier Discreta (DFT) me da:
 
 $$
@@ -262,7 +262,7 @@ void init_rev() { // correr una unica vez antes de usar FFT
         rev[i] = (rev[i>>1] >> 1) + ((i&1) << (P-1));
 }
 
-// Asumimos que |f|=|output|=2^k para algun k natural
+// Asumimos que |f| = |output| = 2^k para algun k natural
 void fft(const vector<cx>& f, vector<cx>& output) {
     int n = (int)f.size();
     for (int i = 0; i < n; i++) {
@@ -361,7 +361,7 @@ complejos, y los coeficientes del polinomio $b$ son los valores complejos de
 esa lista.
 
 ```cpp
-// esperamos que los vectores sean de longitud |a|+|b|-1 con ceros si les falta
+// esperamos que los vectores sean de longitud |a| + |b| - 1 con ceros si les falta
 // esperamos que la longitud de los vectores sea potencia de 2
 void pmul(const vector<ld>& a, const vector<ld>& b, vector<ld>& output) {
     int n = (int)a.size();
